@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+	<property name="blob.type" dbms="oracle" value=" blob"/>
+	<property name="blob.type" dbms="mssql" value="image"/>
+	<property name="blob.type" dbms="mysql" value="longblob"/>
+	<property name="blob.type" dbms="postgresql" value="oid"/>
+	<property name="blob.type" dbms="h2" value="image"/>
+
+
+	<changeSet id="Create liquibase_test1" author="test" runOnChange="true">
+		<createTable tableName="liquibase_test1">
+			<column name="ID" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="column1" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="column2" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="column3" type="varchar(255)">
+            </column>
+            <column name="column4" type="${blob.type}"></column>
+        </createTable>
+
+		<addUniqueConstraint tableName="liquibase_test1" columnNames="column1,column2"
+			constraintName="liquibase_test1_column1_column2" />
+	</changeSet>
+
+    
+
+    <changeSet id="alter sql" author="test" dbms="mysql">
+        <sql>ALTER TABLE liquibase_test1 MODIFY id BIGINT NOT NULL AUTO_INCREMENT;</sql>
+    </changeSet>
+
+
+
+    <changeSet id="Create liquibase_test2" author="test">
+        <createTable tableName="liquibase_test2">
+            <column name="ID" type="BIGINT">
+            </column>
+            <column name="column1" type="BIGINT" />
+            <column name="column2" type="varchar(64)" />
+        </createTable>
+
+		<addPrimaryKey tableName="liquibase_test2" columnNames="column1,column2"
+            constraintName="liquibase_test2_PK" />
+
+
+		 <insert tableName="liquibase_test2">
+            <column name="column2" value="test" />
+            <column name="column1" value="1" />
+        </insert>
+			
+		<rollback><dropTable tableName="liquibase_test3"/></rollback>
+    </changeSet>
+    
+
+</databaseChangeLog>
