@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.cxt.Mybatis.dao.UserDao" >
+  <resultMap id="BaseResultMap" type="com.github.cxt.Mybatis.entity.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="detailMap" type="com.github.cxt.Mybatis.entity.User" extends="BaseResultMap">
+    <association column="id" property="type" select="com.github.cxt.Mybatis.dao.UserTypeDao.selectById" />
+  </resultMap>
+  
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+   		select * from user where id = #{id, jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll" resultType="java.util.Map" >
+   		select * from user
+  </select>
+  
+  <select id="selectByMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+   		select * from user
+   		<where>
+	   		<foreach collection="_parameter.keys" item="key" separator="," >
+				${key}=#{_parameter[${key}]}  
+		    </foreach>
+   		</where>
+  </select>
+  
+  
+  <select id="selectCascadeByUserId" resultMap="detailMap" parameterType="java.lang.Long" >
+   		select * from user where id = #{id, jdbcType=INTEGER}
+  </select>
+  
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into user (name, user_type)
+    values 
+    <foreach collection="list"  item="item" separator=",">
+    (#{item.name,jdbcType=VARCHAR}, #{item.userType,jdbcType=INTEGER})
+  	</foreach>
+  </insert>
+  
+  <insert id="insert" parameterType="com.github.cxt.Mybatis.entity.User" useGeneratedKeys="true" keyProperty="id">
+    insert into user (name, user_type)
+    values 
+    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER})
+  </insert>
+  
+  <!-- 
+    <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  
+   -->
+</mapper>

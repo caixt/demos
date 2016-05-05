@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.cxt.Mybatis.dao.UserTypeDao" >
+  <resultMap id="BaseResultMap" type="com.github.cxt.Mybatis.entity.UserType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   		select * from usertype where id = #{id, jdbcType=INTEGER}
+  </select>
+  
+
+</mapper>
