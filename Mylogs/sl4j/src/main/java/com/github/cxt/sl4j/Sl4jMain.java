@@ -3,13 +3,10 @@ package com.github.cxt.sl4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-public class Main {
+public class Sl4jMain {
 	
-	
-
-	public static void main(String[] args) {
-		Logger logger = LoggerFactory.getLogger(Main.class);
+	public static void test() {
+		Logger logger = LoggerFactory.getLogger(Sl4jMain.class);
 		logger.info("test sl4j");
 	}
 

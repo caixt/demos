@@ -11,6 +11,7 @@
   <name>main</name>
   <url>http://maven.apache.org</url>
   <properties>
+  	<org.slf4j-version>1.7.12</org.slf4j-version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
@@ -18,11 +19,38 @@
       <groupId>com.github.cxt</groupId>
       <artifactId>log4j</artifactId>
       <version>0.0.1-SNAPSHOT</version>
+      <exclusions>
+		<exclusion>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</exclusion>
+	  </exclusions>
     </dependency>
     <dependency>
     <groupId>com.github.cxt</groupId>
       <artifactId>sl4j</artifactId>
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
+    
+    <dependency>  
+	    <groupId>org.slf4j</groupId>  
+	    <artifactId>jcl-over-slf4j</artifactId>  
+	    <version>${org.slf4j-version}</version>  
+	</dependency>  
+	<dependency>  
+	    <groupId>org.slf4j</groupId>  
+	    <artifactId>log4j-over-slf4j</artifactId>  
+	    <version>${org.slf4j-version}</version>  
+	</dependency>  
+	<dependency>  
+	    <groupId>org.slf4j</groupId>  
+	    <artifactId>jul-to-slf4j</artifactId>  
+	    <version>${org.slf4j-version}</version>  
+	</dependency>  
+	<dependency>  
+	    <groupId>org.jboss.logging</groupId>  
+	    <artifactId>jboss-logging</artifactId>  
+	    <version>3.1.4.GA</version>  
+	</dependency> 
   </dependencies>
 </project>
