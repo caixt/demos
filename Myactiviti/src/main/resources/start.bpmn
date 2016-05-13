@@ -1,2 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/"><process id="id_53" name="test" isExecutable="true"><startEvent id="start" name="start" /><endEvent id="end" name="end" /><userTask id="id_41" name="step1_0"><extensionElements><activiti:taskListener event="create" delegateExpression="${cxt}" /></extensionElements></userTask><sequenceFlow id="flow_start_id_41" sourceRef="start" targetRef="id_41" /><userTask id="id_42" name="step1_1"><extensionElements><activiti:taskListener event="create" delegateExpression="${cxt}" /></extensionElements></userTask><sequenceFlow id="flow_id_41_id_42" sourceRef="id_41" targetRef="id_42" /><userTask id="id_43" name="step2_0"><extensionElements><activiti:taskListener event="create" delegateExpression="${cxt}" /></extensionElements></userTask><sequenceFlow id="flow_id_42_id_43" sourceRef="id_42" targetRef="id_43" /><sequenceFlow id="flow_id_43_end" sourceRef="id_43" targetRef="end" /></process></definitions>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/">
+  <process id="demo" name="test" isExecutable="true">
+    <startEvent id="start" name="start"></startEvent>
+    <endEvent id="end" name="end"></endEvent>
+    <userTask id="id_1" name="step1">
+      <extensionElements>
+        <activiti:taskListener event="create" delegateExpression="${cxt}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow_start_id_41" sourceRef="start" targetRef="id_1"></sequenceFlow>
+    <userTask id="id_2" name="step2">
+      <extensionElements>
+        <activiti:taskListener event="create" delegateExpression="${cxt}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow_id_41_id_42" sourceRef="id_1" targetRef="id_2"></sequenceFlow>
+    <userTask id="id_3" name="step3">
+      <extensionElements>
+        <activiti:taskListener event="create" delegateExpression="${cxt}"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow_id_42_id_43" sourceRef="id_2" targetRef="id_3"></sequenceFlow>
+    <sequenceFlow id="flow_id_43_end" sourceRef="id_3" targetRef="end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_demo">
+    <bpmndi:BPMNPlane bpmnElement="demo" id="BPMNPlane_demo">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="530.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="id_1" id="BPMNShape_id_1">
+        <omgdc:Bounds height="60.0" width="100.0" x="80.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="id_2" id="BPMNShape_id_2">
+        <omgdc:Bounds height="60.0" width="100.0" x="230.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="id_3" id="BPMNShape_id_3">
+        <omgdc:Bounds height="60.0" width="100.0" x="380.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow_start_id_41" id="BPMNEdge_flow_start_id_41">
+        <omgdi:waypoint x="35.0" y="32.0"></omgdi:waypoint>
+        <omgdi:waypoint x="42.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="42.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="80.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_id_41_id_42" id="BPMNEdge_flow_id_41_id_42">
+        <omgdi:waypoint x="180.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="192.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="192.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_id_42_id_43" id="BPMNEdge_flow_id_42_id_43">
+        <omgdi:waypoint x="330.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow_id_43_end" id="BPMNEdge_flow_id_43_end">
+        <omgdi:waypoint x="480.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="492.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="492.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="32.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
