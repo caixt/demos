@@ -19,13 +19,18 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-
   
     	<dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-grizzly2-http</artifactId>
+            <groupId>org.glassfish.jersey.core</groupId>  
+       		<artifactId>jersey-server</artifactId>  
             <version>2.22.2</version>
         </dependency>
+
+		<dependency>
+		    <groupId>org.glassfish.jersey.media</groupId>
+		    <artifactId>jersey-media-multipart</artifactId>
+		    <version>2.22.2</version>
+		</dependency>
         
         <dependency>
           <groupId>org.glassfish.jersey.ext</groupId>
@@ -73,5 +78,11 @@
 		    <artifactId>log4j-over-slf4j</artifactId>  
 		    <version>1.7.12</version>  
 		</dependency>
+		
+		<dependency>  
+	        <groupId>commons-io</groupId>  
+	        <artifactId>commons-io</artifactId>  
+	        <version>2.4</version>  
+	    </dependency> 
   </dependencies>
 </project>
