@@ -18,7 +18,7 @@ public class Cxt implements TaskListener{
 
 	@Override
 	public void notify(DelegateTask delegateTask) {
-		System.out.println(taskService);
+		System.out.println("---------------------" + taskService);
 		
 	}
 }
