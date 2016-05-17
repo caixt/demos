@@ -1,0 +1,8 @@
+{
+	"name": "demo Api",
+	"version": "1.0.0",
+	"description": "demo REST API文档",
+	"title": "demo Api",
+	"url": "http://ip:port/demo",
+	"sampleUrl": "http://127.0.0.1:8080/demo"	
+}
