@@ -9,6 +9,8 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cxt.Mybatis.dao.UserDao;
+import com.github.cxt.Mybatis.entity.User;
+import com.github.cxt.Mybatis.entity.UserType;
 
 
 
@@ -23,7 +25,10 @@ public class SampleTest {
 	
 	@Test
 	public void test(){
-		System.out.println(userDao.selectAll().size());
+		User user = new User();
+		user.setName("aa");
+		user.setUserType(1);
+		userDao.insert(user);
 		
 	}
 
