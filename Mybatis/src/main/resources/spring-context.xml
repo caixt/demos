@@ -34,6 +34,13 @@
 	<!-- define the SqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
+        <property name="typeHandlers">
+       		<list>
+				<bean class="com.github.cxt.Mybatis.JSONArrayHandler"></bean>
+				<bean class="com.github.cxt.Mybatis.JSONObjectHandler"></bean>
+				<bean class="com.github.cxt.Mybatis.UUIDTypeHandler"></bean>
+			</list>
+		</property>
         <property name="mapperLocations" value="classpath*:com/github/cxt/Mybatis/mapper/*.xml" />
     </bean>
 
