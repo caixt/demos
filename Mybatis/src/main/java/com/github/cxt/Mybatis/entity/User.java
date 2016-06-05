@@ -1,10 +1,14 @@
 package com.github.cxt.Mybatis.entity;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class User {
 	private Long id;
 	private String name;
 	private Integer userType;
 	private UserType type;
+	private String uuid;
+	private JSONObject info;
 	
 	public Long getId() {
 		return id;
@@ -33,5 +37,17 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", userType=" + userType + ", type=" + type + "]";
+	}
+	public String getUuid() {
+		return uuid;
+	}
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	public JSONObject getInfo() {
+		return info;
+	}
+	public void setInfo(JSONObject info) {
+		this.info = info;
 	}
 }

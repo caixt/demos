@@ -36,9 +36,10 @@
         <property name="dataSource" ref="dataSource" />
         <property name="typeHandlers">
        		<list>
-				<bean class="com.github.cxt.Mybatis.JSONArrayHandler"></bean>
+				<!-- <bean class="com.github.cxt.Mybatis.JSONArrayHandler"></bean>-->
 				<bean class="com.github.cxt.Mybatis.JSONObjectHandler"></bean>
 				<bean class="com.github.cxt.Mybatis.UUIDTypeHandler"></bean>
+				<!-- 另两个采用具体map的配置 -->
 			</list>
 		</property>
         <property name="mapperLocations" value="classpath*:com/github/cxt/Mybatis/mapper/*.xml" />

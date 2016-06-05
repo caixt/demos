@@ -4,7 +4,9 @@
   <resultMap id="BaseResultMap" type="com.github.cxt.Mybatis.entity.User" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="user_type" property="userType" jdbcType="INTEGER"/>
+    <result column="uuid" property="uuid" jdbcType="BINARY" />
+    <result column="info" property="info" jdbcType="LONGVARCHAR" typeHandler="com.github.cxt.Mybatis.JSONObjectHandler"/>
   </resultMap>
   
   <resultMap id="detailMap" type="com.github.cxt.Mybatis.entity.User" extends="BaseResultMap">
@@ -42,10 +44,14 @@
   </insert>
   
   <insert id="insert" parameterType="com.github.cxt.Mybatis.entity.User" useGeneratedKeys="true" keyProperty="id">
-    insert into user (name, user_type)
+    insert into user (name, user_type, uuid, info)
     values 
-    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER})
+    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{uuid,jdbcType=BINARY},  #{info,jdbcType=LONGVARCHAR,typeHandler=com.github.cxt.Mybatis.JSONObjectHandler})
   </insert>
+  
+  <select id="selectByUserUuid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   		select * from user where uuid = #{uuid, jdbcType=BINARY}
+  </select>
   
   <!-- 
     <sql id="Example_Where_Clause" >

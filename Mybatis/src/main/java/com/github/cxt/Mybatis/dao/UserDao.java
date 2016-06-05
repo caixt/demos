@@ -18,4 +18,6 @@ public interface UserDao {
 	public int insertBatch(List<User> users);
 	
 	public int insert(User user);
+	
+	public User selectByUserUuid(String uuid);
 }

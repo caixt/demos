@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.alibaba.fastjson.JSONObject;
+import com.github.cxt.Mybatis.UUIDTypeHandler;
 import com.github.cxt.Mybatis.dao.UserDao;
 import com.github.cxt.Mybatis.entity.User;
 
@@ -18,10 +21,15 @@ public class Main {
 		System.out.println(userDao.selectByUserId(1L));
 		System.out.println(userDao.selectAll().size());
 		Map<String, Object> map = new HashMap<>();
+		String uuid = UUIDTypeHandler.createUUID();
 		User user = new User();
 		user.setName("aaa");
 		user.setUserType(1);
+		user.setUuid(uuid);
+		user.setInfo(JSONObject.parseObject("{\"aaa\":123}"));
 		userDao.insert(user);
+		user = userDao.selectByUserUuid(uuid);
+		System.out.println(user);
 		System.out.println(user.getId());
 		List<User> users = new ArrayList<>();
 		users.add(user);
