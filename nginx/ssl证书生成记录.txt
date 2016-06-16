@@ -1,0 +1,18 @@
+生成key,csr,备注CN=example.com 对应域名,其他参数说明自己百度
+openssl req -new -newkey rsa:2048 -sha256 -nodes -out example_com.csr -keyout example_com.key -subj "/C=CN/ST=Beijing/L=Beijing/O=Example Inc./OU=Web Security/CN=example.com"
+
+
+生成crt,备注自己手动生成,正规的需要认证机构生成
+openssl x509 -req -days 365 -in example_com.csr -signkey example_com.key -out example_com.crt
+
+
+
+
+生成的证书在浏览器中使用(以firefox为例子,其他我也没试)
+1.在nginx上配置ssl服务,并启动
+2.在浏览器中输入对应的地址https://example.com:8443 (在本地host文件里加入了对应的域名配置)，出现不安全的提示。可以点击例外，那之后的几步就不用看了
+3.选项 >> 高级 >> 查看证书 >> 机构。 导入刚才生成的crt文件(并勾上信任使用此CA标识的网站，当然也可以全部勾上)
+4.刷新浏览器的页面，不在出现不安全的提示.(如果之前添加例外的，可以在  选项 >> 高级 >> 查看证书 >> 服务其找到对应的并删掉)
+5.通过firefox的插件访问，但之间没有导入证书或添加例外,http响应code为0，服务器上的nginx还会有错误日志提示(有些版本不会出)
+
+

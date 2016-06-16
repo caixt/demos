@@ -21,7 +21,7 @@
    		select * from user
   </select>
   
-  <select id="selectByMap" resultType="java.util.HashMap" parameterType="java.util.Map">
+  <select id="selectByMap" resultType="java.util.HashMap" parameterType="java.util.Map" >
    		select * from user
    		<where>
 	   		<foreach collection="_parameter.keys" item="key" separator="," >
@@ -51,6 +51,10 @@
   
   <select id="selectByUserUuid" resultMap="BaseResultMap" parameterType="java.lang.String" >
    		select * from user where uuid = #{uuid, jdbcType=BINARY}
+  </select>
+  
+  <select id="selectUUidByUserId" resultType="Byte[]" parameterType="java.lang.Long" >
+   		select uuid from user where id = #{id, jdbcType=INTEGER}
   </select>
   
   <!-- 

@@ -20,4 +20,6 @@ public interface UserDao {
 	public int insert(User user);
 	
 	public User selectByUserUuid(String uuid);
+	
+	public Object selectUUidByUserId(Long id);
 }
