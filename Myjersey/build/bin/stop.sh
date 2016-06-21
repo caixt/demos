@@ -5,12 +5,12 @@ cd $BASE_DIR
 
 module="all"
 
-BOLTDOGPIDFILE="temp/boltdog_$module.pid"
+BOLTDOGPIDFILE="temp/server_$module.pid"
 
-echo -n "Stopping boltdog server ... "
+echo -n "Stopping jersey server ... "
 if [ ! -f "$BOLTDOGPIDFILE" ]
 then
-  echo "no boltdog server to stop (could not find file $BOLTDOGPIDFILE)"
+  echo "no jersey server to stop (could not find file $BOLTDOGPIDFILE)"
 else
   kill -9 $(cat "$BOLTDOGPIDFILE")
   rm "$BOLTDOGPIDFILE"

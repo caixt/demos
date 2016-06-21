@@ -1,18 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
-		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">   
-     		<level>info</level>   
-    	</filter>  
+	<property name="LOG_HOME" value="${log.dir:-logs}/%d{yyyy-MM-dd}" />
+	<property name="ENCODER_PATTERN"
+		value="%d{yyyy-MM-dd  HH:mm:ss} [%thread] %-5level %logger{80}[%L] - %msg%n" />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>debug</level>
+		</filter>
 		<encoder charset="UTF-8">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %t %logger{80}[%L] - %msg%n
-			</pattern>
+			<pattern>${ENCODER_PATTERN}</pattern>
 		</encoder>
 	</appender>
 
-	<root level="debug">
-		<appender-ref ref="stdout" />
+	<appender name="webinfo"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/webinfo.%i.log</fileNamePattern>
+			<maxHistory>1</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>debug</level>
+		</filter>
+	</appender>
+
+	<appender name="info"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/boltdoginfo.%i.log</fileNamePattern>
+			<maxHistory>1</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>debug</level>
+		</filter>
+	</appender>
+
+	<appender name="error"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/boltdogerror.%i.log</fileNamePattern>
+			<maxHistory>1</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>error</level>
+		</filter>
+	</appender>
+
+
+	<root level="info">
+		<appender-ref ref="console" />
+		<appender-ref ref="info" />
+		<appender-ref ref="error" />
 	</root>
 
+	<logger name="org.eclipse.jetty.server.Server" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="console" />
+		<appender-ref ref="webinfo" />
+	</logger>
+	
+	 
+	<logger name="org.eclipse.jetty" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+
+	
 </configuration>   

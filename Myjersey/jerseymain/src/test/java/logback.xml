@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">   
+     		<level>debug</level>   
+    	</filter>  
+		<encoder charset="UTF-8">
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %t %logger{80}[%L] - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<root level="debug">
+		<appender-ref ref="console" />
+	</root>
+	 
+	<logger name="org.eclipse.jetty.server.Server" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="console" />
+	</logger>
+	
+	 
+	<logger name="org.eclipse.jetty" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+	
+
+</configuration>   

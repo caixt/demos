@@ -13,17 +13,8 @@
 		<fileSet>
 			<directory>bin</directory>
 			<includes>
-				<include>res-start.sh</include>
-				<include>res-stop.sh</include>
-				<include>mgr-start.sh</include>
-				<include>mgr-stop.sh</include>
-				<include>job-start.sh</include>
-				<include>job-stop.sh</include>
-				<include>script-update.sh</include>
-				<!-- 以下两个后续会删掉 
 				<include>start.sh</include>
 				<include>stop.sh</include>
-				-->
 			</includes>
 			<lineEnding>unix</lineEnding>
 			<fileMode>0755</fileMode>

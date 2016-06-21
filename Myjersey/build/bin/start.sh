@@ -21,15 +21,15 @@ CLASS_PATH="$BASE_DIR/module/*:$BASE_DIR/lib/*"
 #set logback
 LOGBACK_CONFIGFILE="$BASE_DIR/conf/logback.xml"
 #set mainclass
-MAIN_CLASS=uyun.boltdog.api.rest.Start
+MAIN_CLASS="com.github.cxt.Myjersey.main.JettyServer"
 #start jvm
-JAVA_OPTS="-Xms128m -Xmx1024m"
+JAVA_OPTS="-Xms128m -Xmx512m"
 
 
 module="all"
 logDir="log"
 
-BOLTDOGPIDFILE="temp/boltdog_$module.pid"
+BOLTDOGPIDFILE="temp/server_$module.pid"
 if [ -f "$BOLTDOGPIDFILE" ]; then
   if kill -0 `cat "$BOLTDOGPIDFILE"` > /dev/null 2>&1; then
 	 echo already running as process `cat "$BOLTDOGPIDFILE"`. 
@@ -39,7 +39,7 @@ fi
 
 
 #start jvm
-java $JAVA_OPTS -Dlog.dir=$logDir -Duyun-boltdog-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE -Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS $module >/dev/null 2>&1 &
+java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE -Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1 &
 
 if [ $? -eq 0 ]
 	then
