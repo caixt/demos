@@ -40,9 +40,11 @@
 package com.github.cxt.Myjersey.jerseycore;
 
 import javax.inject.Singleton;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -50,6 +52,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -65,8 +68,8 @@ import com.github.cxt.Myjersey.jerseycore.server.Server;
  *
  * @author Marko Asplund (marko.asplund at gmail.com)
  */
-@Produces(Constants.MEDIA_TYPE)
 @Consumes(Constants.MEDIA_TYPE)
+@Produces(MediaType.TEXT_PLAIN)
 @Path("jersey")
 @Singleton//with singleton scope 不加则是prototype
 public class JerseyResource {
@@ -78,14 +81,12 @@ public class JerseyResource {
 
     @Path("demo")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
     public String getCount() {
         return server.returnContent();
     }
     
     @Path("visitCount")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
     public String getVisitCount() {
         return (count++) + "" +  this;
     }
@@ -99,8 +100,8 @@ public class JerseyResource {
     
     @Path("user")
     @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    public String user(@Valid User user) {
+    public String postUser(@Valid User user, @Context HttpServletRequest request) {
+    	System.out.println(JSONObject.toJSONString(request.getParameterMap()));
     	System.out.println(user.toString());
     	if(user.getName() == null){
     		throw new RuntimeException();
@@ -109,21 +110,8 @@ public class JerseyResource {
     }
     
     @Path("user/{id}")
-    @POST
-    @Produces(MediaType.TEXT_PLAIN)
-    public String postUser(@Valid User user, @PathParam("id") Integer id) {
-    	user.setId(id);
-    	System.out.println(user.toString());
-    	if(user.getName() == null){
-    		throw new RuntimeException();
-    	}
-        return "success";
-    }
-    
-    @Path("user/{id}")
-    @PUT
-    @Produces(MediaType.TEXT_PLAIN)
-    public String putUser(@PathParam("id") Integer id) {
+    @GET
+    public String getUser(@PathParam("id") Integer id) {
     	User user = new User();
     	user.setAge(1);
     	user.setName("demo");
@@ -133,10 +121,27 @@ public class JerseyResource {
     
     
     @Path("user/{id}")
+    @PUT
+    public String putUser(@Valid User user, @PathParam("id") Integer id) {
+    	user.setAge(1);
+    	user.setName("demo");
+    	user.setId(id);
+        return JSONObject.toJSONString(user);
+    }
+    
+    
+    @Path("user/{id}")
     @DELETE
-    @Produces(MediaType.TEXT_PLAIN)
     public String deleteUser(@PathParam("id") Integer id) {
     	return "success";
     }
 
+    @Path("olduser")
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @POST
+    public String olduser(@Context HttpServletRequest request, @FormParam("a") String a, @FormParam("b") String b) {
+    	System.out.println(a + "!" + b);
+    	System.out.println(JSONObject.toJSONString(request.getParameterMap()));
+        return "success";
+    }
 }

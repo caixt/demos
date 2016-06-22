@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hello React</title>
+    <script src="/jquery-2.2.0.min.js"></script>
+  </head>
+  <body>
+  
+    <script type="text/javascript">
+	$(function(){
+	
+		var params={a:"1", b: "2"}; 
+		$.ajax({
+			url : 'jersey/olduser',
+			type : 'post', 
+			data: params,
+			dataType : 'text', 
+			success : function(data) {
+			}
+		});	
+		
+		
+		/*var params={name:"aaaa", age: 1}; 
+		var data = {}
+		params.serializeArray().map(function(x) {
+			data[x.name] = x.value;
+		});
+		alert(data);*/
+		
+		$.ajax({
+			url : 'jersey/user',
+			type : 'post', 
+			contentType: "application/json; charset=utf-8",   
+			data: '{"name":"ccc","age":1}',
+			dataType : 'text', 
+			success : function(data) {
+			}
+		});	
+	})
+    </script>
+  </body>
+</html>
