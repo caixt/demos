@@ -12,7 +12,7 @@ public class JettyServer {
 		webContext.setContextPath("/");
 		webContext.setDescriptor("conf" + File.separator + "web.xml");
 		webContext.setParentLoaderPriority(true);
-		webContext.setResourceBase("conf");
+		webContext.setResourceBase("../html");
 		Server server = new Server(8088);
 		server.setHandler(webContext);
 		try {

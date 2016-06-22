@@ -46,6 +46,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -139,8 +140,8 @@ public class JerseyResource {
     @Path("olduser")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @POST
-    public String olduser(@Context HttpServletRequest request, @FormParam("a") String a, @FormParam("b") String b) {
-    	System.out.println(a + "!" + b);
+    public String olduser(@HeaderParam("Content-Type") String type, @Context HttpServletRequest request, @FormParam("a") String a, @FormParam("b") String b) {
+    	System.out.println(type + "!" + a + "!" + b);
     	System.out.println(JSONObject.toJSONString(request.getParameterMap()));
         return "success";
     }
