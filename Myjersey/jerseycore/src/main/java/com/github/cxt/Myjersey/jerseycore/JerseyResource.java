@@ -42,15 +42,20 @@ package com.github.cxt.Myjersey.jerseycore;
 import javax.inject.Singleton;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.fastjson.JSONObject;
 import com.github.cxt.Myjersey.jerseycore.server.Server;
 
 
@@ -95,12 +100,43 @@ public class JerseyResource {
     @Path("user")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-    public String searchKey(@Valid User user) {
+    public String user(@Valid User user) {
     	System.out.println(user.toString());
     	if(user.getName() == null){
     		throw new RuntimeException();
     	}
         return "success";
+    }
+    
+    @Path("user/{id}")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String postUser(@Valid User user, @PathParam("id") Integer id) {
+    	user.setId(id);
+    	System.out.println(user.toString());
+    	if(user.getName() == null){
+    		throw new RuntimeException();
+    	}
+        return "success";
+    }
+    
+    @Path("user/{id}")
+    @PUT
+    @Produces(MediaType.TEXT_PLAIN)
+    public String putUser(@PathParam("id") Integer id) {
+    	User user = new User();
+    	user.setAge(1);
+    	user.setName("demo");
+    	user.setId(id);
+        return JSONObject.toJSONString(user);
+    }
+    
+    
+    @Path("user/{id}")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public String deleteUser(@PathParam("id") Integer id) {
+    	return "success";
     }
 
 }
