@@ -5,7 +5,8 @@ openssl req -new -newkey rsa:2048 -sha256 -nodes -out example_com.csr -keyout ex
 生成crt,备注自己手动生成,正规的需要认证机构生成
 openssl x509 -req -days 365 -in example_com.csr -signkey example_com.key -out example_com.crt
 
-
+生成keystore,备注java的ssh认证
+keytool -importcert -alias ca -file example_com.crt -storepass 12345678 -keystore example_com.keystore
 
 
 生成的证书在浏览器中使用(以firefox为例子,其他我也没试)
