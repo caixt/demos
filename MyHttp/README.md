@@ -15,4 +15,4 @@
 > 提供ssl不认证,crt认证,keyStore认证
 
 ***
-httpclient的close说明(参考)[http://blog.csdn.net/dadoneo/article/details/6265994]
+httpclient的close说明[参考](http://blog.csdn.net/dadoneo/article/details/6265994)

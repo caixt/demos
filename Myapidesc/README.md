@@ -1,3 +1,3 @@
-# http://apidocjs.com/
-npm install apidoc -g
-apidoc -i ./src -o doc
+# [官网](http://apidocjs.com/)
+	npm install apidoc -g
+	apidoc -i ./src -o doc
