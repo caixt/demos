@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Hello React</title>
+    <title>Hello world</title>
     <script src="/jquery-2.2.0.min.js"></script>
   </head>
   <body>
@@ -11,7 +11,7 @@
 	
 		var params={a:"1", b: "2"}; 
 		$.ajax({
-			url : 'jersey/olduser',
+			url : 'api/jersey/olduser',
 			type : 'post', 
 			data: params,
 			dataType : 'text', 
@@ -24,7 +24,7 @@
 		params = JSON.stringify(params);
 		
 		$.ajax({
-			url : 'jersey/user',
+			url : 'api/jersey/user',
 			type : 'post', 
 			contentType: "application/json; charset=utf-8",   
 			data: params,

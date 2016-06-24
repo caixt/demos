@@ -29,12 +29,12 @@ public class HttpTest {
 	private HttpHost host = new HttpHost("127.0.0.1", 8088);
 	
 	@Test
-	public void testGet() throws ClientProtocolException, IOException{
+	public void testGet() throws ClientProtocolException, IOException, CloneNotSupportedException{
 		HttpClient httpclient = HttpClients.createDefault();
 		String result = null;
 		
 		HttpGet getRequest = new HttpGet("/api/jersey/user/1");
-		
+		getRequest.setHeader("Connection", "close");  
 		getRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 
 		HttpResponse httpResponse = httpclient.execute(host, getRequest);
@@ -55,6 +55,7 @@ public class HttpTest {
 		HttpPost postRequest = new HttpPost("/api/jersey/user");
 		postRequest.setEntity(new StringEntity("{\"name\":\"aaa\",\"age\":1}", "UTF-8"));
 		
+		postRequest.setHeader("Connection", "close");  
 		postRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 
 		HttpResponse httpResponse = httpclient.execute(host, postRequest);
@@ -74,7 +75,7 @@ public class HttpTest {
 		
 		HttpPut putRequest = new HttpPut("/api/jersey/user/3");
 		putRequest.setEntity(new StringEntity("{\"name\":\"aaa\",\"age\":1}", "UTF-8"));
-		
+		putRequest.setHeader("Connection", "close");  
 		putRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 
 		HttpResponse httpResponse = httpclient.execute(host, putRequest);
@@ -93,7 +94,7 @@ public class HttpTest {
 		String result = null;
 		
 		HttpDelete deleteRequest = new HttpDelete("/api/jersey/user/3");
-		
+		deleteRequest.setHeader("Connection", "close");  
 		deleteRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 		HttpResponse httpResponse = httpclient.execute(host, deleteRequest);
 		
@@ -112,7 +113,7 @@ public class HttpTest {
 		String result = null;
 		
 		HttpPost postRequest = new HttpPost("/api/jersey/olduser");
-		
+		postRequest.setHeader("Connection", "close");  
 		
 		List<BasicNameValuePair> parameters =  new ArrayList<BasicNameValuePair>();
 		
