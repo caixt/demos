@@ -35,7 +35,7 @@
 	<appender name="info"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_HOME}/boltdoginfo.%i.log</fileNamePattern>
+			<fileNamePattern>${LOG_HOME}/info.%i.log</fileNamePattern>
 			<maxHistory>1</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -53,7 +53,7 @@
 	<appender name="error"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>${LOG_HOME}/boltdogerror.%i.log</fileNamePattern>
+			<fileNamePattern>${LOG_HOME}/error.%i.log</fileNamePattern>
 			<maxHistory>1</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

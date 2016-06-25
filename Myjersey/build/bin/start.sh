@@ -15,7 +15,7 @@ fi
 #	rm -rf jre-8u*.gz
 #fi
 
-export LANG=zh_CN.UTF-8
+export LANG=en_US.UTF-8
 #set classpath
 CLASS_PATH="$BASE_DIR/module/*:$BASE_DIR/lib/*"
 #set logback
@@ -23,11 +23,20 @@ LOGBACK_CONFIGFILE="$BASE_DIR/conf/logback.xml"
 #set mainclass
 MAIN_CLASS="com.github.cxt.Myjersey.main.JettyServer"
 #start jvm
-JAVA_OPTS="-Xms128m -Xmx512m"
+if [ -z "$JAVA_OPTS" ]; then
+	JAVA_OPTS="-Xms128m -Xmx512m"
+fi
 
 
 module="all"
-logDir="log"
+logDir="logs"
+
+if [ "$foreground" == "true" ];
+then 
+	java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
+	-Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1
+else
+
 
 BOLTDOGPIDFILE="temp/server_$module.pid"
 if [ -f "$BOLTDOGPIDFILE" ]; then
@@ -39,7 +48,8 @@ fi
 
 
 #start jvm
-java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE -Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1 &
+java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
+-Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1 &
 
 if [ $? -eq 0 ]
 	then
@@ -54,4 +64,6 @@ if [ $? -eq 0 ]
 else
   echo SERVER DID NOT START
   exit 1
+fi
+
 fi

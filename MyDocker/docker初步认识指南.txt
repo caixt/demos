@@ -1,0 +1,70 @@
+官网   https://hub.docker.com
+
+
+1、创建一个YUM源
+[dockerrepo]
+name=DockerRepository
+baseurl=https://yum.dockerproject.org/repo/main/centos/7
+enabled=1
+gpgcheck=1
+gpgkey=https://yum.dockerproject.org/gpg
+
+2、执行YUM命令安装
+yum install docker-engine
+
+3、通过如下命令启动docker服务
+systemctl start docker
+
+附：常用命令 
+    docker images
+    docker search xxx
+    docker pull xxx
+    docker ps 
+    docker run/start
+    docker rm
+    docker stop 
+
+docker run --name test-ningx -d -p 8080:80 nginx
+
+==========================================================================
+DockerFile -->build
+                  |  
+             Dcoker Image --> Dcoker Contianer
+                  |
+Dokcer Container--
+
+方式一：Docker File
+   1）编写DcokerFile文件，DockerFile文件一般和源码放在一起
+   2）通过build命令构建Image
+        docker build -t <image-name> <pat>
+       例如
+         docker build -t uyun/automation-nginx ./
+   3)导出Docker Image
+         docker save -o <output-path> <image-name>
+       例如
+         docker save -o autmation_uyun.tar.gz uyun/automation-nginx
+
+  
+     注：也可以导出一个镜像的容器，通过命令docker export
+   4)
+
+附：Dokcer File编写常用
+        FROM
+        MAINTAINER
+        ADD
+        RUN
+        WORKDIR
+        CMD
+        EXPOSE
+        ENV
+        VOLUME
+    
+方式二： 从一个容器生成镜像
+   1）docker run/start 一个镜像为一个容器
+   2）通过docker exec命令进入到容器，执行一些相关操作(安装服务，修改配置文件)
+   3）通过命令docker export 将容器导出
+        docker export <container-id> > <output-path>
+      例如
+        docker export 6c5563 > ./ubuntu_tomcat.tar.gz
+		
+		
