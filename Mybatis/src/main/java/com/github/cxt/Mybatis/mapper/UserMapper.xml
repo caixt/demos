@@ -44,9 +44,9 @@
   </insert>
   
   <insert id="insert" parameterType="com.github.cxt.Mybatis.entity.User" useGeneratedKeys="true" keyProperty="id">
-    insert into user (name, user_type, uuid, info)
+    insert into user (name, user_type)
     values 
-    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{uuid,jdbcType=BINARY},  #{info,jdbcType=LONGVARCHAR,typeHandler=com.github.cxt.Mybatis.JSONObjectHandler})
+    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER})
   </insert>
   
   <select id="selectByUserUuid" resultMap="BaseResultMap" parameterType="java.lang.String" >

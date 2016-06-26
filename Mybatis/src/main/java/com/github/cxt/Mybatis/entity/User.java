@@ -34,10 +34,6 @@ public class User {
 	public void setType(UserType type) {
 		this.type = type;
 	}
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", userType=" + userType + ", type=" + type + "]";
-	}
 	public String getUuid() {
 		return uuid;
 	}
@@ -49,5 +45,10 @@ public class User {
 	}
 	public void setInfo(JSONObject info) {
 		this.info = info;
+	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + ", userType=" + userType + ", type=" + type + ", uuid=" + uuid
+				+ ", info=" + info + "]";
 	}
 }
