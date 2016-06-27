@@ -1,18 +1,26 @@
 package com.github.cxt.MyMock;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.powermock.modules.junit4.PowerMockRunnerDelegate;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
+
+@RunWith(PowerMockRunner.class)
+@PowerMockRunnerDelegate(SpringJUnit4ClassRunner.class )
 @ContextConfiguration(classes = MockTest.Context.class)
+@PrepareForTest({ DemoStatic.class})
 public class MockTest {
 	
     @Autowired
@@ -23,8 +31,11 @@ public class MockTest {
 	
 
 	@Test
-	public void testA(){
-		System.out.println(controller.test1());
+	public void testA() {
+		PowerMockito.mockStatic(DemoStatic.class);
+		PowerMockito.when(DemoStatic.test()).thenReturn(123);
+		Assert.assertEquals(123, DemoStatic.test());
+		Assert.assertEquals("aaaa", controller.test1());
 	}
 	
 	
