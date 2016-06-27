@@ -11,5 +11,4 @@ public class DemoControllerImpl implements DemoController{
 		return demoService.doSth();
 		
 	}
-
 }

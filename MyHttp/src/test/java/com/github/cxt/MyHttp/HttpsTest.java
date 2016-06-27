@@ -53,7 +53,7 @@ public class HttpsTest {
 	
 	@Test
 	public void testKeystore() throws ClientProtocolException, IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException, CertificateException{
-		SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(new File("../nginx/httpsdemo/example_com.keystore"), "12345678".toCharArray()).build();
+		SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(new File("../MyDocker/images/nginx/ssl/example_com.keystore"), "12345678".toCharArray()).build();
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
         HttpClient httpclient = HttpClientBuilder.create().setSSLSocketFactory(sslsf).build();
         //example.com 在本地host里添加映射
@@ -63,7 +63,7 @@ public class HttpsTest {
 	@Test
 	public void testCrt() throws ClientProtocolException, IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException, CertificateException{
 		CertificateFactory cf = CertificateFactory.getInstance("X.509");
-		InputStream fis = new FileInputStream(new File("D:\\nginx-1.6.3\\conf\\sslkey\\example_com.crt"));
+		InputStream fis = new FileInputStream(new File("../MyDocker/images/nginx/ssl/example_com.crt"));
 		Certificate cert = cf.generateCertificate(fis);
 		
 		KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());

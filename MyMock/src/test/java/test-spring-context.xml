@@ -8,5 +8,9 @@
 
 	
 	<context:annotation-config />
+	
+	<bean class="com.github.cxt.MyMock.DemoControllerImpl">
+	</bean>
+
 
 </beans>
