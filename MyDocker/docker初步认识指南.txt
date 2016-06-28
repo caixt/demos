@@ -38,11 +38,11 @@ Dokcer Container--
    2）通过build命令构建Image
         docker build -t <image-name> <pat>
        例如
-         docker build -t uyun/automation-nginx ./
+         docker build -t caixt-nginx ./
    3)导出Docker Image
          docker save -o <output-path> <image-name>
        例如
-         docker save -o autmation_uyun.tar.gz uyun/automation-nginx
+         docker save -o autmation_uyun.tar.gz caixt-nginx
 
   
      注：也可以导出一个镜像的容器，通过命令docker export
