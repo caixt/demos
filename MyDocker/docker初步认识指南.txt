@@ -42,7 +42,7 @@ Dokcer Container--
    3)导出Docker Image
          docker save -o <output-path> <image-name>
        例如
-         docker save -o autmation_uyun.tar.gz caixt-nginx
+         docker save -o caixt-nginx.tar.gz caixt-nginx
 
   
      注：也可以导出一个镜像的容器，通过命令docker export
