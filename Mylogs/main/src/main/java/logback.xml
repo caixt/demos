@@ -37,7 +37,7 @@
 	</root>
 	
 	
-	<logger name="com.github.cxt.sl4j" additivity="false">
+	<logger name="com.github.cxt" additivity="false">
 		<level value="debug" />
 		<appender-ref ref="console" />
 		<appender-ref ref="info" />
