@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+		xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://blog.csdn.net/cutesource/schema/people"
+		elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[
+	Defines the core configuration elements for people modules....
+		]]></xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:element name="people">
+		<xsd:annotation>
+			<xsd:documentation>
+				people catxi test...
+			</xsd:documentation>
+		</xsd:annotation>
+
+        <xsd:complexType>
+        	 <xsd:attribute name="id" type="xsd:string" />  
+             <xsd:attribute name="name" type="xsd:string" />  
+             <xsd:attribute name="age" type="xsd:int" />  
+        </xsd:complexType>
+
+    </xsd:element>  
+
+</xsd:schema>

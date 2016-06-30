@@ -9,13 +9,10 @@
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:score="http://www.cloudslang.io/schema/score"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-                        http://www.springframework.org/schema/beans/spring-beans.xsd
-                        http://www.cloudslang.io/schema/score
-                        http://www.cloudslang.io/schema/score.xsd">  
-
-
-<score:worker uuid="" ></score:worker>
+    xmlns:cutesource="http://blog.csdn.net/cutesource/schema/people"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://blog.csdn.net/cutesource/schema/people http://blog.csdn.net/cutesource/schema/people.xsd
+                        ">  
+<cutesource:people  name="aaa" id="123"/>
 
 </beans>

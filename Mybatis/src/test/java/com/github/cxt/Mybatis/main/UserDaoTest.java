@@ -28,6 +28,7 @@ public class UserDaoTest {
 	
 	@Before
 	public void before(){
+		SLF4JBridgeHandler.removeHandlersForRootLogger();  
 		SLF4JBridgeHandler.install();
 	}
 	
