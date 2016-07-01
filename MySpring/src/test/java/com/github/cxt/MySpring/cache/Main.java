@@ -8,7 +8,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/spring-context-cache.xml")
+@ContextConfiguration("classpath:/com/github/cxt/MySpring/cache/spring-context-cache.xml")
 public class Main {
 
 	@Autowired

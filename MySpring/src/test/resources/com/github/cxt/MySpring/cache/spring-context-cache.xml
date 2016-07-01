@@ -11,7 +11,6 @@
 	<context:component-scan base-package="com.github.cxt" />
 	<cache:annotation-driven />
 	
-	
 	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
         <property name="caches">
             <set>
@@ -24,10 +23,10 @@
             </set>
         </property>
     </bean>
-
+	
 	<!-- 
 	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation" value="ehcache.xml"/>
+        <property name="configLocation" value="com/github/cxt/MySpring/cache/ehcache.xml"/>
     </bean>
 
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
