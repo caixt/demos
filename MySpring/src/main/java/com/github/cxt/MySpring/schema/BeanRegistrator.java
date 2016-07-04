@@ -45,7 +45,6 @@ public class BeanRegistrator{
 		return this;
 	}
 
-	@SuppressWarnings("unused")
 	public BeanRegistrator addConstructorArgReference(String beanName) {
 		builder.addConstructorArgReference(beanName);
 		return this;
@@ -56,7 +55,6 @@ public class BeanRegistrator{
 		return this;
 	}
 
-	@SuppressWarnings("unused")
 	public BeanRegistrator addPropertyValue(String name, String beanName) {
 		builder.addPropertyReference(name, beanName);
 		return this;

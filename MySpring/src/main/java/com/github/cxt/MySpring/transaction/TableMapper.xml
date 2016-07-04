@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.cxt.MySpring.transaction.TableDao" >
+  <resultMap id="BaseResultMap" type="com.github.cxt.MySpring.transaction.Table" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="column1" property="column1" jdbcType="VARCHAR" />
+    <result column="column2" property="column2" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="save1" parameterType="com.github.cxt.MySpring.transaction.Table" useGeneratedKeys="true" keyProperty="id">
+    insert into user (column1, column2)
+    values 
+    (#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=INTEGER})
+  </insert>
+  
+  <insert id="save2" parameterType="com.github.cxt.MySpring.transaction.Table" useGeneratedKeys="true" keyProperty="id">
+    insert into user (column1, column2)
+    values 
+    (#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=INTEGER})
+  </insert>
+  
+</mapper>

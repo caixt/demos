@@ -31,12 +31,14 @@ public class Main {
     }
 
 	public static void main(String[] args) {
-		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("com/github/cxt/MySpring/schema/systemTestContext.xml");
+		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("com/github/cxt/MySpring/schema/systemTestContext.xml");
 		
 		System.out.println(applicationContext.getBeansOfType(Integer.class));
 		System.out.println(applicationContext.getBeansOfType(People.class));
 		System.out.println(applicationContext.getBeansOfType(Work.class));
 		System.out.println(applicationContext.getBean(WorkManager.class));
+		
+		applicationContext.close();
 	}
 
 }
