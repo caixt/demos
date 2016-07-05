@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+
+	<changeSet id="Create sample_table1" author="admin" runOnChange="true">
+		<createTable tableName="sample_table1">
+			<column name="ID" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="column1" type="varchar(255)"/>
+            <column name="column2" type="varchar(255)"/>
+        </createTable>
+	</changeSet>
+
+    <changeSet id="alter sql sample_table1" author="admin" dbms="mysql">
+        <sql>ALTER TABLE sample_table1 MODIFY id BIGINT NOT NULL AUTO_INCREMENT;</sql>
+    </changeSet>
+    
+    <changeSet id="Create sample_table2" author="admin" runOnChange="true">
+		<createTable tableName="sample_table2">
+			<column name="ID" type="BIGINT">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="column1" type="varchar(255)"/>
+            <column name="column2" type="varchar(255)"/>
+        </createTable>
+	</changeSet>
+
+    <changeSet id="alter sql sample_table2" author="admin" dbms="mysql">
+        <sql>ALTER TABLE sample_table2 MODIFY id BIGINT NOT NULL AUTO_INCREMENT;</sql>
+    </changeSet>
+
+</databaseChangeLog>

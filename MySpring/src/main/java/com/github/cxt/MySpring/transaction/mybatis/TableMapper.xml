@@ -10,13 +10,13 @@
   <insert id="save1" parameterType="com.github.cxt.MySpring.transaction.mybatis.Table" useGeneratedKeys="true" keyProperty="id">
     insert into sample_table1 (column1, column2)
     values 
-    (#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=INTEGER})
+    (#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR})
   </insert>
   
   <insert id="save2" parameterType="com.github.cxt.MySpring.transaction.mybatis.Table" useGeneratedKeys="true" keyProperty="id">
     insert into sample_table2 (column1, column2)
     values 
-    (#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=INTEGER})
+    (#{column1,jdbcType=VARCHAR}, #{column2,jdbcType=VARCHAR})
   </insert>
   
 </mapper>

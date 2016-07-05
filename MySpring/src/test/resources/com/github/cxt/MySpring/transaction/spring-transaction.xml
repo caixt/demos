@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -22,8 +23,12 @@
 		<!-- The SQL query that will be used to validate connections from this pool before returning them to the caller -->
 		<property name="validationQuery" value="select 1" />
 	</bean>
+	
+    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase"
+         p:dataSource-ref="dataSource"
+         p:changeLog="com/github/cxt/MySpring/transaction/score.changes.xml"/>
     
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" depends-on="liquibase">
         <property name="dataSource" ref="dataSource" />
     </bean>
 
