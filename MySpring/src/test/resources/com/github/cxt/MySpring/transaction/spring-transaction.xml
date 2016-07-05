@@ -12,7 +12,7 @@
 	<context:annotation-config />
 	<context:component-scan base-package="com.github.cxt.MySpring.transaction" />
 	
-	<context:property-placeholder location="jdbc.properties" />
+	<context:property-placeholder location="com/github/cxt/MySpring/transaction/jdbc.properties" />
 	
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="${jdbc.driver}" />
@@ -32,11 +32,11 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <!-- 如果用classpath*:com/github/cxt/MySpring/transaction/*.xml 会报 文档根元素 "beans" 必须匹配 DOCTYPE 根 "null" (莫名其妙...) -->
-        <property name="mapperLocations" value="classpath*:com/github/cxt/MySpring/transaction/*Mapper.xml" />
+        <property name="mapperLocations" value="classpath*:com/github/cxt/MySpring/transaction/mybatis/*Mapper.xml" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.github.cxt.MySpring.transaction" />
+        <property name="basePackage" value="com.github.cxt.MySpring.transaction.mybatis" />
     </bean>
 
 </beans>

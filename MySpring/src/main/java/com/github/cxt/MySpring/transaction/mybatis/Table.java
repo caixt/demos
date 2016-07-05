@@ -1,4 +1,4 @@
-package com.github.cxt.MySpring.transaction;
+package com.github.cxt.MySpring.transaction.mybatis;
 
 public class Table {
 
