@@ -3,7 +3,7 @@
 	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
-	<id>all</id>
+	<id>bin</id>
 	<includeBaseDirectory>true</includeBaseDirectory>
 	<formats>
 		<format>tar.gz</format>
@@ -20,14 +20,6 @@
 			<fileMode>0755</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>lib</directory>
-			<useDefaultExcludes>true</useDefaultExcludes>
-		</fileSet>
-		<fileSet>
-			<directory>module</directory>
-			<useDefaultExcludes>true</useDefaultExcludes>
-		</fileSet>
-		<fileSet>
 			<directory>conf</directory>
 			<includes>
 				<include>system.properties</include>
@@ -37,4 +29,19 @@
 			</includes>
 		</fileSet>
 	</fileSets>
+	
+	<dependencySets>  
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>  
+                <exclude>${groupId}</exclude>  
+            </excludes>
+		</dependencySet>
+		<dependencySet>
+            <outputDirectory>module</outputDirectory>  
+            <includes>  
+                <include>${groupId}</include>  
+            </includes>
+        </dependencySet>
+	</dependencySets>
 </assembly>
