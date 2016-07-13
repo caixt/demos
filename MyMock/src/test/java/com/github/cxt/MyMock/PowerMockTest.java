@@ -16,12 +16,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
-
+/**
+ * 不兼容jacoco
+ * @author caixt@broada.com
+ * @Description:
+ * @date 2016年7月13日
+ */
 @RunWith(PowerMockRunner.class)
 @PowerMockRunnerDelegate(SpringJUnit4ClassRunner.class )
-@ContextConfiguration(classes = MockTest.Context.class)
+@ContextConfiguration(classes = PowerMockTest.Context.class)
 @PrepareForTest({ DemoStatic.class})
-public class MockTest {
+public class PowerMockTest {
 	
     @Autowired
 	private DemoService demoService;
