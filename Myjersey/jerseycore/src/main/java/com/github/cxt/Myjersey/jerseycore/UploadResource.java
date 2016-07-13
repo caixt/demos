@@ -49,6 +49,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import org.apache.commons.io.FileUtils;
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 import org.glassfish.jersey.media.multipart.FormDataParam;  
 
@@ -63,9 +64,9 @@ public class UploadResource {
 	  public String uploadFile(
 	          @FormDataParam("file") InputStream inputStream,
 	          @FormDataParam("file") FormDataContentDisposition disposition) throws IOException {
-		    //文件名乱码，可以使用commos-fileupload
+		  	String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), "UTF-8");
 			String name = Calendar.getInstance().getTimeInMillis()  
-			        + disposition.getFileName();  
+			        + fileName;  
 		    File file = new File("data" + File.separator + name);  
 		    try {  
 		        FileUtils.copyInputStreamToFile(inputStream, file);  
