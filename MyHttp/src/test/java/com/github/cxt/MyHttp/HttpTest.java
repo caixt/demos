@@ -1,12 +1,19 @@
 package com.github.cxt.MyHttp;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.UUID;
+import org.apache.commons.io.FileUtils;
+import org.apache.http.Header;
+import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -15,6 +22,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -134,5 +144,69 @@ public class HttpTest {
 			logger.info(result);
 		}
 	}
+	
+	
+	@Test
+	public void testDownload() throws ClientProtocolException, IOException{
+		//String url = "http://mirrors.aliyun.com/centos/7/os/x86_64/Packages/389-ds-base-1.3.4.0-19.el7.x86_64.rpm";
+		String url = "http://127.0.0.1:8088/api/file/download";
+		HttpClient client = HttpClients.createDefault();
+        HttpGet httpget = new HttpGet(url);  
+        httpget.setHeader("Connection", "close");
+        HttpResponse response = client.execute(httpget);  
+
+        HttpEntity entity = response.getEntity();  
+        InputStream is = entity.getContent();  
+        
+        String fileName = getFileName(response);
+        if(fileName == null){
+        	fileName = url.substring(url.lastIndexOf('/') + 1);
+        }
+        File file = new File("temp" + File.separator + UUID.randomUUID() + File.separator + fileName);  
+        FileUtils.copyInputStreamToFile(is, file);
+	}
+	
+	
+	@Test
+	public void testUpload() throws ClientProtocolException, IOException{		
+		HttpClient httpclient = HttpClients.createDefault();
+		String result = null;
+		
+		HttpPost postRequest = new HttpPost("/api/file/upload");
+		postRequest.setHeader("Connection", "close");  
+		
+		MultipartEntity part = //new MultipartEntity();
+		new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
+		FileBody file = new FileBody(new File("README.md"));
+		part.addPart("file", file);
+		postRequest.setEntity(part);
+		HttpResponse httpResponse = httpclient.execute(host, postRequest);
+		
+		HttpEntity entity = httpResponse.getEntity();
+		logger.info(httpResponse.getStatusLine().getStatusCode() + "");
+		if (entity != null) {
+			result = EntityUtils.toString(entity);
+			logger.info(result);
+		}
+	}
+	
+	
+	private static String getFileName(HttpResponse response) {  
+        Header contentHeader = response.getFirstHeader("Content-Disposition");  
+        String filename = null;  
+        if (contentHeader != null) {  
+            HeaderElement[] values = contentHeader.getElements();  
+            if (values.length == 1) {  
+                NameValuePair param = values[0].getParameterByName("filename");  
+                if (param != null) {  
+                    //filename = new String(param.getValue().toString().getBytes(), "utf-8");  
+                    //filename=URLDecoder.decode(param.getValue(),"utf-8");  
+                    filename = param.getValue();  
+   
+                }  
+            }  
+        } 
+        return filename;  
+    }
 
 }

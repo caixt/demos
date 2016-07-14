@@ -43,36 +43,52 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+
+import javax.activation.MimetypesFileTypeMap;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 import org.glassfish.jersey.media.multipart.FormDataParam;  
 
-
-@Path("upload")
-public class UploadResource {
+@Path("/file")
+public class FileResource {
     
+	@Path("upload")
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String uploadFile(@FormDataParam("file") InputStream inputStream,
+			@FormDataParam("file") FormDataContentDisposition disposition) throws IOException {
+		String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), "UTF-8");
+		String name = Calendar.getInstance().getTimeInMillis() + fileName;
+		File file = new File("data" + File.separator + name);
+		try {
+			FileUtils.copyInputStreamToFile(inputStream, file);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return "{\"success\": false}";
+		}
+		return "{\"success\": true}";
 
-	  @POST
-	  @Consumes(MediaType.MULTIPART_FORM_DATA)
-	  @Produces(MediaType.APPLICATION_JSON)
-	  public String uploadFile(
-	          @FormDataParam("file") InputStream inputStream,
-	          @FormDataParam("file") FormDataContentDisposition disposition) throws IOException {
-		  	String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), "UTF-8");
-			String name = Calendar.getInstance().getTimeInMillis()  
-			        + fileName;  
-		    File file = new File("data" + File.separator + name);  
-		    try {  
-		        FileUtils.copyInputStreamToFile(inputStream, file);  
-		    } catch (IOException ex) {  
-		    	 return "{\"success\": false}";  
-		    }  
-		    return "{\"success\": true}";  
-
+	}
+	
+	@Produces(MediaType.TEXT_PLAIN)
+	@Path("download")
+	@GET
+	public Response downloadFile() throws IOException {
+		File file = new File("../html/index.html");
+		String mt = new MimetypesFileTypeMap().getContentType(file);
+        return Response
+                .ok(file, mt)
+                .header("Content-disposition","attachment;filename=" + file.getName()) 
+                .header("ragma", "No-cache").header("Cache-Control", "no-cache").build();
+		
 	}
 }
