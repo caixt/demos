@@ -45,11 +45,13 @@ import java.io.InputStream;
 import java.util.Calendar;
 
 import javax.activation.MimetypesFileTypeMap;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -65,10 +67,13 @@ public class FileResource {
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String uploadFile(@FormDataParam("file") InputStream inputStream,
-			@FormDataParam("file") FormDataContentDisposition disposition) throws IOException {
+			@FormDataParam("file") FormDataContentDisposition disposition, 
+			@Context HttpServletRequest request) throws IOException {
 		String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), "UTF-8");
 		String name = Calendar.getInstance().getTimeInMillis() + fileName;
-		File file = new File("data" + File.separator + name);
+		String path = request.getServletContext().getRealPath("/");
+		path += File.separator + "data" + File.separator + name;
+		File file = new File(path);
 		try {
 			FileUtils.copyInputStreamToFile(inputStream, file);
 		} catch (IOException ex) {

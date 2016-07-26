@@ -12,7 +12,8 @@ public class JettyServer {
 		webContext.setContextPath("/");
 		webContext.setDescriptor("conf" + File.separator + "web.xml");
 		webContext.setParentLoaderPriority(true);
-		webContext.setResourceBase("../html");
+		//setResourceBase 和 request.getServletContext().getRealPath("/"); 相关
+		webContext.setResourceBase("");
 		Server server = new Server(8088);
 		server.setHandler(webContext);
 		try {
