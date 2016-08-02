@@ -1,7 +1,7 @@
 # image: Myjersey
 # descr: jerseymain-0.0.1-SNAPSHOT-bin.tar.gz
 
-FROM registry.aliyuncs.com/daydayup/oracle-jre8
+FROM cxt/oracle-jdk8
 
 MAINTAINER caixt, xiantong0216@126.com
 
