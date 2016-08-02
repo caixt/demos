@@ -149,11 +149,11 @@ public class HttpTest {
 	@Test
 	public void testDownload() throws ClientProtocolException, IOException{
 		//String url = "http://mirrors.aliyun.com/centos/7/os/x86_64/Packages/389-ds-base-1.3.4.0-19.el7.x86_64.rpm";
-		String url = "http://127.0.0.1:8088/api/file/download";
+		String url = "/api/file/download";
 		HttpClient client = HttpClients.createDefault();
         HttpGet httpget = new HttpGet(url);  
         httpget.setHeader("Connection", "close");
-        HttpResponse response = client.execute(httpget);  
+        HttpResponse response = client.execute(host, httpget);  
 
         HttpEntity entity = response.getEntity();  
         InputStream is = entity.getContent();  

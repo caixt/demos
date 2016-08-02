@@ -47,7 +47,7 @@ public class HttpsTest {
          
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
         HttpClient httpclient = HttpClientBuilder.create().setSSLSocketFactory(sslsf).build();
-        doGet(httpclient, "https://127.0.0.1:8000/api/jersey/user/1");
+        doGet(httpclient, "https://127.0.0.1:8443/api/jersey/user/1");
 	}
 	
 	
@@ -57,7 +57,7 @@ public class HttpsTest {
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
         HttpClient httpclient = HttpClientBuilder.create().setSSLSocketFactory(sslsf).build();
         //example.com 在本地host里添加映射
-        doGet(httpclient, "https://example.com:8000/api/jersey/user/1");
+        doGet(httpclient, "https://example.com:8443/api/jersey/user/1");
 	}
 	
 	@Test
@@ -78,7 +78,7 @@ public class HttpsTest {
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(ctx);
         HttpClient httpclient = HttpClientBuilder.create().setSSLSocketFactory(sslsf).build();
         //example.com 在本地host里添加映射
-        doGet(httpclient, "https://example.com:8000/api/jersey/user/1");
+        doGet(httpclient, "https://example.com:8443/api/jersey/user/1");
 	}
 	
 	
