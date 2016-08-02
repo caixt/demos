@@ -6,6 +6,6 @@
 	
 * /root/cxt/demos/images/data 挂载
 * 10.1.240.87 宿主机ip
-* 10.1.240.87 宿主机ip
+* -v /root/cxt/demos/images/data:/opt/cxt/Myjersey/html/data:ro 挂载的目录和容器共目录
 * 查看日志 docker logs 容器id
 * [error] 7#7: *1 connect() failed (113: No route to host) 宿主机的防火墙没关
