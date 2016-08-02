@@ -28,6 +28,10 @@
 				<!-- <include>i18n/*</include> -->
 			</includes>
 		</fileSet>
+		<fileSet>
+			<directory>html</directory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+		</fileSet> 
 	</fileSets>
 	
 	<dependencySets>  

@@ -9,6 +9,8 @@ EXPOSE 8000
 
 ADD nginx_8443.conf /etc/nginx/conf.d/nginx_8443.conf
 ADD ssl /opt/cxt/ssl
+ADD jerseymain-0.0.1-SNAPSHOT-bin.tar.gz /opt/cxt/
+RUN mv /opt/cxt/jerseymain-0.0.1-SNAPSHOT /opt/cxt/Myjersey
 
 CMD sed -i "s/#{server}/$SERVER/g" /etc/nginx/conf.d/nginx_8443.conf && \
     nginx -g 'daemon off;'

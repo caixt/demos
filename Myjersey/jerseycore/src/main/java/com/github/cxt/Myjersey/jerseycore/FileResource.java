@@ -87,8 +87,8 @@ public class FileResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	@Path("download")
 	@GET
-	public Response downloadFile() throws IOException {
-		File file = new File("../html/index.html");
+	public Response downloadFile(@Context HttpServletRequest request) throws IOException {
+		File file = new File(request.getServletContext().getRealPath("index.html"));
 		String mt = new MimetypesFileTypeMap().getContentType(file);
         return Response
                 .ok(file, mt)
