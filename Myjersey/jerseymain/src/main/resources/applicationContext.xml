@@ -10,9 +10,16 @@
 	<context:component-scan base-package="com.github.cxt.Myjersey" />
 	
 	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+			<property name="basename" value="classpath:/messages"></property>
+    		<property name="useCodeAsDefaultMessage" value="true" />  
+	</bean>
+	
+ 
+	
 	<beans profile="test">
 		<bean class="com.github.cxt.Myjersey.main.Demo"/>
 	</beans>
-	
 	
 </beans>
