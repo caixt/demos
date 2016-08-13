@@ -42,7 +42,6 @@ package com.github.cxt.Myjersey.jerseycore;
 import javax.inject.Singleton;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -59,7 +58,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import com.alibaba.fastjson.JSONObject;
 import com.github.cxt.Myjersey.jerseycore.server.Server;
 
@@ -70,8 +68,7 @@ import com.github.cxt.Myjersey.jerseycore.server.Server;
  *
  * @author Marko Asplund (marko.asplund at gmail.com)
  */
-@Consumes(Constants.MEDIA_TYPE)
-@Produces(MediaType.APPLICATION_JSON)
+@Consumes(Constants.MEDIA_TYPE) //Content-Type
 @Path("jersey")
 @Singleton//with singleton scope 不加则是prototype
 public class JerseyResource {
@@ -81,70 +78,73 @@ public class JerseyResource {
     @Autowired
     private Server server;
     
-    @Autowired
-    private ReloadableResourceBundleMessageSource messageSource;
-
+    @Path("test")
+    @Consumes(Constants.MEDIA_TYPE)  //Content-Type
+    @Produces(MediaType.APPLICATION_JSON) //Accept
+    @POST
+    public String test() {
+        throw new RuntimeException("test");
+    }
+    
     @Path("demo")
-    @Consumes(Constants.MEDIA_TYPE)
-    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(Constants.MEDIA_TYPE)  //Content-Type
+    @Produces(MediaType.APPLICATION_JSON) //Accept
     @GET
-    public String getCount(@Context HttpServletRequest request) {
-    	System.out.println(messageSource.getMessage("test", null, request.getLocale()));
+    public String getCount() {
         return server.returnContent();
     }
     
     @Path("visitCount")
     @GET
     public String getVisitCount() {
-    	System.out.println();
-        return (count++) + "" +  this;
+        return (count++) + "!" +  this;
     }
     
     @Path("searchKey")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String searchKey1(@NotBlank(message = "{search.string.empty}") @Size(max=5, min=3) @QueryParam("key") final String key, 
-    		@NotNull @QueryParam("n") final Integer n) {
-    	throw new RuntimeException();
-        //return "success";
+    @Produces(MediaType.APPLICATION_JSON)
+    public String searchKey1(@NotBlank(message = "{search.string.empty}") @Size(max=5, min=3) 
+    		@QueryParam("key") final String key) {
+        return "success";
     }
     
     @Path("user")
     @POST
-    public String postUser(@Valid User user, @Context HttpServletRequest request) {
+    public void postUser(@Valid User user, @Context HttpServletRequest request) {
     	System.out.println(JSONObject.toJSONString(request.getParameterMap()));
     	System.out.println(user.toString());
     	if(user.getName() == null){
     		throw new RuntimeException();
     	}
-        return "success";
     }
     
     @Path("user/{id}")
     @GET
-    public String getUser(@PathParam("id") Integer id) {
+    public User getUser(@PathParam("id") Integer id) {
     	User user = new User();
     	user.setAge(1);
     	user.setName("demo");
     	user.setId(id);
-        return JSONObject.toJSONString(user);
+        return user;
     }
     
     
     @Path("user/{id}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @PUT
-    public String putUser(@Valid User user, @PathParam("id") Integer id) {
+    public User putUser(@Valid User user, @PathParam("id") Integer id) {
     	user.setAge(1);
     	user.setName("demo");
     	user.setId(id);
-        return JSONObject.toJSONString(user);
+        return user;
     }
     
     
     @Path("user/{id}")
+    @Produces({MediaType.APPLICATION_JSON})
     @DELETE
-    public String deleteUser(@PathParam("id") Integer id) {
-    	return "success";
+    public void deleteUser(@PathParam("id") Integer id) {
+    	
     }
 
     @Path("olduser")

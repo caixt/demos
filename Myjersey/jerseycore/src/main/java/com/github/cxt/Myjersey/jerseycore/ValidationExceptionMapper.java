@@ -14,39 +14,24 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Variant;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.inject.Provider;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
-
 import org.glassfish.jersey.server.ServerProperties;
 import org.glassfish.jersey.server.validation.internal.LocalizationMessages;
 import org.glassfish.jersey.server.validation.ValidationError;
 import org.glassfish.jersey.server.validation.internal.ValidationHelper;
-import org.springframework.web.context.WebApplicationContext;
 
 @javax.ws.rs.ext.Provider
 public class ValidationExceptionMapper implements ExceptionMapper<ValidationException> {
 	private static final Logger LOGGER = Logger.getLogger(ValidationExceptionMapper.class.getName());
 	
-	private static final String CONTEXT_ATTRIBUTE = WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE;
-
     @Context
     private Configuration config;
     @Context
     private Provider<Request> request;
-    @Context
-    private ServletContext servletContext;
-    @Context
-    private HttpServletRequest servletrequest;
 
     @Override
     public Response toResponse(final ValidationException exception) {
-    	System.out.println(this + "!" + request);
-    	WebApplicationContext context = (WebApplicationContext) servletContext
-    			.getAttribute(CONTEXT_ATTRIBUTE);
-    	System.out.println(servletrequest.getLocale());
-    	System.out.println(context.getMessage("test", null, servletrequest.getLocale()));
         if (exception instanceof ConstraintViolationException) {
             LOGGER.log(Level.FINER, LocalizationMessages.CONSTRAINT_VIOLATIONS_ENCOUNTERED(), exception);
 
