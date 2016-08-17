@@ -130,6 +130,12 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.0</version>
 		</dependency>
+	
+		<dependency>
+            <groupId>de.odysseus.juel</groupId>
+            <artifactId>juel</artifactId>
+            <version>2.1.2</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.mybatis</groupId>
