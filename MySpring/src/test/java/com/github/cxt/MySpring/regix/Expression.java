@@ -5,13 +5,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import javax.el.ExpressionFactory;
+
 import org.junit.Test;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
+
 import com.github.cxt.MySpring.transaction.mybatis.Table;
+
 import de.odysseus.el.ExpressionFactoryImpl;
 import de.odysseus.el.util.SimpleContext;
 
@@ -28,9 +32,10 @@ public class Expression {
 		table = new Table();
 		table.setId(2L);
 		tables.add(table);
-		map.put("tables", tables);
-		System.out.println(eval_de(String.class, "aaa${aaa}a${tables[0].id}", new HashMap<>(map)));
+		map.put("$tables", tables);
+		System.out.println(eval_de(String.class, "aaa${aaa}aaa${$tables[0].id}", new HashMap<>(map)));
 	}
+	
 	
 	@Test
 	public void test2() {
@@ -48,6 +53,7 @@ public class Expression {
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	private <T> T eval_de(Class<T> T, String expr, Map<String, Object> args) {
 		ExpressionFactory factory = new ExpressionFactoryImpl();
 		SimpleContext context = new SimpleContext();

@@ -46,8 +46,8 @@ public class Main {
 	
 	@Test
 	public void test4(){
-		Pattern pattern = Pattern.compile("Windows(?!95|98|NT|2000)");
-		Matcher matcher = pattern.matcher("Windows2001");
+		Pattern pattern = Pattern.compile("Windows(?!95|98|NT|2000)2000");
+		Matcher matcher = pattern.matcher("Windows2000");
 		while(matcher.find()){
 			System.out.println(matcher.group(0));
 		}
@@ -81,26 +81,37 @@ public class Main {
 		}
 	}
 	
-//	@Test
-//	public void test_1(){
-//		Pattern pattern = Pattern.compile("\\$\\{(\\[\\d+\\]\\.\\w+|\\w+)\\}");
-//		Matcher matcher = pattern.matcher("aaa${ba}aac${[2].bb}aaaaaa");
-//		while(matcher.find()){
-//			
-//			System.out.println(matcher.group(0));
-//			System.out.println(matcher.group(1));
-//		}
-//	}
-
-//	@Test
-//	public void test_1(){
-//		Pattern pattern = Pattern.compile("\\$\\{(\\w+)\\}");
-//		Matcher matcher = pattern.matcher("aaa${ba}aac${[2].bb}aaaaaa");
-//		while(matcher.find()){
-//			matcher.re
-//			
-//			System.out.println(matcher.group(0));
-//			System.out.println(matcher.group(1));
-//		}
-//	}
+	@Test
+	public void test_1(){
+		Pattern pattern = Pattern.compile("(\\w)\\1");
+		Matcher matcher = pattern.matcher("abccdefghiijklmnopt");
+		while(matcher.find()){
+			System.out.println(matcher.group(0));
+		}
+	}
+	
+	@Test
+	public void test_2(){
+		Pattern pattern = Pattern.compile("(\\w)\\1((?!\\1)\\w)\\2");
+		Matcher matcher = pattern.matcher("aabbccddeeffgggg");
+		while(matcher.find()){
+			System.out.println(matcher.group(0));
+		}
+	}
+	
+	
+	@Test
+	public void test_3(){
+		//Pattern pattern = Pattern.compile("(\\w)((?=\\1\\1\\1)(\\1))+");
+		Pattern pattern = Pattern.compile("(\\w)(\\1)*(?=\\1\\1\\1)(\\1)");
+		Matcher matcher = pattern.matcher("aaa bbbb ffffff 999999999");
+		while(matcher.find()){
+			System.out.println(matcher.group(0));
+			System.out.println(matcher.group(1));
+			System.out.println(matcher.group(2));
+			System.out.println(matcher.group(3));
+		}
+	}
+	
+	
 }
