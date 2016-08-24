@@ -22,6 +22,7 @@
 			            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 		       		<maxFileSize>10MB</maxFileSize>
       			</timeBasedFileNamingAndTriggeringPolicy>
+      			<cleanHistoryOnStart>true</cleanHistoryOnStart>
          </rollingPolicy>
          <encoder charset="UTF-8">
                  <pattern>${ENCODER_PATTERN}</pattern>
