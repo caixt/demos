@@ -1,12 +1,16 @@
 package com.github.cxt.Myzookeeper;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.BackgroundCallback;
 import org.apache.curator.framework.api.CuratorEvent;
+import org.apache.curator.framework.api.transaction.CuratorTransaction;
+import org.apache.curator.framework.api.transaction.CuratorTransactionResult;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.utils.CloseableUtils;
 import org.apache.curator.utils.EnsurePath;
@@ -118,5 +122,18 @@ public class Base {
 	  
 	}
 	
+	@Test
+	public void test3() throws Exception{
+		CuratorTransaction transaction = client.inTransaction();  
+		  
+        Collection<CuratorTransactionResult> results = transaction
+        		.create().forPath("/path", "some data".getBytes())
+                .and().setData().forPath("/path", "other data".getBytes())
+                //.and().delete().forPath("/yetanotherpath")  
+                .and().commit();  
 
+        for (CuratorTransactionResult result : results) {  
+            System.out.println(result.getForPath() + " - " + result.getType());  
+        }  
+	}
 }
