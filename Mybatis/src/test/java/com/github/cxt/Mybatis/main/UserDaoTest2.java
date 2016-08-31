@@ -11,7 +11,6 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 import com.github.cxt.Mybatis.dao.UserDao;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = Configurator.class)
 @Transactional

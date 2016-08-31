@@ -1,7 +1,6 @@
 package com.github.cxt.Mybatis.main;
 
 import java.io.IOException;
-
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.type.TypeHandler;
@@ -12,11 +11,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import com.github.cxt.Mybatis.JSONArrayHandler;
 import com.github.cxt.Mybatis.JSONObjectHandler;
 import com.github.cxt.Mybatis.UUIDTypeHandler;
-import com.github.cxt.Mybatis.dao.UserDao;
 
 @EnableTransactionManagement
 public class Configurator {

@@ -23,6 +23,8 @@ import com.github.cxt.Mybatis.entity.User;
 @TransactionConfiguration(defaultRollback = true)
 public class UserDaoTest {
 	
+	public static int n = 3;
+	
 	@Autowired
 	private UserDao userDao;
 	
@@ -34,7 +36,7 @@ public class UserDaoTest {
 	
 	@Test
 	public void test1(){
-		System.out.println(userDao.selectByUserId(1L).toString());
+		System.out.println(userDao.selectByUserId(1L));
 	}
 	
 	@Test
@@ -92,8 +94,15 @@ public class UserDaoTest {
 	
 	@Test
 	public void test9(){
-		Byte[] b = (Byte[]) userDao.selectUUidByUserId(1l);
-		System.out.println(b);
+		//mybatis 3.4.0以上
+		String uuid = userDao.selectUUidByUserId(1l);
+		System.out.println(uuid);
+	}
+	
+	@Test
+	public void test10(){
+		//貌似不支持 #{}的格式
+		System.out.println(userDao.selectByStatic());
 	}
 
 }

@@ -14,7 +14,7 @@
   </resultMap>
   
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-   		select * from user where id = #{id, jdbcType=INTEGER}
+   		select * from user where id = #{id, jdbcType=INTEGER} and name = '${@com.github.cxt.Mybatis.entity.ResClassnName@DATABASE.getCode()}'
   </select>
   
   <select id="selectAll" resultType="java.util.Map" >
@@ -53,8 +53,12 @@
    		select * from user where uuid = #{uuid, jdbcType=BINARY}
   </select>
   
-  <select id="selectUUidByUserId" resultType="Byte[]" parameterType="java.lang.Long" >
+  <select id="selectUUidByUserId" resultType="String" parameterType="java.lang.Long" >
    		select uuid from user where id = #{id, jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectByStatic" resultMap="BaseResultMap">
+   		select * from user where user_type = ${@com.github.cxt.Mybatis.entity.UserTypeEnmu@CODE2.getVal()}
   </select>
   
   <!-- 

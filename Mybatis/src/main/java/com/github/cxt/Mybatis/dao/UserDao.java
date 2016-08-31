@@ -21,5 +21,7 @@ public interface UserDao {
 	
 	public User selectByUserUuid(String uuid);
 	
-	public Object selectUUidByUserId(Long id);
+	public String selectUUidByUserId(Long id);
+	
+	public List<User> selectByStatic();
 }

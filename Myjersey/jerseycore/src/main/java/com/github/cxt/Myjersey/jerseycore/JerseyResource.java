@@ -88,7 +88,7 @@ public class JerseyResource {
     
     @Path("demo")
     @Consumes(Constants.MEDIA_TYPE)  //Content-Type
-    @Produces(MediaType.APPLICATION_JSON) //Accept
+    @Produces(MediaType.TEXT_HTML) //Accept
     @GET
     public String getCount() {
         return server.returnContent();

@@ -68,3 +68,4 @@ Dokcer Container--
         docker export 6c5563 > ./ubuntu_tomcat.tar.gz
 		
 		
+docker 启动不以 bash 来启动 docker run -it *** /bin/bash
