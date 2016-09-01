@@ -2,7 +2,7 @@
 
 ***
 	docker build -t cxt/nginx:v1.0 ./
-	docker run -d -p 8443:8443 -v /root/cxt/demos/images/data:/opt/cxt/Myjersey/html/data:ro --link ***:MYJERSEY --name myninx cxt/nginx:v1.0
+	docker run -d -p 8443:8443 --volumes-from *** --link ***:MYJERSEY --name myninx cxt/nginx:v1.0
 	*** 为myjersey的容器名称
 	
 * /root/cxt/demos/images/data 挂载

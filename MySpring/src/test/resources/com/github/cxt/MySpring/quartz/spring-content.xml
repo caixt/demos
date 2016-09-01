@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+">
+	
+	<!-- 分布式作业角度系统  elastic-job -->
+	<beans profile="spring">
+		<bean id="scheduler"
+			class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+			<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+		</bean>
+	</beans>
+	<beans profile="redis">
+		<bean id="scheduler"
+			class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+			<property name="applicationContextSchedulerContextKey" value="applicationContext" />
+			<property name="configLocation" value="com/github/cxt/MySpring/quartz/system.properties" />
+		</bean>
+	</beans>
+	
+</beans>

@@ -69,3 +69,6 @@ Dokcer Container--
 		
 		
 docker 启动不以 bash 来启动 docker run -it *** /bin/bash
+docker 集群的解决方案
+	挂载 flocker
+	网络 flannel nfv(后面这个不知道是对是错,没看到啥资料)
