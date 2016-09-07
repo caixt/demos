@@ -6,7 +6,6 @@ import org.quartz.CronScheduleBuilder;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
@@ -32,15 +31,15 @@ public class RedisQuartz {
 		JobDataMap map = jobDetail.getJobDataMap();
 		map.put("jobId", jobId);
 		scheduler.scheduleJob(jobDetail,
-				TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 1/1 * * * ?"))
+				TriggerBuilder.newTrigger().withSchedule(CronScheduleBuilder.cronSchedule("0 0/1 * * * ?"))
 						.build());
 		
-		Thread.sleep(1000 * 60);
+		Thread.sleep(1000 * 60 * 100);
 	}
 	
 	@Test
 	public void testold() throws InterruptedException, SchedulerException {	
-		Thread.sleep(1000 * 60 * 10);
+		Thread.sleep(1000 * 60 * 100);
 	}
 	
 }

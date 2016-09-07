@@ -10,7 +10,13 @@ import java.util.StringTokenizer;
 import jline.Completor;
 import jline.ConsoleReader;
 
-public class Main {
+/**
+ * 备注 在eclpse中运行没效果
+ * @author caixt@broada.com
+ * @Description:
+ * @date 2016年9月7日
+ */
+public class JlineMain {
 
 	protected static final Map<String,String> commandMap = new HashMap<String,String>();
 	

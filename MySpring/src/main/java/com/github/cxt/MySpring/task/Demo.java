@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Demo {
 
+	@SuppressWarnings("deprecation")
 	public void test1(){
 		System.out.println("!" + new Date().toLocaleString());
 		try {
