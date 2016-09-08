@@ -5,6 +5,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 ">
+ 
+	<context:property-placeholder />
 
 	<!-- 分布式作业角度系统  elastic-job -->
 	<beans profile="spring">
@@ -17,7 +19,20 @@
 		<bean id="scheduler"
 			class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 			<property name="applicationContextSchedulerContextKey" value="applicationContext" />
-			<property name="configLocation" value="com/github/cxt/MySpring/quartz/system.properties" />
+			<property name="quartzProperties">
+				<props>
+					<prop key="org.quartz.jobStore.class">net.joelinn.quartz.jobstore.RedisJobStore</prop>
+					<prop key="org.quartz.jobStore.host">192.168.100.254</prop>
+					<prop key="org.quartz.jobStore.password">12345678</prop>
+					<prop key="org.quartz.jobStore.port">6379</prop>
+					<prop key="org.quartz.jobStore.redisCluster">false</prop>
+					<prop key="org.quartz.jobStore.redisSentinel">false</prop>
+					<prop key="org.quartz.jobStore.masterGroupName">mymaster</prop>
+					<prop key="org.quartz.jobStore.database">0</prop>
+					<prop key="org.quartz.jobStore.keyPrefix">job:timer</prop>
+					<prop key="org.quartz.jobStore.lockTimeout">30000</prop>
+				</props>
+			</property>
 		</bean>
 	</beans>
 	
