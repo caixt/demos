@@ -38,6 +38,7 @@ public class TransactionTest {
 		jedis.close();
 	}
 	
+	
 	@Test
 	public void testMulti(){
 		String key = KEY_PREFIX + ":" + Thread.currentThread().getStackTrace()[1].getMethodName();
@@ -62,10 +63,15 @@ public class TransactionTest {
 	}
 	
 	
+	//watch 相当于热关锁
 	@Test
 	public void testWatch(){
 		String key = KEY_PREFIX + ":" + Thread.currentThread().getStackTrace()[1].getMethodName();
 		jedis.watch(key);
+		Transaction transaction = jedis.multi();
+		transaction.set("mykey", "a");
+		List<?> result = transaction.exec();
+		System.out.println(result);
 	}
 	
 	@Test

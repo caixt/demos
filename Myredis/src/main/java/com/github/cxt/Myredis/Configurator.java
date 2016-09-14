@@ -11,7 +11,7 @@ public class Configurator {
 	public JedisPoolCustom jedisPoolCustom(){
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
 		poolConfig.setTestOnBorrow(true);
-		return new JedisPoolCustom(poolConfig, "mymaster", "192.168.100.254", 6379, 3000, "12345678", 2, false);
+		return new JedisPoolCustom(poolConfig, "mymaster", "192.168.100.254", 6379, 3000, "12345678", 0, false);
 	}
 	@Bean
 	public RedisTemplate redisTemplate(){

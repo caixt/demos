@@ -40,21 +40,24 @@
 package com.github.cxt.Myjersey.jerseycore;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
-
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
+import javax.ws.rs.core.StreamingOutput;
 import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 import org.glassfish.jersey.media.multipart.FormDataParam;  
@@ -84,7 +87,6 @@ public class FileResource {
 
 	}
 	
-	@Produces(MediaType.TEXT_PLAIN)
 	@Path("download")
 	@GET
 	public Response downloadFile(@Context HttpServletRequest request) throws IOException {
@@ -95,5 +97,29 @@ public class FileResource {
                 .header("Content-disposition","attachment;filename=" + file.getName()) 
                 .header("ragma", "No-cache").header("Cache-Control", "no-cache").build();
 		
+	}
+	
+	@Path("download2")
+	@GET
+	public Response downloadFile(@Context HttpServletResponse response) throws IOException {
+		final File file = new File(request.getServletContext().getRealPath("index.html"));
+		final InputStream responseStream = new FileInputStream(file);
+		StreamingOutput output = new StreamingOutput() {
+            @Override
+            public void write(OutputStream out) throws IOException, WebApplicationException {
+            	try{
+	                int length;
+	                byte[] buffer = new byte[1024 * 10];
+	                while((length = responseStream.read(buffer)) != -1) {
+	                    out.write(buffer, 0, length);
+	                    out.flush();
+	                }
+            	}finally{
+            		responseStream.close();
+            		//file.delete();
+            	}
+            }   
+        };
+        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + file.getName()).build();
 	}
 }
