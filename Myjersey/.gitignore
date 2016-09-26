@@ -1,4 +1,1 @@
 *.jar
-build/conf
-build/lib
-build/module
