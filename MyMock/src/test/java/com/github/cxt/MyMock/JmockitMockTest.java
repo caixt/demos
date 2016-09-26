@@ -9,8 +9,6 @@ import org.junit.Test;
 
 /**
  * 兼容jacoco
- * @author caixt@broada.com
- * @Description:
  * @date 2016年7月13日
  */
 public class JmockitMockTest {

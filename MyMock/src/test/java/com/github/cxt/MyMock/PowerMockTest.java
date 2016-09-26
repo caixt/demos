@@ -21,8 +21,6 @@ import static org.mockito.Mockito.when;
 
 /**
  * 不兼容jacoco
- * @author caixt@broada.com
- * @Description:
  * @date 2016年7月13日
  */
 @RunWith(PowerMockRunner.class)

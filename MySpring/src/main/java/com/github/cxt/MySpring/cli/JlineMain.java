@@ -12,8 +12,6 @@ import jline.ConsoleReader;
 
 /**
  * 备注 在eclpse中运行没效果
- * @author caixt@broada.com
- * @Description:
  * @date 2016年9月7日
  */
 public class JlineMain {

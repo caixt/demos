@@ -10,8 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * junit 和 main运行有差异(先去掉配置文件中的<context:annotation-config />)
- * @author caixt@broada.com
- * @Description:
  * @date 2016年7月1日
  */
 @RunWith(SpringJUnit4ClassRunner.class)
