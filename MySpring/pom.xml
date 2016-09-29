@@ -195,6 +195,12 @@
 		    <artifactId>quartz-redis-jobstore</artifactId>
 		    <version>1.1.3</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		    <version>4.1.5.Final</version>
+		</dependency>
   </dependencies>
   
   

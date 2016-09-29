@@ -40,8 +40,10 @@ public class Table1ServerImpl implements Table1Server{
 		table2Server.save2(table);
 	}
 
+	@Transactional
 	@Override
 	public void save4(Table table) {
+		tableDao.save1(table);
 		table2Server.save2(table);
 	}
 
@@ -63,7 +65,6 @@ public class Table1ServerImpl implements Table1Server{
 		table2Server.save5(table);
 	}
 
-	
 	@Override
 	public void save7(Table table) {
 		tableDao.save1(table);
