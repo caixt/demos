@@ -8,7 +8,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-
 import java.util.Scanner;
 
 public class Client implements Runnable{
@@ -42,7 +41,7 @@ public class Client implements Runnable{
             f.channel().closeFuture().sync();
         } catch (InterruptedException e) {
 			e.printStackTrace();
-		} finally {
+        } finally {
             workerGroup.shutdownGracefully();
         }
 	}

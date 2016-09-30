@@ -23,8 +23,6 @@ import com.github.cxt.Mybatis.entity.User;
 @TransactionConfiguration(defaultRollback = true)
 public class UserDaoTest {
 	
-	public static int n = 3;
-	
 	@Autowired
 	private UserDao userDao;
 	

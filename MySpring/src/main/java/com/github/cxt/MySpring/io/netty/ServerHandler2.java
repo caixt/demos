@@ -17,7 +17,7 @@ public class ServerHandler2 extends ChannelInboundHandlerAdapter {
 	 */
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws UnsupportedEncodingException {
-		System.out.println("!!!!!");
+		//System.out.println("!!!!!");
 		String calrResult = (String) msg;
 		ctx.write(Unpooled.copiedBuffer(calrResult.getBytes()));
 	}
