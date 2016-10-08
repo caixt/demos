@@ -8,7 +8,7 @@ public class Demo {
 	public void test1(){
 		System.out.println("!" + new Date().toLocaleString());
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

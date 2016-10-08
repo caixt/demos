@@ -11,7 +11,7 @@
 	<task:scheduler id="scheduler" pool-size="3" />
 	<task:scheduled-tasks scheduler="scheduler">  
         <task:scheduled ref="demo" method="test1"  
-            fixed-delay="20000" initial-delay="20000"/>  
+            fixed-delay="2000" initial-delay="3000"/>  
     </task:scheduled-tasks> 
     
 </beans>

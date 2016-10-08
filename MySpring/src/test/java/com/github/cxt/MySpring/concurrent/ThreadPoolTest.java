@@ -1,5 +1,6 @@
 package com.github.cxt.MySpring.concurrent;
 
+import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -42,6 +43,15 @@ public class ThreadPoolTest {
 				}},
 				6,
 				2,
+				TimeUnit.SECONDS);
+		
+		Executors.newScheduledThreadPool(3).schedule(new Runnable(){
+					@Override
+				public void run() {
+					System.out.println("!" + new Date().toLocaleString());
+					System.out.println("bombing!!!");
+					
+				}}, 2,
 				TimeUnit.SECONDS);
 	}
 
