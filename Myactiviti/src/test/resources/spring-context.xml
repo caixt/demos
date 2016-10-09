@@ -41,7 +41,7 @@
 		<!-- <property name="mailServerPort" value="5025" /> -->
 		<property name="jpaHandleTransaction" value="true" />
 		<property name="jpaCloseEntityManager" value="true" />
-		<property name="jobExecutorActivate" value="false" />
+		<property name="jobExecutorActivate" value="true" />
 	
 		<property name="dbHistoryUsed" value="false" />
         <property name="history" value="none" />
@@ -68,4 +68,5 @@
 		
 		
 	<bean id="cxt" class="com.github.cxt.Myactiviti.Cxt"/>
+	<bean id="cxt2" class="com.github.cxt.Myactiviti.Cxt2"/>
 </beans>

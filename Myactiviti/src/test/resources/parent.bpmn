@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="CheckSubprocess" name="CheckSubprocess" isExecutable="true">
+    <startEvent id="startevent4" name="Start"></startEvent>
+    <endEvent id="endevent4" name="End"></endEvent>
+    <userTask id="parent_step1" name="parent_step1">
+      <extensionElements>
+        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt3"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow9" sourceRef="parent_step1" targetRef="endevent4"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="startevent4" targetRef="parent_step1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_CheckSubprocess">
+    <bpmndi:BPMNPlane bpmnElement="CheckSubprocess" id="BPMNPlane_CheckSubprocess">
+      <bpmndi:BPMNShape bpmnElement="startevent4" id="BPMNShape_startevent4">
+        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="12.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent4" id="BPMNShape_endevent4">
+        <omgdc:Bounds height="35.0" width="35.0" x="390.0" y="12.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parent_step1" id="BPMNShape_parent_step1">
+        <omgdc:Bounds height="55.0" width="105.0" x="150.0" y="2.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="255.0" y="29.0"></omgdi:waypoint>
+        <omgdi:waypoint x="390.0" y="29.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="35.0" y="29.0"></omgdi:waypoint>
+        <omgdi:waypoint x="150.0" y="29.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

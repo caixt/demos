@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:/spring-context.xml")
 public class Main {
 	
-	private static String KEY = "demo";
+	private static String KEY = "main";
 	
 	Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -37,8 +37,8 @@ public class Main {
 	
 	@Before
 	public void initAndStart(){
-		 DeploymentBuilder builder = repositoryService.createDeployment();  
-		 builder.addClasspathResource("start.bpmn");  
+		 DeploymentBuilder builder = repositoryService.createDeployment();
+		 builder.addClasspathResource("main.bpmn");  
 		 builder.deploy();  
 		 pi = runtimeService.startProcessInstanceByKey(KEY);
 	}
@@ -50,6 +50,7 @@ public class Main {
 	public void allComplete(){
 		List<Task> tasks = null;
 		while( (tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).orderByTaskName().asc().list()).size() > 0){
+			System.out.println(tasks.size());
 			for(Task task : tasks) {
 				System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + task.getId());
 				taskService.complete(task.getId());

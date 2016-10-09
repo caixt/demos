@@ -1,16 +1,10 @@
 package com.github.cxt.Myactiviti;
 
-import org.activiti.engine.TaskService;
 import org.activiti.engine.delegate.DelegateTask;
 import org.activiti.engine.delegate.TaskListener;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class Cxt implements TaskListener{
+public class Cxt3 implements TaskListener{
 	
-	@Autowired
-	private TaskService taskService;
-	
-
 	/**
 	 * 
 	 */
@@ -19,6 +13,7 @@ public class Cxt implements TaskListener{
 	@Override
 	public void notify(DelegateTask delegateTask) {
 		System.out.println(delegateTask.getTaskDefinitionKey() + "---------------------start");
+		System.out.println("参数:" + delegateTask.getVariables());
 		System.out.println(delegateTask.getTaskDefinitionKey() + "---------------------end");
 	}
 }
