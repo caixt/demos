@@ -4,11 +4,9 @@
     <startEvent id="startevent1" name="Start"></startEvent>
     <callActivity id="subSubprocess" name="子流程" calledElement="CheckSubprocess">
       <extensionElements>
-        <activiti:in source="param1" target="param1"></activiti:in>
-        <activiti:in source="param2" target="param2"></activiti:in>
+        <activiti:in source="param1" target="p1"></activiti:in>
       </extensionElements>
     </callActivity>
-    <endEvent id="endevent1" name="End"></endEvent>
     <userTask id="step1" name="step1">
       <extensionElements>
         <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt3"></activiti:taskListener>
@@ -16,13 +14,14 @@
     </userTask>
     <sequenceFlow id="flow5" sourceRef="startevent1" targetRef="step1"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="step1" targetRef="subSubprocess"></sequenceFlow>
+    <endEvent id="endevent1" name="End"></endEvent>
     <userTask id="step2" name="step2">
       <extensionElements>
         <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt3"></activiti:taskListener>
       </extensionElements>
     </userTask>
-    <sequenceFlow id="flow7" sourceRef="subSubprocess" targetRef="step2"></sequenceFlow>
-    <sequenceFlow id="flow8" sourceRef="step2" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="step2" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="subSubprocess" targetRef="step2"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_sub2">
     <bpmndi:BPMNPlane bpmnElement="sub2" id="BPMNPlane_sub2">
@@ -32,14 +31,14 @@
       <bpmndi:BPMNShape bpmnElement="subSubprocess" id="BPMNShape_subSubprocess">
         <omgdc:Bounds height="60.0" width="100.0" x="230.0" y="0.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="530.0" y="12.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="step1" id="BPMNShape_step1">
         <omgdc:Bounds height="55.0" width="105.0" x="80.0" y="3.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="560.0" y="12.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="step2" id="BPMNShape_step2">
-        <omgdc:Bounds height="55.0" width="105.0" x="380.0" y="2.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="390.0" y="2.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
         <omgdi:waypoint x="35.0" y="32.0"></omgdi:waypoint>
@@ -50,12 +49,12 @@
         <omgdi:waypoint x="230.0" y="30.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
-        <omgdi:waypoint x="330.0" y="30.0"></omgdi:waypoint>
-        <omgdi:waypoint x="380.0" y="29.0"></omgdi:waypoint>
+        <omgdi:waypoint x="495.0" y="29.0"></omgdi:waypoint>
+        <omgdi:waypoint x="560.0" y="29.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
-        <omgdi:waypoint x="485.0" y="29.0"></omgdi:waypoint>
-        <omgdi:waypoint x="530.0" y="29.0"></omgdi:waypoint>
+        <omgdi:waypoint x="330.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="390.0" y="29.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

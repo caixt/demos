@@ -1,6 +1,8 @@
 package com.github.cxt.Myactiviti;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
@@ -40,7 +42,9 @@ public class Main {
 		 DeploymentBuilder builder = repositoryService.createDeployment();
 		 builder.addClasspathResource("main.bpmn");  
 		 builder.deploy();  
-		 pi = runtimeService.startProcessInstanceByKey(KEY);
+		 Map<String, Object> params = new HashMap<>();
+		 params.put("p1", "test");
+		 pi = runtimeService.startProcessInstanceByKey(KEY, params);
 	}
 	
 	/**

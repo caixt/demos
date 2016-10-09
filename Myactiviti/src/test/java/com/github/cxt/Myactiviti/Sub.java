@@ -3,7 +3,6 @@ package com.github.cxt.Myactiviti;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -108,5 +107,4 @@ public class Sub {
 		
 		System.out.println("end");
 	}
-	
 }
