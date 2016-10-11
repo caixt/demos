@@ -3,6 +3,7 @@ package com.github.cxt.Myactiviti;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -66,7 +67,7 @@ public class Sub {
 		builder.deploy();
 
 		Map<String, Object> variables = new HashMap<String, Object>();
-        variables.put("param1", "p1");
+        variables.put("param1", "不成功");
         variables.put("param2", "p2");
         variables.put("param3", "p3");
          
@@ -87,7 +88,6 @@ public class Sub {
 		ProcessInstance spi = runtimeService.createProcessInstanceQuery().superProcessInstanceId(ppi.getId()).singleResult();
 		
         System.out.println("sppi:" + spi.getId());
-        
         //子的
 		while ((tasks = taskService.createTaskQuery().processInstanceId(spi.getId()).orderByTaskName().asc().list()).size() > 0) {
 			System.out.println(tasks.size());
@@ -107,4 +107,5 @@ public class Sub {
 		
 		System.out.println("end");
 	}
+
 }
