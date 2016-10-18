@@ -44,7 +44,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.Calendar;
+
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +60,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+
 import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 import org.glassfish.jersey.media.multipart.FormDataParam;  
@@ -101,7 +104,7 @@ public class FileResource {
 	
 	@Path("download2")
 	@GET
-	public Response downloadFile(@Context HttpServletResponse response) throws IOException {
+	public Response downloadFile(@Context HttpServletResponse response, @Context HttpServletRequest request) throws IOException {
 		final File file = new File(request.getServletContext().getRealPath("index.html"));
 		final InputStream responseStream = new FileInputStream(file);
 		StreamingOutput output = new StreamingOutput() {
@@ -120,6 +123,23 @@ public class FileResource {
             	}
             }   
         };
-        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + file.getName()).build();
+        
+        String filename = file.getName();
+        String userAgent = request.getHeader("User-Agent");
+        //IE11 User-Agent字符串:Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+        //IE6~IE10版本的User-Agent字符串:Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.0; Trident/6.0)
+         
+        if (userAgent != null && (userAgent.toLowerCase().indexOf("msie") > 0 || userAgent.indexOf("like Gecko") > 0)){
+        	filename = URLEncoder.encode(filename, "UTF-8");//IE浏览器
+        }else {
+        //先去掉文件名称中的空格,然后转换编码格式为utf-8,保证不出现乱码,
+        //这个文件名称用于浏览器的下载框中自动显示的文件名
+        	filename = new String(filename.replaceAll(" ", "").getBytes(), "ISO8859-1");
+        //firefox浏览器
+        //firefox浏览器User-Agent字符串: 
+        //Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
+        }
+        
+        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename).build();
 	}
 }
