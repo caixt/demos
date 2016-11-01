@@ -48,7 +48,7 @@ fi
 
 
 #start jvm
-java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
+nohup java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
 -Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1 &
 
 if [ $? -eq 0 ]
