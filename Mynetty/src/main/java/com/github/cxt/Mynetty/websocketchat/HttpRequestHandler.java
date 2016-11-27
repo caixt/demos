@@ -45,7 +45,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
         this.wsUri = wsUri;
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
         if (wsUri.equalsIgnoreCase(request.getUri())) {
             ctx.fireChannelRead(request.retain());                  //2
