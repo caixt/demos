@@ -13,6 +13,9 @@ public class Cxt2 implements TaskListener{
 	@Override
 	public void notify(DelegateTask delegateTask) {
 		System.out.println(delegateTask.getTaskDefinitionKey() + "---------------------start");
+		System.out.println(delegateTask.getEventName());
+		System.out.println("参数1:" + delegateTask.getVariables());
+		System.out.println("参数2:" + delegateTask.getVariablesLocal());
 		System.out.println(delegateTask.getTaskDefinitionKey() + "---------------------end");
 	}
 }

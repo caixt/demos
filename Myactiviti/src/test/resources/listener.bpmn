@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/">
+  <process id="listener" name="test" isExecutable="true">
+    <startEvent id="start" name="start"></startEvent>
+    <endEvent id="end" name="end"></endEvent>
+    <userTask id="id_1" name="step1">
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.github.cxt.Myactiviti.Cxt3"></activiti:executionListener>
+        <activiti:executionListener event="end" class="com.github.cxt.Myactiviti.Cxt3"></activiti:executionListener>
+        <activiti:taskListener event="all" class="com.github.cxt.Myactiviti.Cxt2"></activiti:taskListener>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="flow13" sourceRef="start" targetRef="id_1"></sequenceFlow>
+    <serviceTask id="servicetask1" name="Service Task" activiti:class="com.github.cxt.Myactiviti.Cxt4">
+      <extensionElements>
+        <activiti:executionListener event="start" class="com.github.cxt.Myactiviti.Cxt3"></activiti:executionListener>
+        <activiti:executionListener event="end" class="com.github.cxt.Myactiviti.Cxt3"></activiti:executionListener>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow14" sourceRef="id_1" targetRef="servicetask1"></sequenceFlow>
+    <sequenceFlow id="flow15" sourceRef="servicetask1" targetRef="end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_listener">
+    <bpmndi:BPMNPlane bpmnElement="listener" id="BPMNPlane_listener">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="650.0" y="81.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="id_1" id="BPMNShape_id_1">
+        <omgdc:Bounds height="60.0" width="100.0" x="200.0" y="68.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask1" id="BPMNShape_servicetask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="430.0" y="70.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="75.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="98.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="300.0" y="98.0"></omgdi:waypoint>
+        <omgdi:waypoint x="430.0" y="97.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="535.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="650.0" y="98.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

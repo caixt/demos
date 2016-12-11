@@ -5,13 +5,13 @@
     <endEvent id="endevent4" name="End"></endEvent>
     <userTask id="parent_step1" name="parent_step1">
       <extensionElements>
-        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt4"></activiti:taskListener>
+        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt2"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow12" sourceRef="startevent4" targetRef="parent_step1"></sequenceFlow>
     <userTask id="parent_step2" name="parent_step2">
       <extensionElements>
-        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt4"></activiti:taskListener>
+        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt2"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow13" sourceRef="parent_step1" targetRef="parent_step2">

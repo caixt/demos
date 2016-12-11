@@ -9,7 +9,7 @@
     </callActivity>
     <userTask id="step1" name="step1">
       <extensionElements>
-        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt3"></activiti:taskListener>
+        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt2"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow5" sourceRef="startevent1" targetRef="step1"></sequenceFlow>
@@ -17,7 +17,7 @@
     <endEvent id="endevent1" name="End"></endEvent>
     <userTask id="step2" name="step2">
       <extensionElements>
-        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt3"></activiti:taskListener>
+        <activiti:taskListener event="create" class="com.github.cxt.Myactiviti.Cxt2"></activiti:taskListener>
       </extensionElements>
     </userTask>
     <sequenceFlow id="flow7" sourceRef="step2" targetRef="endevent1"></sequenceFlow>
