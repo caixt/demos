@@ -1,6 +1,9 @@
 package com.github.cxt.Myactiviti;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -35,7 +38,9 @@ public class Listener {
 		 DeploymentBuilder builder = repositoryService.createDeployment();
 		 builder.addClasspathResource("listener.bpmn");  
 		 builder.deploy();  
-		 ProcessInstance pi = runtimeService.startProcessInstanceByKey(KEY);
+		 Map<String, Object> params = new HashMap<>();
+		 params.put("p1", "4");
+		 ProcessInstance pi = runtimeService.startProcessInstanceByKey(KEY, params);
 		 
 		 List<Task> tasks = null;
 			while( (tasks = taskService.createTaskQuery().processInstanceId(pi.getId()).orderByTaskName().asc().list()).size() > 0){
@@ -45,6 +50,7 @@ public class Listener {
 					taskService.complete(task.getId());
 				}
 			}
-			System.out.println("end");
+		System.out.println("end");
 	}
+
 }
