@@ -41,6 +41,7 @@ package com.github.cxt.Myjersey.jerseycore;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -60,7 +61,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
-
 import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
 import org.glassfish.jersey.media.multipart.FormDataParam;  
@@ -142,4 +142,28 @@ public class FileResource {
         
         return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename).build();
 	}
+	
+	
+    @Path("show")
+    @GET
+    public Response show(@Context HttpServletRequest request) throws FileNotFoundException {
+    	final File file = new File(request.getServletContext().getRealPath("index.html"));
+		final InputStream responseStream = new FileInputStream(file);
+		StreamingOutput output = new StreamingOutput() {
+            @Override
+            public void write(OutputStream out) throws IOException, WebApplicationException {
+            	try{
+	                int length;
+	                byte[] buffer = new byte[1024 * 10];
+	                while((length = responseStream.read(buffer)) != -1) {
+	                    out.write(buffer, 0, length);
+	                    out.flush();
+	                }
+            	}finally{
+            		responseStream.close();
+            	}
+            }   
+        };
+        return Response.ok(output).header("Content-Type", "text/plain").build();
+    }
 }
