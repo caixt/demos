@@ -1,5 +1,7 @@
 package com.github.cxt.Mynetty.http;
 
+import java.nio.charset.Charset;
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -7,12 +9,11 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
-import io.netty.handler.codec.http.DefaultHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
-import io.netty.handler.codec.http.HttpHeaders;
-import io.netty.handler.codec.http.HttpResponse;
+import io.netty.handler.codec.http.HttpHeaderNames;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import io.netty.handler.codec.http.HttpUtil;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.util.CharsetUtil;
 
@@ -22,20 +23,18 @@ import io.netty.util.CharsetUtil;
 public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> { //1
     @Override
     public void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
-        HttpResponse response = new DefaultHttpResponse(request.getProtocolVersion(), HttpResponseStatus.OK);
-        response.headers().set(HttpHeaders.Names.CONTENT_TYPE, "text/html; charset=UTF-8");
-
-        boolean keepAlive = HttpHeaders.isKeepAlive(request);
-
+		ByteBuf buf = (ByteBuf)request.content();
+	    byte[]req = new byte[buf.readableBytes()];
+	    buf.readBytes(req);
+	    String body = new String(req, HttpUtil.getCharset(request, Charset.forName("utf-8")));
+	    System.out.println(body);
+	    
+		boolean keepAlive = HttpUtil.isKeepAlive(request);
         FullHttpResponse msg = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, 
         		HttpResponseStatus.OK, Unpooled.copiedBuffer("{}", CharsetUtil.UTF_8));
-		msg.headers().set(HttpHeaders.Names.CONTENT_TYPE, "application/json; charset=utf-8");
-		msg.headers().set(HttpHeaders.Names.CONTENT_LENGTH, msg.content().readableBytes());
-
-		// not keep-alive
+		msg.headers().set(HttpHeaderNames.CONTENT_TYPE, "application/json; charset=utf-8");
+		msg.headers().set(HttpHeaderNames.CONTENT_LENGTH, msg.content().readableBytes());
 		ChannelFuture future = ctx.writeAndFlush(msg);
-        
-        
         if (!keepAlive) {
             future.addListener(ChannelFutureListener.CLOSE);        //9
         }

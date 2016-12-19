@@ -2,7 +2,6 @@ package com.github.cxt.Mynetty.http;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -24,7 +23,6 @@ public class HttpServer {
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			bootstrap.group(boss, worker).channel(NioServerSocketChannel.class).childHandler(
 				new HttpServerInitializer());
-			setChannelOptions(bootstrap);
 
 			Channel ch = bootstrap.bind(port).sync().channel();
 
@@ -38,10 +36,6 @@ public class HttpServer {
 	protected void shutdown() {
 		boss.shutdownGracefully();
 		worker.shutdownGracefully();
-	}
-
-	protected void setChannelOptions(ServerBootstrap bootstrap) {
-		bootstrap.childOption(ChannelOption.MAX_MESSAGES_PER_READ, 36);
 	}
 
 	public static void main(String[] args) {
