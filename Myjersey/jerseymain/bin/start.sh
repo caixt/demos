@@ -27,13 +27,19 @@ if [ -z "$JAVA_OPTS" ]; then
 	JAVA_OPTS="-Xms128m -Xmx512m"
 fi
 
+if [ "$JAVA_HOME" != "" ]; then
+  JAVA="$JAVA_HOME/bin/java"
+else
+  JAVA=java
+fi
+
 
 module="all"
 logDir="logs"
 
 if [ "$foreground" == "true" ];
 then 
-	java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
+	$JAVA $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
 	-Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1
 else
 
@@ -48,7 +54,8 @@ fi
 
 
 #start jvm
-nohup java $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
+
+nohup $JAVA $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
 -Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1 &
 
 if [ $? -eq 0 ]

@@ -31,9 +31,18 @@
 		<fileSet>
 			<directory>html</directory>
 			<useDefaultExcludes>true</useDefaultExcludes>
-		</fileSet> 
+		</fileSet>
+		<fileSet>
+			<directory>lib</directory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+		</fileSet>
+		<fileSet>
+			<directory>module</directory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+		</fileSet>		
 	</fileSets>
 	
+	<!-- 排除依赖也会被导入
 	<dependencySets>  
 		<dependencySet>
 			<outputDirectory>lib</outputDirectory>
@@ -48,4 +57,5 @@
             </includes>
         </dependencySet>
 	</dependencySets>
+	-->
 </assembly>

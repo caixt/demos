@@ -63,13 +63,14 @@ public class TransactionTest {
 	}
 	
 	
-	//watch 相当于热关锁
+	//watch 相当于乐观锁
 	@Test
 	public void testWatch(){
 		String key = KEY_PREFIX + ":" + Thread.currentThread().getStackTrace()[1].getMethodName();
 		jedis.watch(key);
 		Transaction transaction = jedis.multi();
-		transaction.set("mykey", "a");
+		transaction.set(key, "a");
+		//如果被人修改则返回null
 		List<?> result = transaction.exec();
 		System.out.println(result);
 	}

@@ -1,0 +1,12 @@
+[Unit]
+Description=myjersey
+After=network.target
+
+[Service]
+Type=forking
+Environment="JAVA_HOME=/root/jre1.8.0_77"
+ExecStart=/root/cxt/jersey/jerseymain-0.0.1-SNAPSHOT/bin/start.sh
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

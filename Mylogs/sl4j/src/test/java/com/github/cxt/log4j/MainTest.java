@@ -11,6 +11,7 @@ public class MainTest {
 	public void done() throws InterruptedException {
 		while(true){
 			Sl4jMain.test();
+			Sl4jMain.test2();
 			Thread.sleep(1000);
 		}
 	}
