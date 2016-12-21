@@ -14,7 +14,7 @@
   </resultMap>
   
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-   		select * from user where id = #{id, jdbcType=INTEGER} and name = '${@com.github.cxt.Mybatis.entity.ResClassnName@DATABASE.getCode()}'
+   		select * from user where id = #{id, jdbcType=INTEGER}
   </select>
   
   <select id="selectAll" resultType="java.util.Map" >
@@ -24,8 +24,9 @@
   <select id="selectByMap" resultType="java.util.HashMap" parameterType="java.util.Map" >
    		select * from user
    		<where>
+   		    <!-- 老版本是#{_parameter[${key}]},不同的版本这个方法需要确认  -->
 	   		<foreach collection="_parameter.keys" item="key" separator="," >
-				${key}=#{_parameter[${key}]}  
+				${key}=#{_parameter.${key}}  
 		    </foreach>
    		</where>
   </select>

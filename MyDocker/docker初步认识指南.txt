@@ -62,10 +62,12 @@ Dokcer Container--
 方式二： 从一个容器生成镜像
    1）docker run/start 一个镜像为一个容器
    2）通过docker exec命令进入到容器，执行一些相关操作(安装服务，修改配置文件)
-   3）通过命令docker export 将容器导出
-        docker export <container-id> > <output-path>
+   3）通过命令docker save 将容器导出
+         docker save <container-id> > <output-path>
+		 docker load < <output-path>
       例如
-        docker export 6c5563 > ./ubuntu_tomcat.tar.gz
+        docker save 6c5563 > ./ubuntu_tomcat.tar.gz
+		docker load < ./ubuntu_tomcat.tar.gz
 		
 		
 docker 启动不以 bash 来启动 docker run -it *** /bin/bash
