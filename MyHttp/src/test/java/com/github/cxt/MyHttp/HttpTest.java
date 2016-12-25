@@ -3,6 +3,7 @@ package com.github.cxt.MyHttp;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +17,16 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -38,12 +41,24 @@ public class HttpTest {
 	
 	private HttpHost host = new HttpHost("127.0.0.1", 8088);
 	
+	
+	@Test
+	public void test() throws Exception{
+		List<NameValuePair> data = URLEncodedUtils.parse(URI.create("/api/jersey/searchKey?key=key&a=%E6%88%91"), "utf-8");
+		System.out.println(data.size());
+		System.out.println(data.get(1).getValue());
+	}
+	
+	
 	@Test
 	public void testGet() throws ClientProtocolException, IOException, CloneNotSupportedException{
 		HttpClient httpclient = HttpClients.createDefault();
 		String result = null;
 		
+		RequestConfig config = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();//设置请求和传输超时时间
+		
 		HttpGet getRequest = new HttpGet("/api/jersey/user/1");
+		getRequest.setConfig(config);
 		getRequest.setHeader("Connection", "close");  
 		getRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 
@@ -175,11 +190,14 @@ public class HttpTest {
 		HttpPost postRequest = new HttpPost("/api/file/upload");
 		postRequest.setHeader("Connection", "close");  
 		
-		MultipartEntity part = //new MultipartEntity();
-		new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
+		MultipartEntityBuilder part = MultipartEntityBuilder.create();
+		part.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+		part.setCharset(Charset.forName("UTF-8"));
+		part.setBoundary(null);
+		//new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE, null, Charset.forName("UTF-8"));
 		FileBody file = new FileBody(new File("README.md"));
 		part.addPart("file", file);
-		postRequest.setEntity(part);
+		postRequest.setEntity(part.build());
 		HttpResponse httpResponse = httpclient.execute(host, postRequest);
 		
 		HttpEntity entity = httpResponse.getEntity();
