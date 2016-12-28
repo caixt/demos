@@ -5,16 +5,21 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+
 
 @javax.ws.rs.ext.Provider
 public class HttpBefore implements ContainerRequestFilter{
 	
 	public static ThreadLocal<HttpInfo> body = new ThreadLocal<>();
 	
-	
+	@Context
+	private HttpServletRequest request;
 
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
@@ -24,18 +29,28 @@ public class HttpBefore implements ContainerRequestFilter{
 		if("post".equalsIgnoreCase(method) && contentType != null && contentType.startsWith(MediaType.APPLICATION_JSON)){
 			InputStream inputStream = requestContext.getEntityStream();
 			StringBuilder sb = new StringBuilder();
-			InputStreamReader input = new InputStreamReader(inputStream, "UTF-8");
+			Charset charset = getCharSet();
+			InputStreamReader input = new InputStreamReader(inputStream, charset);
 			BufferedReader reader = new BufferedReader(input);
 			String line = null;
 			while ((line = reader.readLine()) != null) {
 				sb.append(line);
 			}
-			requestContext.setEntityStream(new ByteArrayInputStream(sb.toString().getBytes("UTF-8")));
+			requestContext.setEntityStream(new ByteArrayInputStream(sb.toString().getBytes(charset)));
 			body.set(new HttpInfo(url, method, sb.toString()));
 		}
 		else{
 			body.set(new HttpInfo(url, method, null));
 		}
+	}
+	
+	
+	private Charset getCharSet(){
+		String charset = request.getCharacterEncoding();
+		if(charset == null || charset.trim().equals("")){
+			return Charset.defaultCharset();
+		}
+		return Charset.forName(charset);
 	}
 	
 	
