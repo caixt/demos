@@ -47,7 +47,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.Calendar;
-
+import java.util.List;
+import java.util.Map;
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,34 +62,134 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.io.FileUtils;
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;  
-import org.glassfish.jersey.media.multipart.FormDataParam;  
+import org.glassfish.jersey.media.multipart.FormDataBodyPart;
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 
 @Path("/file")
 public class FileResource {
+	
+	private static String CHARSET = "UTF-8";
     
+//	//使用存储临时文件(从流中直接读取文件并保存到临时文件,新的流是从临时文件中读取的)
+//	@Path("upload")
+//	@POST
+//	@Consumes(MediaType.MULTIPART_FORM_DATA)
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public String uploadFile(@FormDataParam("file") InputStream inputStream,
+//			@FormDataParam("file") FormDataContentDisposition disposition, 
+//			@FormDataParam("p1") String p1,
+//			@Context HttpServletRequest request) throws IOException {
+//		//浏览器默认不会带,httpclent可以带
+//		System.out.println(request.getCharacterEncoding());
+//		System.out.println(p1);
+//		
+//		String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), CHARSET);
+//		if(fileName != null && !fileName.trim().equals("")){
+//			String name = Calendar.getInstance().getTimeInMillis() + fileName;
+//			String path = request.getServletContext().getRealPath("/");
+//			path += File.separator + "data" + File.separator + name;
+//			File file = new File(path);
+//			try {
+//				FileUtils.copyInputStreamToFile(inputStream, file);
+//			} catch (IOException ex) {
+//				ex.printStackTrace();
+//				return "{\"success\": false}";
+//			}
+//		}
+//		return "{\"success\": true}";
+//	}
+	
+	
+	//使用存储临时文件(从流中直接读取文件并保存到临时文件,新的流是从临时文件中读取的)
 	@Path("upload")
 	@POST
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public String uploadFile(@FormDataParam("file") InputStream inputStream,
-			@FormDataParam("file") FormDataContentDisposition disposition, 
-			@Context HttpServletRequest request) throws IOException {
-		String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), "UTF-8");
-		String name = Calendar.getInstance().getTimeInMillis() + fileName;
-		String path = request.getServletContext().getRealPath("/");
-		path += File.separator + "data" + File.separator + name;
-		File file = new File(path);
-		try {
-			FileUtils.copyInputStreamToFile(inputStream, file);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			return "{\"success\": false}";
-		}
+	public String uploadFile(FormDataMultiPart form, @Context HttpServletRequest request) throws IOException {
+		//浏览器默认不会带,httpclent可以带
+		System.out.println(request.getCharacterEncoding());
+		Map<String, List<FormDataBodyPart>> map = form.getFields();
+		for(String key : map.keySet()){
+			FormDataBodyPart filePart = form.getField(key);
+			//流会自己关闭掉
+			InputStream inputStream = filePart.getValueAs(InputStream.class);  
+			FormDataContentDisposition disposition = filePart.getFormDataContentDisposition();
+			System.out.println(filePart.getMediaType());
+			if(MediaType.TEXT_PLAIN_TYPE.equals(filePart.getMediaType())){
+				System.out.println(key + "!" + filePart.getValue());
+			}
+			else {
+				String fileName = new String(disposition.getFileName().getBytes("ISO8859-1"), CHARSET);
+			    if(fileName != null && !fileName.trim().equals("")){
+					String name = Calendar.getInstance().getTimeInMillis() + fileName;
+					String path = request.getServletContext().getRealPath("/");
+					path += File.separator + "data" + File.separator + name;
+					File file = new File(path);
+					try {
+						FileUtils.copyInputStreamToFile(inputStream, file);
+					} catch (IOException ex) {
+						ex.printStackTrace();
+						return "{\"success\": false}";
+					}
+				}
+			}
+		}		
 		return "{\"success\": true}";
-
 	}
+	
+	
+	//从流中直接读取文件
+	@Path("upload2")
+	@POST
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String uploadFile(@Context HttpServletRequest request) throws IOException {
+		//浏览器默认不会带,httpclent可以带
+		System.out.println(request.getCharacterEncoding());
+		ServletFileUpload upload = new ServletFileUpload();
+		upload.setHeaderEncoding(CHARSET);
+		try{
+			FileItemIterator fileIterator = upload.getItemIterator(request);
+			while (fileIterator.hasNext()) {
+				FileItemStream item = fileIterator.next();
+				InputStream is = item.openStream();
+				try{
+					if (!item.isFormField()){
+						String fileName = item.getName();
+						if(fileName == null || fileName.trim().equals("")){
+							continue;
+						}				
+						String name = Calendar.getInstance().getTimeInMillis() + fileName;
+						String path = request.getServletContext().getRealPath("/");
+						path += File.separator + "data" + File.separator + name;
+						File file = new File(path);
+						FileUtils.copyInputStreamToFile(is, file);
+					}
+					else {
+						System.out.println(Streams.asString(is, CHARSET));
+					}
+				}finally{
+					if(null != is){
+						try {
+							is.close();
+						} catch (IOException ignore) {
+						}
+					}
+				}
+			}
+			return "{\"success\": true}";
+		}catch(IOException | FileUploadException e){
+			return "{\"success\": false}";
+		} 
+	}
+	
 	
 	@Path("download")
 	@GET
