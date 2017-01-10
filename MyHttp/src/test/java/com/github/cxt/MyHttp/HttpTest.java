@@ -3,7 +3,9 @@ package com.github.cxt.MyHttp;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
+import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,7 @@ public class HttpTest {
 		
 		HttpGet getRequest = new HttpGet("/api/jersey/user/1");
 		getRequest.setConfig(config);
+		getRequest.setHeader("Accept", "application/json");
 		getRequest.setHeader("Connection", "close");  
 		getRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 
@@ -67,7 +70,7 @@ public class HttpTest {
 		HttpEntity entity = httpResponse.getEntity();
 		logger.info(httpResponse.getStatusLine().getStatusCode() + "");
 		if (entity != null) {
-			result = EntityUtils.toString(entity);
+			result = EntityUtils.toString(entity, "utf-8");
 			logger.info(result);
 		}
 	}
@@ -100,6 +103,7 @@ public class HttpTest {
 		
 		HttpPut putRequest = new HttpPut("/api/jersey/user/3");
 		putRequest.setEntity(new StringEntity("{\"name\":\"aaa\",\"age\":1}", "UTF-8"));
+		
 		putRequest.setHeader("Connection", "close");  
 		putRequest.setHeader("Content-Type", "application/json;charset=UTF-8");
 
@@ -168,8 +172,8 @@ public class HttpTest {
 		HttpClient client = HttpClients.createDefault();
         HttpGet httpget = new HttpGet(url);  
         httpget.setHeader("Connection", "close");
-        HttpResponse response = client.execute(host, httpget);  
-
+        HttpResponse response = client.execute(host, httpget);
+        
         HttpEntity entity = response.getEntity();  
         InputStream is = entity.getContent();  
         
@@ -209,18 +213,28 @@ public class HttpTest {
 	}
 	
 	
-	private static String getFileName(HttpResponse response) {  
-        Header contentHeader = response.getFirstHeader("Content-Disposition");  
+	private static String getFileName(HttpResponse response) throws UnsupportedEncodingException {
+        Header contentHeader = response.getFirstHeader("Content-Disposition");
         String filename = null;  
         if (contentHeader != null) {  
             HeaderElement[] values = contentHeader.getElements();  
-            if (values.length == 1) {  
-                NameValuePair param = values[0].getParameterByName("filename");  
+            if (values.length == 1) {
+            	NameValuePair param = values[0].getParameterByName("filename*");
+            	if (param != null) {  
+            		filename = param.getValue().toString();
+            		int index = filename.indexOf("''");
+            		try{
+            			filename=URLDecoder.decode(filename.substring(index + 2), filename.substring(0, index));
+            			return filename;
+            		}catch(UnsupportedEncodingException ignore){
+            		}
+            		
+            	}
+            	
+                param = values[0].getParameterByName("filename");
                 if (param != null) {  
-                    //filename = new String(param.getValue().toString().getBytes(), "utf-8");  
-                    //filename=URLDecoder.decode(param.getValue(),"utf-8");  
-                    filename = param.getValue();  
-   
+                    filename = new String(param.getValue().toString().getBytes("ISO8859-1"), Charset.forName("utf-8"));
+                    return filename;
                 }  
             }  
         } 

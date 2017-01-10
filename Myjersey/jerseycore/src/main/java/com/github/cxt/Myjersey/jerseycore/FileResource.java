@@ -225,6 +225,7 @@ public class FileResource {
             }   
         };
         
+        
         String filename = file.getName();
         String userAgent = request.getHeader("User-Agent");
         //IE11 User-Agent字符串:Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
@@ -240,8 +241,8 @@ public class FileResource {
         //firefox浏览器User-Agent字符串: 
         //Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
         }
-        
-        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename).build();
+        //http://blog.csdn.net/candyguy242/article/details/17449191
+        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename + ";filename*=UTF-8''" + URLEncoder.encode(file.getName(), "UTF-8")).encoding("UTF-8").build();
 	}
 	
 	

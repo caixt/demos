@@ -123,7 +123,7 @@ public class JerseyResource {
     public User getUser(@PathParam("id") Integer id) {
     	User user = new User();
     	user.setAge(1);
-    	user.setName("demo");
+    	user.setName("'我啊(a!&");
     	user.setId(id);
         return user;
     }
