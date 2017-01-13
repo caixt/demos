@@ -49,6 +49,7 @@ public class HttpTest {
 		List<NameValuePair> data = URLEncodedUtils.parse(URI.create("/api/jersey/searchKey?key=key&a=%E6%88%91"), "utf-8");
 		System.out.println(data.size());
 		System.out.println(data.get(1).getValue());
+		System.out.println(URLDecoder.decode("%E6%88%91", "utf-8"));
 	}
 	
 	
@@ -168,7 +169,7 @@ public class HttpTest {
 	@Test
 	public void testDownload() throws ClientProtocolException, IOException{
 		//String url = "http://mirrors.aliyun.com/centos/7/os/x86_64/Packages/389-ds-base-1.3.4.0-19.el7.x86_64.rpm";
-		String url = "/api/file/download";
+		String url = "/data/1484272919623%E6%93%8D%E4%BD%9CXML.zip";
 		HttpClient client = HttpClients.createDefault();
         HttpGet httpget = new HttpGet(url);  
         httpget.setHeader("Connection", "close");
@@ -181,6 +182,7 @@ public class HttpTest {
         if(fileName == null){
         	fileName = url.substring(url.lastIndexOf('/') + 1);
         }
+        fileName = URLDecoder.decode(fileName, "utf-8");
         File file = new File("temp" + File.separator + UUID.randomUUID() + File.separator + fileName);  
         FileUtils.copyInputStreamToFile(is, file);
 	}

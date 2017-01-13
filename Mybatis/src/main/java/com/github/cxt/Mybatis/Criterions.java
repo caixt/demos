@@ -100,6 +100,13 @@ public class Criterions {
             }
             criteria.add(new Criterion(condition, value));
         }
+        
+        protected void addCriterion(String condition, Object[] value, String property) {
+            if (value == null) {
+                throw new RuntimeException("Value for " + property + " cannot be null");
+            }
+            criteria.add(new Criterion(condition, value, null, true));
+        }
 
         protected void addCriterion(String condition, Object value1, Object value2, String property) {
             if (value1 == null || value2 == null) {
@@ -173,8 +180,11 @@ public class Criterions {
             return (Criteria) this;
         }
         
-        public Criteria andCustom(String str) {
-        	addCriterion("(" + str + ")");
+        public Criteria andCustom(String str, Object... params) {
+        	for(int i = 0; i < params.length; i++){
+        		str = str.replaceFirst("\\?", "#{criterion.value[" + i + "]}");
+        	}
+        	addCriterion("(" + str + ")", params, "custom");
         	return (Criteria) this;
         }
 
@@ -196,12 +206,12 @@ public class Criterions {
 
         private boolean noValue;
 
-        private boolean singleValue;
+        protected boolean singleValue;
 
         private boolean betweenValue;
 
         private boolean listValue;
-
+        
         private String typeHandler;
 
         public String getCondition() {
@@ -231,7 +241,7 @@ public class Criterions {
         public boolean isListValue() {
             return listValue;
         }
-
+        
         public String getTypeHandler() {
             return typeHandler;
         }
@@ -253,6 +263,14 @@ public class Criterions {
             } else {
                 this.singleValue = true;
             }
+        }
+        
+        protected Criterion(String condition, Object value, String typeHandler, boolean custom) {
+            super();
+            this.condition = condition;
+            this.noValue = true;
+            this.value = value;
+            this.typeHandler = typeHandler; 
         }
 
         protected Criterion(String condition, Object value) {

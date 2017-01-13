@@ -3,11 +3,14 @@ package com.github.cxt.Mybatis.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.github.cxt.Mybatis.Criterions;
 import com.github.cxt.Mybatis.entity.User;
 
 public interface UserDao {
 
 	public User selectByUserId(Long id);
+	
+	public List<Map<String, Object>> selectByCriterions(Criterions criterions);
 	
 	public List<Map<String, Object>> selectAll();
 	

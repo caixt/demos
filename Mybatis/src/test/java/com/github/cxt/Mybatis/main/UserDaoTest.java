@@ -13,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.github.cxt.Mybatis.Criterions;
 import com.github.cxt.Mybatis.dao.UserDao;
 import com.github.cxt.Mybatis.entity.User;
 
@@ -103,4 +105,11 @@ public class UserDaoTest {
 		System.out.println(userDao.selectByStatic());
 	}
 
+	
+	@Test
+	public void test11(){
+		Criterions criterions = new Criterions();
+		criterions.createCriteria().andCustom("name like '%a%' or name like ?", "%b%");
+		System.out.println(userDao.selectByCriterions(criterions).size());
+	}
 }
