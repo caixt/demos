@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import jline.Completor;
-import jline.ConsoleReader;
+import jline.console.ConsoleReader;
+import jline.console.completer.Completer;
 
 /**
  * 备注 在eclpse中运行没效果
@@ -41,11 +40,11 @@ public class JlineCliMain {
 	
 	public static void main(String[] args) throws IOException {
 		ConsoleReader reader = new ConsoleReader();
-		reader.addCompletor(new Completor() {
+		
+		reader.addCompleter(new Completer() {
 			
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
-			public int complete(String buffer, int cursor, List candidates) {
+			public int complete(String buffer, int cursor, List<CharSequence> candidates) {
 				buffer = buffer.substring(0,cursor);
 				for (String cmd : commandMap.keySet()) {
 		            if (cmd.startsWith( buffer )) {
@@ -56,6 +55,7 @@ public class JlineCliMain {
 				return buffer.lastIndexOf(" ")+1;
 			}
 		});
+		
 		String line;
         while ((line = (String)reader.readLine("caixt>")) != null) {
         	if(line.trim().equals("")){
