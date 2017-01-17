@@ -12,9 +12,10 @@ import jline.ConsoleReader;
 
 /**
  * 备注 在eclpse中运行没效果
+ * 参考zookeeper的启动命令
  * @date 2016年9月7日
  */
-public class JlineMain {
+public class JlineCliMain {
 
 	protected static final Map<String,String> commandMap = new HashMap<String,String>();
 	
@@ -28,6 +29,13 @@ public class JlineMain {
         commandMap.put("get","path [watch]");
         commandMap.put("ls","path [watch]");
         commandMap.put("quit","");
+    }
+	
+    static void usage() {
+        System.err.println("CxtCliDemo -server host:port cmd args");
+        for (String cmd : commandMap.keySet()) {
+            System.err.println("\t"+cmd+ " " + commandMap.get(cmd));
+        }
     }
 	 
 	
@@ -44,6 +52,7 @@ public class JlineMain {
 		                candidates.add(cmd);
 		            }
 		        }
+				//可以加入自己的业务
 				return buffer.lastIndexOf(" ")+1;
 			}
 		});
@@ -53,11 +62,19 @@ public class JlineMain {
         		continue;
         	}
         	MyCommandOptions opts = new MyCommandOptions(line);
-        	System.out.println(opts);
-        	if(line.startsWith("quit")){
+            if (opts.cmdArgs.size() < 1) {
+                usage();
+                continue;
+            }
+            if (!commandMap.containsKey(opts.command)) {
+                usage();
+                continue;
+            }
+        	else if(line.startsWith("quit")){
         		 System.out.println("Quitting...");
                  System.exit(0);
         	}
+        	System.out.println(opts);
         }
 	}
 	
@@ -86,5 +103,4 @@ public class JlineMain {
 		}
         
 	}
-
 }
