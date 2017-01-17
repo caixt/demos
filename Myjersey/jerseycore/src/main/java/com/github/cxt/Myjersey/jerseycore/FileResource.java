@@ -122,7 +122,7 @@ public class FileResource {
 			InputStream inputStream = filePart.getValueAs(InputStream.class);  
 			FormDataContentDisposition disposition = filePart.getFormDataContentDisposition();
 			System.out.println(filePart.getMediaType());
-			if(MediaType.TEXT_PLAIN_TYPE.equals(filePart.getMediaType())){
+			if(disposition.getFileName() == null){//文本内容
 				System.out.println(key + "!" + filePart.getValue());
 			}
 			else {
@@ -243,6 +243,20 @@ public class FileResource {
         }
         //http://blog.csdn.net/candyguy242/article/details/17449191
         return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename + ";filename*=UTF-8''" + URLEncoder.encode(file.getName(), "UTF-8")).encoding("UTF-8").build();
+	}
+	
+	
+	@Path("download3")
+	@GET
+	public Response downloadFile() throws IOException {
+		String file = "test.txt";
+		Response.ResponseBuilder responseBuilder = Response.status(200);
+		responseBuilder.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
+		responseBuilder.header("Content-Type", "application/octet-stream");
+		//https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
+		responseBuilder.header("X-Accel-Redirect", "/data/" + file);
+		return responseBuilder.build();
+		
 	}
 	
 	

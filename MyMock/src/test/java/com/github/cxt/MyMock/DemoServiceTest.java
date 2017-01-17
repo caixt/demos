@@ -11,13 +11,20 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
 public class DemoServiceTest {
-
+	
 	@Test
 	public void test1(){
 		DemoService demoService = mock(DemoService.class);
 		when(demoService.doSth1(Mockito.eq("aaa"), Mockito.anyInt())).thenReturn("result");
 		Assert.assertEquals("result", demoService.doSth1("aaa", 1));
 		verify(demoService, Mockito.atLeast(1)).doSth1("aaa", 1);
+		
+		Mockito.doThrow(new RuntimeException()).when(demoService).pluckFruits();
+		try{
+			demoService.pluckFruits();
+		}catch(Exception e ){
+			System.out.println("!");
+		}
 	}
 	
 	@Test
