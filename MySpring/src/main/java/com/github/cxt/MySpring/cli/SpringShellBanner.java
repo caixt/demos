@@ -1,6 +1,7 @@
 package com.github.cxt.MySpring.cli;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.Order;
 import org.springframework.shell.plugin.BannerProvider;
@@ -15,12 +16,15 @@ public class SpringShellBanner extends SpringShellProvider implements BannerProv
 
 	private static final String BANNER = "MySrpingBanner.txt";
 	private static final String ASSISTANCE = "Welcome to MyShell. For assistance type help.";
+	
+	private final static Logger logger = Logger.getLogger(SpringShellBanner.class);
 
     @Value("${MySrping.version}")
     private String version;
 
 	@Override
 	public String getBanner() {
+		logger.info("!!!!!!!!!");
 		StringBuilder sb = new StringBuilder();
 		try (InputStream in = ClassLoader.getSystemResourceAsStream(BANNER)) {
 			sb.append(IOUtils.toString(in));

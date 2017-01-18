@@ -218,8 +218,8 @@
 			<groupId>org.springframework.shell</groupId>
 			<artifactId>spring-shell</artifactId>
 			<version>1.1.0.RELEASE</version>
-			<scope>compile</scope>
 		</dependency>
+		
   </dependencies>
   
   
@@ -264,7 +264,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<includeGroupIds>jline,commons-cli,org.springframework,org.springframework.shell,commons-logging,commons-io</includeGroupIds>
+							<includeGroupIds>jline,commons-cli,org.springframework,org.springframework.shell,commons-logging,commons-io,org.slf4j,ch.qos.logback</includeGroupIds>
 							<outputDirectory>
 								lib
 							</outputDirectory>
