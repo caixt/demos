@@ -37,7 +37,7 @@ public class Main {
 		interpreter = new PythonInterpreter();
 		interpreter.setLocals(new PyStringMap());
 		Map<String, Serializable> params = new HashMap<>();
-		params.put("x", "abcd");
+		params.put("x", "aaaaaaaaa");
 		for (Map.Entry<String, Serializable> entry : params.entrySet()) {
 			interpreter.set(entry.getKey(), entry.getValue());
 		}
@@ -50,6 +50,7 @@ public class Main {
 			PyObject value = interpreter.get(key);
 			Serializable javaValue = resolveJythonObjectToJavaExec(value, key);
 			returnValue.put(key, javaValue);
+			System.out.println(key + "!" + javaValue);
 		}
 		System.out.println("!");
 	}
@@ -64,6 +65,37 @@ public class Main {
 		prepareInterpreterContext(context);
 		Serializable value = eval(interpreter, script);
 		System.out.println(value);
+	}
+	
+	
+	//-Dpython.path=D:\git\cslang\python-lib
+	@Test
+	public void test3() throws FileNotFoundException, URISyntaxException {
+		interpreter = new PythonInterpreter();
+		interpreter.setLocals(new PyStringMap());
+		Map<String, Serializable> params = new HashMap<>();
+		params.put("ssl", 0);
+		params.put("host", "127.0.0.1");
+		params.put("port", "8088");
+		params.put("attempts", 1);
+		params.put("time_to_sleep", 1);
+		params.put("attempt_timeout", 10);
+		
+		for (Map.Entry<String, Serializable> entry : params.entrySet()) {
+			interpreter.set(entry.getKey(), entry.getValue());
+		}
+		File file = new File(this.getClass().getResource("testPython.py").toURI());
+		interpreter.execfile(new FileInputStream(file));
+		Iterator<PyObject> localsIterator = interpreter.getLocals().asIterable().iterator();
+		Map<String, Serializable> returnValue = new HashMap<>();
+		while (localsIterator.hasNext()) {
+			String key = localsIterator.next().asString();
+			PyObject value = interpreter.get(key);
+			Serializable javaValue = resolveJythonObjectToJavaExec(value, key);
+			returnValue.put(key, javaValue);
+			System.out.println(key + "!" + javaValue);
+		}
+		System.out.println("!");
 	}
 	
 	
