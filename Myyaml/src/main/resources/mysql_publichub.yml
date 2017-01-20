@@ -1,9 +1,0 @@
-data:
-  sql: select create_time createTime,hub_type hubType,file_name fileName,id,modify_time modifyTime,size,type from file_hub WHERE tenant_id = "3cc40c1b2ded40958ff64efbd291707e" and hub_type = 1 order by create_time desc LIMIT 0,10
-  extend:
-    - content
-    - createUser: id,name
-    - modifyUser: id,name	
-
-total:
-  sql: select count(*) total from file_hub WHERE tenant_id = "3cc40c1b2ded40958ff64efbd291707e" and hub_type = 1
