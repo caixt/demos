@@ -64,7 +64,7 @@
   </select>
   
   <select id="selectByStatic" resultMap="BaseResultMap">
-   		select * from user where user_type = ${@com.github.cxt.Mybatis.entity.UserTypeEnmu@CODE2.getVal()}
+   		select * from user where user_type = ${@com.github.cxt.Mybatis.entity.UserTypeEnmu@CODE2.getVal()} and user_type = ${@com.github.cxt.Mybatis.entity.UserTypeEnmu@TYPE}
   </select>
   
   <!-- 
