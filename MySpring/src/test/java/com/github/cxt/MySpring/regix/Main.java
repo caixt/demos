@@ -113,5 +113,10 @@ public class Main {
 		}
 	}
 	
+	@Test
+	public void test_4(){
+		System.out.println(Pattern.matches("^\\$\\{.*\\}$", "${abcd}"));
+	}
+	
 	
 }
