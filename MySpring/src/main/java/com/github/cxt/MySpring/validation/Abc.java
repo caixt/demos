@@ -1,5 +1,6 @@
 package com.github.cxt.MySpring.validation;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
@@ -10,7 +11,9 @@ public class Abc {
 	private String str1;
 	@NotNull(groups=GroupA.class)
 	private String str2;
-//	@Valid
+	@Valid
+	@NotNull
+	public B b;
 	
 	public String getStr1() {
 		return str1;
@@ -23,5 +26,11 @@ public class Abc {
 	}
 	public void setStr2(String str2) {
 		this.str2 = str2;
+	}
+	public B getB() {
+		return b;
+	}
+	public void setB(B b) {
+		this.b = b;
 	}
 }
