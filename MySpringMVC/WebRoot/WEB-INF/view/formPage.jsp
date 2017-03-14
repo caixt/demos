@@ -23,7 +23,7 @@
     </style>
   </head>
   <body>
-	<spring:message code="Size.subscriber.name" arguments="111,222" argumentSeparator=","/>
+	<spring:message code="Hell" arguments="caixt" argumentSeparator=","/>
 	<div id="container">
 	
 		<h2>Subscribe to The Newsletter!</h2>
