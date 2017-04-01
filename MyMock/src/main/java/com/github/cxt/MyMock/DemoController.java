@@ -2,7 +2,6 @@ package com.github.cxt.MyMock;
 
 
 
-public interface DemoController 
-{
+public interface DemoController {
 	String test1();
 }

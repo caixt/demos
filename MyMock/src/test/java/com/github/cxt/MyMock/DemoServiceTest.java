@@ -3,7 +3,6 @@ package com.github.cxt.MyMock;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -30,15 +29,19 @@ public class DemoServiceTest {
 	@Test
 	public void test2(){
 		DemoService demoService = mock(DemoService.class);
-		when(demoService.doSth2(Mockito.anyString(), Mockito.anyString())).then(new Answer<String>() {
+		when(demoService.doEntity(Mockito.anyString())).then(new Answer<Entity>() {
 
 			@Override
-			public String answer(InvocationOnMock invocation) throws Throwable {
-				String a0 = invocation.getArgumentAt(0, String.class);
-				String a1 = invocation.getArgumentAt(1, String.class);
-				return a0 + a1;
+			public Entity answer(InvocationOnMock invocation) throws Throwable {
+				String id = invocation.getArgumentAt(0, String.class);
+				Entity entity = mock(Entity.class);
+				when(entity.getId()).thenReturn(id);
+				when(entity.getName()).thenReturn("name");
+				return entity;
 			}
 		});
-		Assert.assertEquals("aaabbb", demoService.doSth2("aaa", "bbb"));
+		Entity entity = demoService.doEntity("id");
+		Assert.assertEquals("id", entity.getId());
+		Assert.assertEquals("name", entity.getName());
 	}
 }

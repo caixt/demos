@@ -6,7 +6,7 @@ public interface DemoService {
 	
 	public String doSth1(String s, Integer n);
 	
-	public String doSth2(String s1, String s2);
+	public Entity doEntity(String id);
 	
 	public void pluckFruits();
 }
