@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 import java.io.IOException;
+import java.nio.charset.Charset;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -25,10 +27,11 @@ public class HttpMockTest {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Rule
     public MockServerRule server = new MockServerRule(this, 8080);
+//	会被MockServerRule的role 进反射注入
+	private MockServerClient mockClient;
 	
 	@Before
 	public void before(){
-		MockServerClient mockClient = new MockServerClient("127.0.0.1", 8080);
         mockClient.when(
                 request()
                         .withPath("/api/v1/login")
@@ -37,7 +40,7 @@ public class HttpMockTest {
         ).respond(
                 response()
                         .withStatusCode(200)
-                        .withBody("{\"success\": \"true\"}")
+                        .withBody("{\"success\": \"true\", \"message\":\"登录成功\"}".getBytes(Charset.forName("utf-8")))
         );
 	}
 	
@@ -57,7 +60,7 @@ public class HttpMockTest {
 		HttpEntity entity = httpResponse.getEntity();
 		logger.info(httpResponse.getStatusLine().getStatusCode() + "");
 		if (entity != null) {
-			result = EntityUtils.toString(entity);
+			result = EntityUtils.toString(entity, "utf-8");
 			logger.info(result);
 		}
 	}
