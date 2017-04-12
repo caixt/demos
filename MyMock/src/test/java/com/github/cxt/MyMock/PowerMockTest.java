@@ -10,11 +10,9 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.powermock.modules.junit4.PowerMockRunnerDelegate;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -28,9 +26,6 @@ import static org.mockito.Mockito.when;
 @ContextConfiguration(classes = PowerMockTest.Context.class)
 @PrepareForTest({ DemoStatic.class})
 public class PowerMockTest {
-	
-    @Autowired
-	private DemoService demoService;
 
 	@Autowired
 	private DemoController controller;
@@ -65,8 +60,13 @@ public class PowerMockTest {
 	}
 	
 	
-	@ImportResource("classpath:/test-spring-context.xml")
+	//@ImportResource("classpath:/test-spring-context.xml")
 	public static class Context {
+		
+		@Bean
+		DemoController demoController(){
+			return new DemoControllerImpl();
+		}
 		
 		@Bean
 		DemoService demoService(){

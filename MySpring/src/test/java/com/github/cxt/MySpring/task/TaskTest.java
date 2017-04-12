@@ -9,7 +9,7 @@ import org.springframework.scheduling.support.ScheduledMethodRunnable;
 public class TaskTest {
 
 	
-	@SuppressWarnings({ "unused", "resource" })
+	@SuppressWarnings("resource")
 	public static void main(String[] args) throws NoSuchMethodException {
 		ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("com/github/cxt/MySpring/task/spring-task-content.xml");
 		

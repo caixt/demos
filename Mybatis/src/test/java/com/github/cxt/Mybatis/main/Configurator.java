@@ -22,9 +22,9 @@ public class Configurator {
     DataSource dataSource(){
 		BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("com.mysql.jdbc.Driver");
-        ds.setUrl("jdbc:mysql://127.0.0.1:3306/mybatis?useUnicode=true&amp;characterEncoding=UTF-8");
+        ds.setUrl("jdbc:mysql://127.0.0.1:3306/mybatis?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8");
         ds.setUsername("root");
-        ds.setPassword("xiantong");
+        ds.setPassword("12345678");
         return ds;
     }
 	
