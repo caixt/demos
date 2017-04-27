@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.cxt</groupId>
+  <artifactId>MySpringbootSpringMVC</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>spring-boot-jsp Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  <!-- spring boot parent节点，引入这个之后，在下面和spring boot相关的就不需要引入版本了; -->
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.1.RELEASE</version>
+	</parent>
+  
+  
+  
+  <properties>
+  	 <!-- 指定一下jdk的版本 ，这里我们使用jdk 1.8 ,默认是1.6 -->
+    <java.version>1.8</java.version>
+  </properties>
+  
+  
+  <dependencies>
+    	<!-- web支持: 1、web mvc; 2、restful; 3、jackjson支持; 4、aop ........ -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+    	
+    	<!-- servlet 依赖.-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+    	 
+		<!-- 
+		    	JSTL（JSP Standard Tag Library，JSP标准标签库)是一个不断完善的开放源代码的JSP标签库，是由apache的jakarta小组来维护的。
+		-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+    	 
+    	
+    	<!-- tomcat 的支持. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
+    	
+    	
+  </dependencies>
+  <build>
+    <finalName>springmvc</finalName>
+  </build>
+</project>
