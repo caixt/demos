@@ -67,6 +67,12 @@
    		select * from user where user_type = ${@com.github.cxt.Mybatis.entity.UserTypeEnmu@CODE2.getVal()} and user_type = ${@com.github.cxt.Mybatis.entity.UserTypeEnmu@TYPE}
   </select>
   
+  <select id="selectByTwoCriterions" resultMap="BaseResultMap">
+   		select * from user <include refid="com.github.cxt.Mybatis.dao.base.Common_Where_Clause_1"></include>
+  		union all
+  		select * from user <include refid="com.github.cxt.Mybatis.dao.base.Common_Where_Clause_2"></include>
+  </select>
+  
   <!-- 
     <sql id="Example_Where_Clause" >
     <where >

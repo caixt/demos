@@ -2,7 +2,6 @@ package com.github.cxt.Mybatis.dao;
 
 import java.util.List;
 import java.util.Map;
-
 import com.github.cxt.Mybatis.Criterions;
 import com.github.cxt.Mybatis.entity.User;
 
@@ -27,4 +26,6 @@ public interface UserDao {
 	public String selectUUidByUserId(Long id);
 	
 	public List<User> selectByStatic();
+	
+	public List<User> selectByTwoCriterions(Criterions criterions1, Criterions criterions2);
 }

@@ -112,4 +112,13 @@ public class UserDaoTest {
 		criterions.createCriteria().andCustom("name like '%a%' or name like ?", "%b%");
 		System.out.println(userDao.selectByCriterions(criterions).size());
 	}
+	
+	@Test
+	public void test12(){
+		Criterions criterions1 = new Criterions();
+		criterions1.createCriteria().andColumnEqualTo("name", "aaa");
+		Criterions criterions2 = new Criterions();
+		criterions2.createCriteria().andColumnEqualTo("user_type", 1);
+		System.out.println(userDao.selectByTwoCriterions(criterions1, criterions2).size());
+	}
 }
