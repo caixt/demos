@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.junit.Test;
 
-public class Main {
+public class Regex {
 	
 	@Test
 	public void test0(){
