@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.expression.EvaluationContext;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.ParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.test.context.ContextConfiguration;
@@ -82,6 +83,28 @@ public class Spel {
 		map.put("$tables", tables);
 		System.out.println(eval_spring(String.class, "#$tables[0].id + #aaa", new HashMap<>(map)));
 		
+	}
+	
+	@Test
+	public void test4(){
+		ExpressionParser parser = new SpelExpressionParser();
+		ParserContext parserContext = new ParserContext() {  
+	        @Override  
+	         public boolean isTemplate() {  
+	            return true;  
+	        }  
+	        @Override  
+	        public String getExpressionPrefix() {  
+	            return "#{";  
+	        }  
+	        @Override  
+	        public String getExpressionSuffix() {  
+	            return "}";  
+	        }  
+	    };
+	    String str = "#{'aaaa'.toUpperCase()}";
+	    String msg = parser.parseExpression(str, parserContext).getValue(String.class);
+		System.out.println(msg);
 	}
 	
 	
