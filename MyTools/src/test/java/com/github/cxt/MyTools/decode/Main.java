@@ -1,7 +1,6 @@
 package com.github.cxt.MyTools.decode;
 
 import java.io.File;
-import java.security.MessageDigest;
 import org.junit.Test;
 
 public class Main {

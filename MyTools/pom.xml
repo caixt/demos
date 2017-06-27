@@ -36,6 +36,14 @@
 	    <artifactId>jsch</artifactId>
 	    <version>0.1.50</version>
 	</dependency>
+	
+	<dependency>
+	    <groupId>commons-io</groupId>
+		  <artifactId>commons-io</artifactId>
+		  <version>2.3</version>
+	</dependency>
+	
+	
   </dependencies>
   
   <build>

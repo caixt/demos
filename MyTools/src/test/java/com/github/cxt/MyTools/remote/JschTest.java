@@ -20,7 +20,7 @@ public class JschTest {
 	
 	@Test
 	public void test3() throws Exception{
-		ShellUtils.exec("echo aaaa \n ll\necho bbbb\n", "root", "12345678", "10.1.50.130");
+		ShellUtils.exec("cat /root/server/openAPI.yaml", "root", "12345678", "10.1.50.130");
 	}
 	
 	@Test

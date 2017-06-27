@@ -1,13 +1,12 @@
 package com.github.cxt.MyTools.remote;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;  
 import java.io.InputStream;  
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import org.apache.commons.io.IOUtils;
 import com.jcraft.jsch.Channel;  
 import com.jcraft.jsch.ChannelExec;
 import com.jcraft.jsch.ChannelSftp;
@@ -100,28 +99,23 @@ public class ShellUtils {
     public static void exec(String command, String user, String passwd, String host) throws Exception {  
     	Session session = connect(user, passwd, host);  
           
-        BufferedReader reader = null;  
         ChannelExec channel = null;  
   
         try {  
             channel = (ChannelExec) session.openChannel("exec");  
-            channel.setCommand(command);  
-                  
-            channel.setInputStream(null);  
-            channel.setErrStream(System.err);  
-            channel.connect();  
-            InputStream in = channel.getInputStream();  
-            reader = new BufferedReader(new InputStreamReader(in));  
-            String buf = null;  
-            while ((buf = reader.readLine()) != null) {  
-                System.out.println(buf);  
-            }  
+            PipedOutputStream errPipe = new PipedOutputStream();
+            PipedInputStream errIs = new PipedInputStream(errPipe);
+            InputStream is = channel.getInputStream();
+            	
+
+	        channel.setInputStream(null);
+	        channel.setErrStream(errPipe);
+	        channel.setCommand(command);
+
+	        channel.connect();
+	        System.out.println(IOUtils.toString(is));
+	        System.out.println(IOUtils.toString(errIs));
         } finally {  
-            try {  
-                reader.close();  
-            } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
             channel.disconnect();  
             session.disconnect();  
         }  
