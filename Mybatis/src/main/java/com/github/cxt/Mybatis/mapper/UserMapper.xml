@@ -6,7 +6,8 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="user_type" property="userType" jdbcType="INTEGER"/>
     <result column="uuid" property="uuid" jdbcType="BINARY" />
-    <result column="info" property="info" jdbcType="LONGVARCHAR" typeHandler="com.github.cxt.Mybatis.JSONObjectHandler"/>
+    <result column="info" property="info" jdbcType="LONGVARCHAR" typeHandler="com.github.cxt.Mybatis.JSONObjectHandler" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" typeHandler="com.github.cxt.Mybatis.STRING"/>
   </resultMap>
   
   <resultMap id="detailMap" type="com.github.cxt.Mybatis.entity.User" extends="BaseResultMap">
@@ -50,9 +51,9 @@
   </insert>
   
   <insert id="insert" parameterType="com.github.cxt.Mybatis.entity.User" useGeneratedKeys="true" keyProperty="id">
-    insert into user (name, user_type)
+    insert into user (name, user_type, classes)
     values 
-    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER})
+    (#{name,jdbcType=VARCHAR}, #{userType,jdbcType=INTEGER}, #{classes,jdbcType=VARCHAR})
   </insert>
   
   <select id="selectByUserUuid" resultMap="BaseResultMap" parameterType="java.lang.String" >

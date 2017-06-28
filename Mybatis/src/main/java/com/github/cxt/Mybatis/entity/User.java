@@ -1,5 +1,7 @@
 package com.github.cxt.Mybatis.entity;
 
+import java.util.Arrays;
+
 import com.alibaba.fastjson.JSONObject;
 
 public class User {
@@ -9,6 +11,7 @@ public class User {
 	private UserType type;
 	private String uuid;
 	private JSONObject info;
+	private String[] classes;
 	
 	public Long getId() {
 		return id;
@@ -46,9 +49,16 @@ public class User {
 	public void setInfo(JSONObject info) {
 		this.info = info;
 	}
+	public String[] getClasses() {
+		return classes;
+	}
+	public void setClasses(String[] classes) {
+		this.classes = classes;
+	}
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", userType=" + userType + ", type=" + type + ", uuid=" + uuid
-				+ ", info=" + info + "]";
+				+ ", info=" + info + ", classes=" + Arrays.toString(classes) + "]";
 	}
+
 }

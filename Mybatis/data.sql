@@ -25,13 +25,14 @@ CREATE TABLE `user` (
   `user_type` int(11) NOT NULL,
   `uuid` binary(16) DEFAULT NULL,
   `info` text,
+  `classes` varchar(100),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('1', 'aaa', '1', 0xBD429E84626246B89C29BB1C52E8DD95, '{\"aaa\":123}');
+INSERT INTO `user` VALUES ('1', 'aaa', '1', 0xBD429E84626246B89C29BB1C52E8DD95, '{\"aaa\":123}', null);
 
 -- ----------------------------
 -- Table structure for `usertype`

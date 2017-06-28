@@ -45,6 +45,7 @@
 				<!-- <bean class="com.github.cxt.Mybatis.JSONArrayHandler"></bean>-->
 				<bean class="com.github.cxt.Mybatis.JSONObjectHandler"></bean>
 				<bean class="com.github.cxt.Mybatis.UUIDTypeHandler"></bean>
+				<bean class="com.github.cxt.Mybatis.STRING"></bean>
 				<!-- 另两个采用具体map的配置 -->
 			</list>
 		</property>

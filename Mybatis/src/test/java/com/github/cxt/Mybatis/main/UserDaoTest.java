@@ -84,6 +84,8 @@ public class UserDaoTest {
 		User user = new User();
 		user.setName("aaa");
 		user.setUserType(1);
+		user.setClasses(new String[]{"a","b"});
+		
 		System.out.println(userDao.insert(user));
 	}
 
