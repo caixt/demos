@@ -52,4 +52,17 @@
 			</plugin>
 		</plugins>
   </build>
+  
+    <distributionManagement>
+        <snapshotRepository>
+            <id>test-snapshots</id>
+            <name>snapshots</name>
+            <url>http://10.1.50.130:18081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+        <repository>
+            <id>test-releases</id>
+            <name>User Project Release</name>
+            <url>http://10.1.50.130:18081/nexus/content/repositories/releases/</url>
+        </repository>
+  </distributionManagement>
 </project>
