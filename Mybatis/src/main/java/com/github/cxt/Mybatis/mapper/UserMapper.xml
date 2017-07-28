@@ -14,6 +14,14 @@
     <association column="id" property="type" select="com.github.cxt.Mybatis.dao.UserTypeDao.selectById" />
   </resultMap>
   
+  <resultMap id="errMap" type="com.github.cxt.Mybatis.entity.User" >
+    <!-- <id column="id" property="id" jdbcType="BIGINT" /> -->
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <association property="type" javaType="com.github.cxt.Mybatis.entity.UserType">
+		<id column="user_type" property="id" jdbcType="INTEGER" />
+    </association>
+  </resultMap>
+  
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
    		select * from user where id = #{id, jdbcType=INTEGER}
   </select>
@@ -74,6 +82,9 @@
   		select * from user <include refid="com.github.cxt.Mybatis.dao.base.Common_Where_Clause_2"></include>
   </select>
   
+  <select id="selectNumberError" resultMap="errMap">
+   		select id,name,user_type from user;
+  </select>
   <!-- 
     <sql id="Example_Where_Clause" >
     <where >

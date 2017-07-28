@@ -123,4 +123,11 @@ public class UserDaoTest {
 		criterions2.createCriteria().andColumnEqualTo("user_type", 1);
 		System.out.println(userDao.selectByTwoCriterions(criterions1, criterions2).size());
 	}
+	
+	@Test
+	public void test13(){
+		//id column 的值相同，或不存在该配置。并且包含association
+		//存在查询值和结果数据量不相同的情况。mybatis处理的bug
+		System.out.println(userDao.selectNumberError().size());
+	}
 }

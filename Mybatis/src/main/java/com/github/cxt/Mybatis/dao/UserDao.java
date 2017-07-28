@@ -28,4 +28,6 @@ public interface UserDao {
 	public List<User> selectByStatic();
 	
 	public List<User> selectByTwoCriterions(Criterions criterions1, Criterions criterions2);
+
+	public  List<User> selectNumberError();
 }
