@@ -55,7 +55,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Context;
@@ -106,6 +108,23 @@ public class FileResource {
 //		return "{\"success\": true}";
 //	}
 	
+	
+	@Path("put/{path}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String putFile(InputStream inputStream, @PathParam("path") String name, @Context HttpServletRequest request) throws IOException {
+		String path = request.getServletContext().getRealPath("/");
+		path += File.separator + "data" + File.separator + name;
+		File file = new File(path);
+		try {
+			FileUtils.copyInputStreamToFile(inputStream, file);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return "{\"success\": false}";
+		}
+		return "{\"success\": true}";
+	}
 	
 	//使用存储临时文件(从流中直接读取文件并保存到临时文件,新的流是从临时文件中读取的)
 	@Path("upload")
