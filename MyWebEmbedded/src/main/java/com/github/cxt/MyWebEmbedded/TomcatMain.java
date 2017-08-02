@@ -1,13 +1,10 @@
 package com.github.cxt.MyWebEmbedded;
 
 import java.io.File;
-
 import javax.servlet.ServletException;
-
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.core.AprLifecycleListener;
 import org.apache.catalina.core.StandardServer;
-import org.apache.catalina.startup.ContextConfig;
 import org.apache.catalina.startup.Tomcat;
 
 public class TomcatMain {
@@ -25,10 +22,7 @@ public class TomcatMain {
 		StandardServer server = (StandardServer) tomcat.getServer();
 		AprLifecycleListener listener = new AprLifecycleListener();
 		server.addLifecycleListener(listener);
-
-		ContextConfig conf = new ContextConfig();
-		conf.setDefaultWebXml("WEB-INF/web.xml");
-		tomcat.addWebapp(tomcat.getHost(), "/", WEB_APP_PATH, conf);
+		tomcat.addWebapp("/", WEB_APP_PATH);
 
 		tomcat.start();
 		tomcat.getServer().await();

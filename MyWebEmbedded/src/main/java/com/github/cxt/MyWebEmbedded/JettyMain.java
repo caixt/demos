@@ -14,8 +14,8 @@ public class JettyMain
 	public static void main(String[] args) {
 
 		webContext.setContextPath("/");
-		webContext.setDescriptor("WebRoot/WEB-INF/web.xml");
-		webContext.setParentLoaderPriority(true);
+//		webContext.setDescriptor("WebRoot/WEB-INF/web.xml");
+//		webContext.setParentLoaderPriority(true);
 		webContext.setResourceBase("WebRoot");
 		Server server = new Server(8080);
 		server.setHandler(webContext);
