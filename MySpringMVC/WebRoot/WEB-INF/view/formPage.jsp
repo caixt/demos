@@ -9,7 +9,7 @@
   	<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 	<meta content="utf-8" http-equiv="encoding" />
     <title>Sample Form</title>
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="/js/jquery-2.2.0.min.js"></script>
     <style>
     	body { background-color: #eee; font: helvetica; }
     	#container { width: 500px; background-color: #fff; margin: 30px auto; padding: 30px; border-radius: 5px; }

@@ -21,6 +21,7 @@
   </mvc:interceptor>  
  </mvc:interceptors>  
 
+  <mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
  
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
       <property name="prefix" value="/WEB-INF/view/" />

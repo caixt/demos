@@ -45,9 +45,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.http.HttpServletRequest;
@@ -78,6 +82,100 @@ import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 public class FileResource {
 	
 	private static String CHARSET = "UTF-8";
+	private static int MAX_NAME_SIZE = 50;
+	
+	@Path("put/{path}")
+	@PUT
+	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String putFile(InputStream inputStream, @PathParam("path") String name, @Context HttpServletRequest request) throws IOException {
+		String path = request.getServletContext().getRealPath("/");
+		path += File.separator + "data" + File.separator + name;
+		File file = new File(path);
+		try {
+			FileUtils.copyInputStreamToFile(inputStream, file);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return "{\"success\": false}";
+		}
+		return "{\"success\": true}";
+	}
+	
+	@Path("store/{path:.*}")
+	@GET
+	public Response storeInfo(@PathParam("path") String path, @Context HttpServletRequest request) throws Exception{
+		File file = new File(request.getServletContext().getRealPath("data/" + path));
+		if(file.exists()){
+			if(file.isDirectory()){
+				return listfile(path, file);
+			}
+			else{
+				String mt = new MimetypesFileTypeMap().getContentType(file);
+				//文件名兼容性可能不够,兼容性好点参考download2
+		        return Response.ok(file, mt)
+		                .header("Content-disposition","attachment;filename=" + file.getName() + ";filename*=UTF-8''" + URLEncoder.encode(file.getName(), "UTF-8")) 
+		                .header("ragma", "No-cache").header("Cache-Control", "no-cache").build();
+			}
+		}
+		StringBuilder sb = new StringBuilder();
+		sb.append("<html>").append("\r\n")
+		.append("<head><title>404 Not Found</title></head>").append("\r\n")
+		.append("<body bgcolor=\"white\">").append("\r\n")
+		.append("<center><h1>404 Not Found</h1></center>").append("\r\n")
+		.append("</body>").append("\r\n")
+		.append("</html>");
+		return Response.ok(sb.toString()).header("Content-Type", "text/html;charset=utf-8").build();
+	}
+	
+	private Response listfile(String path, File dir) throws UnsupportedEncodingException{
+		StringBuilder sb = new StringBuilder();
+		String title = replace(path);
+		sb.append("<html>").append("\r\n")
+		.append("<head><title>Index of " + title + "</title></head>").append("\r\n")
+		.append("<body bgcolor=\"white\">").append("\r\n")
+		.append("<h1>Index of " + title +"</h1><hr><pre><a href=\"../\">../</a>").append("\r\n");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy HH:mm", Locale.ENGLISH);
+		for(File f : dir.listFiles()){
+			byte[] bytes = f.getName().getBytes(CHARSET);
+			String name = null;
+			StringBuilder fill = new StringBuilder();
+			if(bytes.length > MAX_NAME_SIZE){
+				name = new String(bytes, 0, MAX_NAME_SIZE - 3) + "..>";
+			}
+			else {
+				name = f.getName();
+				for(int i = bytes.length; i < MAX_NAME_SIZE; i++){
+					fill.append(" ");
+				}
+			}
+			sb.append("<a href=\"").append(URLEncoder.encode(f.getName(), CHARSET));
+			if(f.isDirectory()){
+				sb.append("/");	
+			}
+			sb.append("\">")
+			.append(replace(name))
+			.append("</a>")
+			.append(fill)
+			.append(sdf.format(new Date(f.lastModified())))
+			.append("               ");
+			if(f.isFile()){
+				sb.append(f.length());
+			}
+			sb.append("\r\n");
+		}
+		sb.append("</pre><hr></body>").append("\r\n")
+		.append("</html>");
+		return Response.ok(sb.toString()).header("Content-Type", "text/html;charset=utf-8").build();
+	}
+	
+	private static String replace(String str){
+		str = str.replace("&", "&amp;");
+		str = str.replace("<", "&lt;");
+		str = str.replace(">", "&gt;");
+		str = str.replace("\"", "&quot;");
+		return str;
+	}
+	
     
 //	//使用存储临时文件(从流中直接读取文件并保存到临时文件,新的流是从临时文件中读取的)
 //	@Path("upload")
@@ -108,23 +206,6 @@ public class FileResource {
 //		return "{\"success\": true}";
 //	}
 	
-	
-	@Path("put/{path}")
-	@PUT
-	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String putFile(InputStream inputStream, @PathParam("path") String name, @Context HttpServletRequest request) throws IOException {
-		String path = request.getServletContext().getRealPath("/");
-		path += File.separator + "data" + File.separator + name;
-		File file = new File(path);
-		try {
-			FileUtils.copyInputStreamToFile(inputStream, file);
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			return "{\"success\": false}";
-		}
-		return "{\"success\": true}";
-	}
 	
 	//使用存储临时文件(从流中直接读取文件并保存到临时文件,新的流是从临时文件中读取的)
 	@Path("upload")
