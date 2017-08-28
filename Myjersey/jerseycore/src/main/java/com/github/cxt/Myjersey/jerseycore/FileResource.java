@@ -342,7 +342,8 @@ public class FileResource {
         //Mozilla/5.0 (Windows NT 6.1; WOW64; rv:36.0) Gecko/20100101 Firefox/36.0
         }
         //http://blog.csdn.net/candyguy242/article/details/17449191
-        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename + ";filename*=UTF-8''" + URLEncoder.encode(file.getName(), "UTF-8")).encoding("UTF-8").build();
+        return Response.ok(output).header("Content-Disposition", "attachment; filename=" + filename + ";filename*=UTF-8''" 
+        		+ URLEncoder.encode(file.getName(), "UTF-8").replace("+", "%20")).encoding("UTF-8").build();
 	}
 	
 	
@@ -351,6 +352,7 @@ public class FileResource {
 	public Response downloadFile() throws IOException {
 		String file = "test.txt";
 		Response.ResponseBuilder responseBuilder = Response.status(200);
+		//如转向连接里有head头里有文件信息,则会冲突,只能存一。
 		responseBuilder.header("Content-Disposition", "attachment; filename=\"" + file + "\"");
 		responseBuilder.header("Content-Type", "application/octet-stream");
 		//https://www.nginx.com/resources/wiki/start/topics/examples/xsendfile/
