@@ -2,36 +2,22 @@ package com.github.cxt.MySpring.interceptor;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
-import org.aopalliance.intercept.MethodInterceptor;
-import org.aopalliance.intercept.MethodInvocation;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
 @Aspect
-public class MyMethodInterceptor implements MethodInterceptor{
+public class MyMethodInterceptorAnnoation {
 
-	@Override
-	public Object invoke(MethodInvocation invocation) throws Throwable {
-		System.out.println("??????????????????");
-		Method method = invocation.getThis().getClass().getDeclaredMethod(invocation.getMethod().getName(), 
-				invocation.getMethod().getParameterTypes());
-		
-        if(method.isAnnotationPresent(TestMethod.class)){  
-            TestMethod testMethod = method.getAnnotation(TestMethod.class);
-            String desc = testMethod.desc();
-            
-            Parameter[] parameter =  method.getParameters();
-            for(int i = 0; i < parameter.length; i++){
-            	Parameter p = parameter[i];
-            	System.out.println(p.getName() + "!" + invocation.getArguments()[i]);
-            }
-            System.out.println(desc);
-        }
-		return invocation.proceed();
-	}
+
 	
+	@Pointcut("execution(public * com.github.cxt.MySpring.interceptor.*.*(..))")  
+	private void anyMethod(){}//定义一个切入点
+	 
+	@After(value = "anyMethod()")
     public void after(JoinPoint joinPoint) throws NoSuchMethodException {
     	System.out.println("--------------------------------");
         Signature signature = joinPoint.getSignature();

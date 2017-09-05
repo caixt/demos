@@ -2,9 +2,9 @@ package com.github.cxt.MySpring.interceptor;
 
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import com.github.cxt.MySpring.schema.People;
 
+//http://blog.csdn.net/chyohn/article/details/54946004
 public class Main {
 
 	@Test
@@ -17,6 +17,11 @@ public class Main {
 		People p = new People();
 		p.setName("tes111t");
 		server.test3(p);
-		applicationContext.close();
+		System.out.println("!!!!!!!!!!!!!");
+        for(String str : applicationContext.getBeanDefinitionNames()){
+        	System.err.println(str + "???" + applicationContext.getBean(str));
+        }
+        System.err.println(server);
+        applicationContext.close();
 	}
 }
