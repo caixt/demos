@@ -13,7 +13,16 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
+import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @Configuration
+@EnableSwagger2
 @SpringBootApplication
 @ComponentScan(basePackages="com.github.cxt.springmvc")
 public class MainApplication extends WebMvcConfigurerAdapter {
@@ -38,4 +47,23 @@ public class MainApplication extends WebMvcConfigurerAdapter {
 	public LocaleResolver localeResolver() {
 		return new SessionLocaleResolver();
 	}
+	
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.github.cxt.springmvc.controller"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+    
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("springboot利用swagger构建api文档")
+                .description("简单优雅的restfun风格，http://xxxxx/forezp")
+                .termsOfServiceUrl("http://xxxxx/forezp")
+                .version("1.0")
+                .build();
+    }
 }
