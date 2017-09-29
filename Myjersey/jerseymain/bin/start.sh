@@ -32,7 +32,7 @@ if [ "$JAVA_HOME" != "" ]; then
 else
   JAVA=java
 fi
-
+#java -Xms128m -Xmx512m -Duyun-biltdog -Dlogback.configurationFile=./conf/logback.xml -jar ./jarlib/jerseymain-0.0.1-SNAPSHOT.jar
 
 module="all"
 logDir="logs"

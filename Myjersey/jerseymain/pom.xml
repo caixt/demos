@@ -51,6 +51,9 @@
 						<fileset>  
 							<directory>module</directory>
 						</fileset>
+                        <fileset>  
+							<directory>jarlib</directory>
+						</fileset>
 				  </filesets>
 				</configuration>
 			</plugin>
@@ -85,10 +88,22 @@
 							</outputDirectory>
 						</configuration>
 					</execution>
-				</executions>
-				<configuration>  
-					<includeScope>compile</includeScope>  
-				</configuration> 
+                    <execution>
+                        <id>copy3</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                jarlib/
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>  
+                    <includeScope>compile</includeScope>  
+                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -96,6 +111,17 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
+						<id>package1</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>module</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>package2</id>
 						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
@@ -103,10 +129,14 @@
 						<configuration>
 							<archive>
 								<manifest>
+									<mainClass>com.github.cxt.Myjersey.main.JettyServer</mainClass>
 									<addClasspath>true</addClasspath>
+                                    <!--
+									<classpathPrefix>jarlib/</classpathPrefix>
+                                    -->
 								</manifest>
 							</archive>
-							<outputDirectory>module</outputDirectory>
+							<outputDirectory>jarlib</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -144,7 +174,7 @@
 						<configuration>
 							<artifacts>
 								<artifact>
-									<file>target/jerseymain-0.0.1-SNAPSHOT-bin.tar.gz</file>
+									<file>target/${artifactId}-${version}-bin.tar.gz</file>
 									<type>tar.gz</type>
 								</artifact>
 							</artifacts>
