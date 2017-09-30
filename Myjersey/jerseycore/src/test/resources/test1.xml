@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE a [ 
+    <!-- <!ENTITY b SYSTEM "file:/E:/a.txt"> -->
+     <!-- <!ENTITY b SYSTEM "file:///etc/passwd"> -->
+	<!ENTITY file SYSTEM "abc.txt">
+]>
+<root>&file;</root>
