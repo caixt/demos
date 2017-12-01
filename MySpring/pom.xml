@@ -250,6 +250,12 @@
 		    <version>1.5.8</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.cache2k</groupId>
+		    <artifactId>cache2k-core</artifactId>
+		    <version>1.0.1.Final</version>
+		</dependency>
+		
   </dependencies>
   
   
