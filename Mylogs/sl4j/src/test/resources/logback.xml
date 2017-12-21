@@ -12,23 +12,39 @@
 		</encoder>
 	</appender>
 
-	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	   <file>logs/example.log</file>
-	   <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-          <fileNamePattern>logs/example.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-          <maxFileSize>10MB</maxFileSize>
-	      <maxHistory>30</maxHistory>
-	      <totalSizeCap>10GB</totalSizeCap>
-	      <cleanHistoryOnStart>true</cleanHistoryOnStart>
-	    </rollingPolicy>
-	
+	   <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+         <FileNamePattern>logs/example.%i.log</FileNamePattern>
+         <minIndex>1</minIndex>
+         <maxIndex>10</maxIndex>
+      </rollingPolicy>
+      <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+         <maxFileSize>10MB</maxFileSize>
+      </triggeringPolicy>
 	    <encoder>
 	      <pattern>
 			  %d{yyyy-MM-dd HH:mm:ss.SSS}|%contextName|%level|Test|%class|%thread|%method|%line|%msg%n
           </pattern>
 	    </encoder>
 	</appender> 
-	
+
+	<!-- 存在文件序号大于一千后不清理的bug,可能在新版本修正。FileNamePattern \\d{1,3} 
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	   <file>logs/example.log</file>
+	   <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	        <fileNamePattern>logs/example.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+	        <maxFileSize>10MB</maxFileSize>
+	        <maxHistory>15</maxHistory>
+	        <totalSizeCap>200MB</totalSizeCap>
+       </rollingPolicy>
+	    <encoder>
+	      <pattern>
+			  %d{yyyy-MM-dd HH:mm:ss.SSS}|%contextName|%level|Test|%class|%thread|%method|%line|%msg%n
+          </pattern>
+	    </encoder>
+	</appender> 
+	-->
 	
     <!-- all,debug,info,warn,error -->
 	<root>
@@ -36,4 +52,10 @@
 		<appender-ref ref="stdout" />
 		<appender-ref ref="FILE" />
 	</root>
+	
+	<logger name="com.github.cxt" additivity="false">
+        <level value="info" />
+        <appender-ref ref="stdout" />
+		<appender-ref ref="FILE" />
+    </logger>
 </configuration>
