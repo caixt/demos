@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.1.RELEASE</version>
+		<version>1.5.6.RELEASE</version>
 	</parent>
   
   
@@ -24,6 +24,12 @@
   
   
   <dependencies>
+  		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
     	<!-- web支持: 1、web mvc; 2、restful; 3、jackjson支持; 4、aop ........ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -70,8 +76,29 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.6.1</version>
         </dependency>
+
   </dependencies>
-  <build>
-    <finalName>springmvc</finalName>
+  
+  	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+
+            
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<attachClasses>true</attachClasses>
+				</configuration>
+			</plugin>
+         
+		</plugins>
+    	<finalName>springmvc</finalName>
   </build>
 </project>

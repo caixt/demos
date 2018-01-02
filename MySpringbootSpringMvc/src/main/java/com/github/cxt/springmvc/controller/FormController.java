@@ -35,16 +35,22 @@ public class FormController {
 		return "formPage";
 	}
 	
-	
 	@RequestMapping(value="/json", method=RequestMethod.POST)
 	@ResponseBody
-	public Object test_test(@RequestBody @Valid Subscriber subscriber, BindingResult result) throws UnsupportedEncodingException {
+	public Object json(@RequestBody @Valid Subscriber subscriber, BindingResult result) throws UnsupportedEncodingException {
 		if(result.hasErrors()) {
 			return "{\"result\":\"" + result.toString() + "\"}";
 		}
 		System.out.println(subscriber.toString());
 	    return "{\"result\":\"" + subscriber.toString() + "\"}";
 
+	}
+	
+	@RequestMapping(value="/err", method=RequestMethod.GET)
+	@ResponseBody
+	public Object err() throws UnsupportedEncodingException {	
+		double n = 100 / 0;
+		return n;
 	}
 	
 	

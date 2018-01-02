@@ -16,6 +16,8 @@ import com.github.cxt.springmvc.validator.Phone;
 import com.github.cxt.springmvc.validator.Year;
 
 public class Subscriber {
+	
+	private String id;
 
 	@Size(min=2, max=30) 
 	private String name;
@@ -98,11 +100,18 @@ public class Subscriber {
 		this.receiveNewsletter = receiveNewsletter;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "Subscriber [name=" + name + ", email=" + email + ", age=" + age
-				+ ", phone=" + phone + ", gender=" + gender + ", birthday="
-				+ birthday + ", receiveNewsletter=" + receiveNewsletter + "]";
+		return "Subscriber [id=" + id + ", name=" + name + ", email=" + email + ", age=" + age + ", phone=" + phone
+				+ ", gender=" + gender + ", birthday=" + birthday + ", receiveNewsletter=" + receiveNewsletter + "]";
 	}
 	
 }

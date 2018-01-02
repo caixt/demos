@@ -50,6 +50,7 @@ public class MainApplication extends WebMvcConfigurerAdapter {
 	
     @Bean
     public Docket createRestApi() {
+    	//地址里输入/swagger-ui.html
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
