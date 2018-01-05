@@ -14,10 +14,6 @@ import org.junit.Test;
 
 public class ScriptEngineManagerTest {
 	
-	public static int testabc(int a){
-		return a*a;
-	}
-
 	@Test
 	public void test() throws ScriptException, NoSuchMethodException, IOException{
 		 ScriptEngineManager factory = new ScriptEngineManager();
@@ -89,19 +85,5 @@ public class ScriptEngineManagerTest {
 		String str = "def test(a){a+a}; def s = \"a\"; println(s);for(i=0;i<15;i++){s=test(s);println(i + \"-\" + s.length() + \"-\" + s);};";
 		engine.eval(str);
 		writer.close();
-	}
-
-	@Test
-	public void test4() throws Exception{
-		String s = "a"; 
-		System.out.println(s);
-		for(int i=0;i<15;i++){
-			s=s+s;
-			if(i >11){
-				System.out.println("!");
-			}
-			System.out.println(i + "-" + s.length() + "-" + s);
-		}
-		
 	}
 }
