@@ -46,9 +46,15 @@ public class ComplexTest {
 		}).start();
 
 		context.setWriter(writer);
-		
+		//1.script脚本执行的时候的classloader为CallSiteClassLoader。
+		//2.再通过class的classloader获取到GroovyClassLoader 所以能加载到额外指定的jar
+		//3.GroovyClassLoader的父classloader为appclassloader 所以能加载到项目启动时的jar
+		//4.如果还是找不到class，那就按当前CallSiteClassLoader.class对应的classLoader来加载
+		//但是mysql的驱动如果是在2这个步骤添加的,并且按照传统的方法来获取连接,将找不到驱动，原因
+		//1.驱动获取是通过DriverManager来加载的,但这个class的classloader为BootStrapClassLoader
+		//2.并且CallSiteClassLoader.class的classLoader为appclassloader。
+		//所以1,2都不能获取到mysql的连接
 		GroovyClassLoader classLoader = engine.getClassLoader();
-		classLoader.addClasspath("jar/mysql-connector-java-5.1.34.jar");
 		classLoader.addClasspath("jar/commons-codec-1.9.jar");
 		classLoader.addClasspath("jar/commons-logging-1.2.jar");
 		classLoader.addClasspath("jar/httpclient-4.5.2.jar");
