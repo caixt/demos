@@ -15,7 +15,7 @@ import com.github.cxt.springmvc.form.Subscriber;
 @RestController
 @RequestMapping(value="/rest")
 public class RestDemoController {
-
+	
     @GetMapping(value = "/{id}")
     public Subscriber get(@PathVariable("id") String id, @RequestParam(name="apikey", required=false) String apikey) {
     	Subscriber sub = new Subscriber();

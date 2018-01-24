@@ -13,6 +13,8 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+
+//ClassPathScanningCandidateComponentProvider  287
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
