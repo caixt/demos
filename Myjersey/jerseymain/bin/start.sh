@@ -39,6 +39,7 @@ logDir="logs"
 
 if [ "$foreground" == "true" ];
 then 
+    #前台转后台1.CTRL-z  2.bg %1  3.jobs 4.disown -h %1
 	$JAVA $JAVA_OPTS -Dlog.dir=$logDir -Djersey-$module -Dlogback.configurationFile=$LOGBACK_CONFIGFILE \
 	-Dbase.dir=$BASE_DIR -cp $CLASS_PATH $MAIN_CLASS >/dev/null 2>&1
 else
