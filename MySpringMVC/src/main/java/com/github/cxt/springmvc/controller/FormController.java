@@ -2,6 +2,7 @@ package com.github.cxt.springmvc.controller;
 
 import java.io.UnsupportedEncodingException;
 import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,10 +15,13 @@ import com.github.cxt.springmvc.form.Subscriber;
 @Controller
 public class FormController {
 	
+	@Value("${xxx}")
+	private String xx;
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String loadFormPage(Model m) {
 		m.addAttribute("subscriber", new Subscriber());
+		System.out.println(xx);
 		return "formPage";
 	}
 	
