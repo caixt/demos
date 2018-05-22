@@ -1,14 +1,12 @@
 package com.github.cxt.MySpring.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.cxt.MySpring.transaction.mybatis.Table;
 import com.github.cxt.MySpring.transaction.mybatis.TableDao;
 
-@Service
 public class Table2ServerImpl implements Table2Server{
 
 	@Autowired

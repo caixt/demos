@@ -1,14 +1,13 @@
 package com.github.cxt.MySpring.transaction;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.transaction.support.DefaultTransactionStatus;
 import com.github.cxt.MySpring.transaction.mybatis.Table;
 import com.github.cxt.MySpring.transaction.mybatis.TableDao;
 
-@Service
 public class Table1ServerImpl implements Table1Server{
 
 	@Autowired
@@ -16,14 +15,23 @@ public class Table1ServerImpl implements Table1Server{
 	@Autowired
 	private Table2Server table2Server;
 	
+	@Autowired
+	private ApplicationEventPublisher publisher;
+
+	
 	@Transactional
 	@Override
 	public void save1(Table table) {
-		tableDao.save1(table);
-		//事务的部分核心代码
-		DefaultTransactionStatus status = (DefaultTransactionStatus) TransactionAspectSupport.currentTransactionStatus();
-		System.out.println(status);
-		throw new RuntimeException("测试");
+		try{
+			tableDao.save1(table);
+			//事务的部分核心代码
+			DefaultTransactionStatus status = (DefaultTransactionStatus) TransactionAspectSupport.currentTransactionStatus();
+			System.out.println(status);
+			throw new RuntimeException("测试");
+		}finally{
+			publisher.publishEvent(1);
+			System.out.println("?????????");
+		}
 	}
 	
 	@Transactional
@@ -44,7 +52,7 @@ public class Table1ServerImpl implements Table1Server{
 	@Override
 	public void save4(Table table) {
 		tableDao.save1(table);
-		table2Server.save2(table);
+		table2Server.save3(table);
 	}
 
 	@Transactional

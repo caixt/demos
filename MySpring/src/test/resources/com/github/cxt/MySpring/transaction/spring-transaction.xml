@@ -43,5 +43,7 @@
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.github.cxt.MySpring.transaction.mybatis" />
     </bean>
+    
+    <bean class="com.github.cxt.MySpring.transaction.TestEventListener"></bean>
 
 </beans>

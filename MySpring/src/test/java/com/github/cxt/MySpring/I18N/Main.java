@@ -21,7 +21,8 @@ public class Main {
 	
 	@Test
 	public void test(){
-		System.out.println(messageSource.getMessage("welcome-msg", new Object[]{"aaa", new Date()}, Locale.CHINA));
+		System.out.println(String.format("%s", 1000));
+		System.out.println(messageSource.getMessage("welcome-msg", new Object[]{String.format("%s", 1000), new Date()}, Locale.CHINA));
 	}
 	
 	
