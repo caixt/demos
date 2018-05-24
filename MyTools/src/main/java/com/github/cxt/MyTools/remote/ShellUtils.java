@@ -137,6 +137,22 @@ public class ShellUtils {
     	}
     } 
     
+    public static void upload(InputStream src, String dst, String user, String passwd, String host) throws Exception {
+    	Session session = connect(user, passwd, host);  
+    	ChannelSftp  channelSftp = null;
+    	try{
+    		channelSftp = (ChannelSftp)session.openChannel("sftp"); 
+	        channelSftp.connect(); 
+	        channelSftp.put(src, dst, ChannelSftp.OVERWRITE); 
+	        channelSftp.quit(); 
+    	}finally{
+    		if(channelSftp != null){
+    			channelSftp.quit(); 
+    		}
+    		session.disconnect();
+    	}
+    } 
+    
     public static void download(String src, String dst, String user, String passwd, String host) throws Exception {
     	Session session = connect(user, passwd, host);  
     	ChannelSftp  channelSftp = null;
