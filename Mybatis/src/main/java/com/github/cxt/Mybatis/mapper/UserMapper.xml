@@ -31,9 +31,14 @@
    		<include refid="com.github.cxt.Mybatis.dao.base.Common_Where_Clause"></include>
   </select>
   
-   <select id="selectAll" resultType="java.util.Map" >
+  <select id="selectAll" resultType="java.util.Map" >
    		select * from user
   </select>
+  
+  <select id="selectAll_COUNT" resultType="java.lang.Long" >
+   		select 100 FROM DUAL;
+  </select>
+  
   
   <select id="selectByMap" resultType="java.util.HashMap" parameterType="java.util.Map" >
    		select * from user
