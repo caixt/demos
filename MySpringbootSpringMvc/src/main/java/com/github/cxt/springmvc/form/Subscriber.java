@@ -1,25 +1,31 @@
 package com.github.cxt.springmvc.form;
 
+import java.beans.Transient;
 import java.util.Date;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-
+import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonView;
 import com.github.cxt.springmvc.validator.Phone;
 import com.github.cxt.springmvc.validator.Year;
 
+@XmlRootElement
+//@JsonIgnoreProperties(value={"email"})
 public class Subscriber {
 	
+	public interface TestView {};  
+	
+	@JsonView(TestView.class) 
 	private String id;
 
 	@Size(min=2, max=30) 
+	@JsonView(TestView.class) 
 	private String name;
 	
 	@NotEmpty @Email
@@ -104,6 +110,7 @@ public class Subscriber {
 		return id;
 	}
 
+	@Transient
 	public void setId(String id) {
 		this.id = id;
 	}
