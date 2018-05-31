@@ -11,8 +11,11 @@ import org.junit.runner.RunWith;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.ContextConfiguration;
@@ -148,18 +151,21 @@ public class Main {
 		table.setColumn2("column2");
 		table1Server.save9(table);
 	}
-	
-	
+
+	@PropertySource(value="classpath:com/github/cxt/MySpring/transaction/jdbc.properties")
 	@EnableTransactionManagement
 	public static class Context{
 		
+	    
+		//@Value单元测试在4.3.0之前存在bug，取不到值(仅单元测试...)
+		//DefaultListableBeanFactory.doResolveDependency  resolveEmbeddedValue
 		@Bean
-	    DataSource dataSource(){
+	    DataSource dataSource(Environment env, @Value("${jdbc.url}") String url){
 			BasicDataSource ds = new BasicDataSource();
-	        ds.setDriverClassName("com.mysql.jdbc.Driver");
-	        ds.setUrl("jdbc:mysql://127.0.0.1:3306/mybatis?useUnicode=true&characterEncoding=UTF-8");
-	        ds.setUsername("root");
-	        ds.setPassword("12345678");
+	        ds.setDriverClassName(env.getProperty("jdbc.driver"));
+	        ds.setUrl(url);
+	        ds.setUsername(env.getProperty("jdbc.username"));
+	        ds.setPassword(env.getProperty("jdbc.password"));
 	        return ds;
 	    }
 		
@@ -180,9 +186,10 @@ public class Main {
 	    	return sqlSessionFactoryBean;
 	    }
 	    
+	    //因为实现了BeanDefinitionRegistryPostProcessor接口,所以找不到值
 	    @Bean
-	    @DependsOn(value="sqlSessionFactoryBean")
-	    MapperScannerConfigurer mapperScannerConfigurer(){
+	    MapperScannerConfigurer mapperScannerConfigurer(@Value("${jdbc.url}") String url){
+	    	System.out.println(url);
 	    	MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
 	    	scannerConfigurer.setBasePackage("com.github.cxt.MySpring.transaction.mybatis");
 	    	return scannerConfigurer;
