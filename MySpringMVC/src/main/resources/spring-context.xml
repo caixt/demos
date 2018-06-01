@@ -14,14 +14,20 @@
 <mvc:annotation-driven />
 -->
  <context:property-placeholder location="classpath:test.properties"/>
+ 
+ <!-- 没生效。暂时不知道为什么。注解生效的 -->
+<mvc:cors>  
+    <mvc:mapping path="/**" allowed-origins="*"/>  
+</mvc:cors> 
+ 
 
  <mvc:interceptors>  
   <mvc:interceptor>  
    <mvc:mapping path="/" />  
    <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />  
   </mvc:interceptor>  
- </mvc:interceptors>  
-
+ </mvc:interceptors>
+ 
   <mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
  
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -32,4 +38,6 @@
   <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
       <property name="basename" value="messages" />
   </bean>
+  
+  
 </beans>
