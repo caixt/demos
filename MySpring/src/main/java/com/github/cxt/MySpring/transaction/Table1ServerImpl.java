@@ -25,6 +25,7 @@ public class Table1ServerImpl implements Table1Server{
 		try{
 			tableDao.save1(table);
 			//事务的部分核心代码
+			//DataSourceUtils.getConnection(this.dataSource);
 			DefaultTransactionStatus status = (DefaultTransactionStatus) TransactionAspectSupport.currentTransactionStatus();
 			System.out.println(status);
 			throw new RuntimeException("测试");
