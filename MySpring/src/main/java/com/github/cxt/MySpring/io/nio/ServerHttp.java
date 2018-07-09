@@ -11,7 +11,7 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-public class Server {
+public class ServerHttp {
 
 	/* 缓冲区大小 */
 	private int BLOCK = 4096;
@@ -21,7 +21,7 @@ public class Server {
 	private ByteBuffer receivebuffer = ByteBuffer.allocate(BLOCK);
 	private Selector selector;
 
-	public Server(int port) throws IOException {
+	public ServerHttp(int port) throws IOException {
 		// 打开服务器套接字通道
 		ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
 		// 服务器配置为非阻塞
@@ -85,19 +85,24 @@ public class Server {
 				client.register(selector, SelectionKey.OP_WRITE);
 			}
 		} else if (selectionKey.isWritable()) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("HTTP/1.1 200 OK\r\n");
+			sb.append("Content-Type:text/txt;charset=").append("UTF-8").append("\r\n");
+			sb.append("\r\n");
+			sb.append("hello world");
 			// 将缓冲区清空以备下次写入
 			sendbuffer.clear();
 			// 返回为之创建此键的通道。
 			client = (SocketChannel) selectionKey.channel();
-			sendText = "aaaa";//"message from server--" + flag++;
+			sendText = sb.toString();
 			// 向缓冲区中输入数据
 			sendbuffer.put(sendText.getBytes());
 			// 将缓冲区各标志复位,因为向里面put了数据标志被改变要想从中读取数据发向服务器,就要复位
 			sendbuffer.flip();
 			// 输出到通道
 			client.write(sendbuffer);
-			System.out.println("服务器端向客户端发送数据--：" + sendText);
-			client.register(selector, SelectionKey.OP_READ);
+			client.close();
+//			client.register(selector, SelectionKey.OP_READ);
 		}
 	}
 
@@ -107,8 +112,8 @@ public class Server {
 	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		int port = 8080;
-		Server server = new Server(port);
+		int port = 8888;
+		ServerHttp server = new ServerHttp(port);
 		server.listen();
 	}
 }

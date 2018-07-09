@@ -30,7 +30,7 @@ public class Main {
 	public static class Context{
 	    
 		@Bean
-		CustomDemoInterface CustomDemoInterface(){
+		CustomDemoInterface customDemoInterface(){
 			return new CustomDemoImpl();
 		}
 		

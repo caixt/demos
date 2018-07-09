@@ -22,7 +22,7 @@ public class Client {
 	private static ByteBuffer receivebuffer = ByteBuffer.allocate(BLOCK);
 	/* 服务器端地址 */
 	private final static InetSocketAddress SERVER_ADDRESS = new InetSocketAddress(
-			"localhost", 8888);
+			"localhost", 8080);
 
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws IOException {
