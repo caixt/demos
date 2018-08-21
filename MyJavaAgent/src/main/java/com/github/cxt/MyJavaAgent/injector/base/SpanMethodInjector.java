@@ -1,6 +1,8 @@
 package com.github.cxt.MyJavaAgent.injector.base;
 
+import com.github.cxt.MyJavaAgent.injector.Method;
 import com.github.cxt.MyJavaAgent.injector.MethodInjector;
+
 
 public abstract class SpanMethodInjector implements MethodInjector {
 	
@@ -48,7 +50,7 @@ public abstract class SpanMethodInjector implements MethodInjector {
 	
 	
 	@Override
-	public String[][] getMethodVariables(String className, String methodName) {
+	public String[][] getMethodVariables(String className, Method method) {
 		return new String[][]{
 			{"com.github.cxt.MyJavaAgent.tracespan.Tracer",  "_$tracer"}, 
 			{"java.lang.String", "_$name"}, 
@@ -57,22 +59,22 @@ public abstract class SpanMethodInjector implements MethodInjector {
 	}
 
 	@Override
-	public String getMethodProcessStart(String className, String methodName) {
-		return String.format(methodProcessStart, name, className + "." + methodName);
+	public String getMethodProcessStart(String className, Method method) {
+		return String.format(methodProcessStart, name, className + "." + method.getName());
 	}
 
 	@Override
-	public String getMethodProcessReturn(String className, String methodName) {
+	public String getMethodProcessReturn(String className, Method method) {
 		return methodProcessReturn;
 	}
 
 	@Override
-	public String getMethodProcessException(String className, String methodName) {
+	public String getMethodProcessException(String className, Method method) {
 		return methodProcessException;
 	}
 
 	@Override
-	public String getMethodProcessFinally(String className, String methodName) {
+	public String getMethodProcessFinally(String className, Method method) {
 		return methodProcessFinally;
 	}
 }

@@ -1,5 +1,6 @@
 package com.github.cxt.MyJavaAgent.injector.jdbc;
 
+import com.github.cxt.MyJavaAgent.injector.Method;
 import com.github.cxt.MyJavaAgent.injector.base.SpanCallInjector;
 
 public class JdbcExecuteInjector extends SpanCallInjector {
@@ -8,7 +9,7 @@ public class JdbcExecuteInjector extends SpanCallInjector {
 	protected final static String NAME = "JDBC";
 	
 	public JdbcExecuteInjector(){
-		super.setName(NAME);
+		super.name = NAME;
 		String str = "if($args.length>0 && $args[0]!=null)_$desc=$args[0].toString();\n"
 				+ "else { \n"
 				+ "  Object _$v = _$tracer.getAttachmentValue($0);\n"
@@ -18,15 +19,16 @@ public class JdbcExecuteInjector extends SpanCallInjector {
 		
 	}
 	
-	public boolean isNeedInject(String className) {
-		return "java.sql.Statement".equals(className) || "java.sql.PreparedStatement".equals(className) 
-				|| "java.sql.CallableStatement".equals(className);
+	public boolean isNeedInject(String callClassName) {
+		return "java.sql.Statement".equals(callClassName) || "java.sql.PreparedStatement".equals(callClassName) 
+				|| "java.sql.CallableStatement".equals(callClassName);
 	}
 	
 	@Override
-	public boolean isNeedCallInject(String className, String methodName){
-		return isNeedInject(className) && 
-			("execute".equals(methodName) || "executeQuery".equals(methodName) 
-						|| "executeUpdate".equals(methodName) || "executeBatch".equals(methodName));
+	public boolean isNeedCallInject(String callClassName, Method method){
+		String callMethodName = method.getName();
+		return isNeedInject(callClassName) && 
+			("execute".equals(callMethodName) || "executeQuery".equals(callMethodName) 
+						|| "executeUpdate".equals(callMethodName) || "executeBatch".equals(callMethodName));
 	}
 }

@@ -1,6 +1,7 @@
 package com.github.cxt.MyJavaAgent.injector.jdbc;
 
 import com.github.cxt.MyJavaAgent.injector.CallInjector;
+import com.github.cxt.MyJavaAgent.injector.Method;
 
 public class JdbcStatementInjector implements CallInjector {
 	
@@ -14,23 +15,24 @@ public class JdbcStatementInjector implements CallInjector {
 
 
 	@Override
-	public String getMethodCallBefore(String className, String methodName) {
+	public String getMethodCallBefore(String callClassName, Method callMethod) {
         return methodCallBefore;
 	}
 
 	@Override
-	public String getMethodCallAfter(String className, String methodName) {
+	public String getMethodCallAfter(String callClassName, Method callMethod) {
 		return methodCallAfter;
 	}
 	
-	public boolean isNeedInject(String className) {
-		return "java.sql.Connection".equals(className);
+	public boolean isNeedInject(String callClassName) {
+		return "java.sql.Connection".equals(callClassName);
 	}
 	
 	@Override
-	public boolean isNeedCallInject(String className, String methodName){
-		return isNeedInject(className) && 
-				("prepareStatement".equals(methodName) || "prepareCall".equals(methodName));
+	public boolean isNeedCallInject(String callClassName, Method callMethod){
+		String callMethodName = callMethod.getName();
+		return isNeedInject(callClassName) && 
+				("prepareStatement".equals(callMethodName) || "prepareCall".equals(callMethodName));
 	}
 	
 	

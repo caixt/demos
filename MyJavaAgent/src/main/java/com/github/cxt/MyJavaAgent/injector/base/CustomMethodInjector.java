@@ -1,5 +1,7 @@
 package com.github.cxt.MyJavaAgent.injector.base;
 
+import com.github.cxt.MyJavaAgent.injector.Method;
+
 public class CustomMethodInjector extends SpanMethodInjector{
 	
 	protected final static String NAME = "CUSTOM";
@@ -16,7 +18,7 @@ public class CustomMethodInjector extends SpanMethodInjector{
 	}
 
 	@Override
-	public boolean isNeedProcessInject(String className, String methodName) {
-		return this.className.equals(className) && this.methodName.equals(methodName);
+	public boolean isNeedProcessInject(String className, Method method) {
+		return this.className.equals(className) && this.methodName.equals(method.getName());
 	}
 }
