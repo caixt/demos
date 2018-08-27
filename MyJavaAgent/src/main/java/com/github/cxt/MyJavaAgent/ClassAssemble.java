@@ -40,8 +40,8 @@ public class ClassAssemble {
 		if(config.isEnableJdbcTrace()){
 			JdbcStatementInjector jdbcStmtInjector = new JdbcStatementInjector();
 			JdbcExecuteInjector jdbcExeInjector = new JdbcExecuteInjector();
-			callInjectors.add(jdbcStmtInjector);
-			callInjectors.add(jdbcExeInjector);
+			methodCallInjectors.add(jdbcStmtInjector);
+			methodCallInjectors.add(jdbcExeInjector);
 		}
 		if(config.isEnableServletTrace()){
 			ServletInjector servletInjector = new ServletInjector();
@@ -53,7 +53,17 @@ public class ClassAssemble {
 			for(int i = 0; i< customMethods.size(); i++){
 				String str = customMethods.get(i);
 				int index = str.lastIndexOf(".");
-				customMethodInjector = new CustomMethodInjector(str.substring(0, index), str.substring(index + 1));
+				String className = str.substring(0, index);
+				String methodName = str.substring(index + 1);
+				index = methodName.lastIndexOf("#");
+				if(index > 0){
+					String name = methodName.substring(index + 1);
+					methodName = methodName.substring(0, index);
+					customMethodInjector = new CustomMethodInjector(className, methodName, name);
+				}
+				else{
+					customMethodInjector = new CustomMethodInjector(className, methodName, i);
+				}
 				methodInjectors.add(customMethodInjector);
 			}
 		}

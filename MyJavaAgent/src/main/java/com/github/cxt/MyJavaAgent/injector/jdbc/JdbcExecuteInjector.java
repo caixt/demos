@@ -1,9 +1,8 @@
 package com.github.cxt.MyJavaAgent.injector.jdbc;
 
 import com.github.cxt.MyJavaAgent.injector.Method;
-import com.github.cxt.MyJavaAgent.injector.base.SpanCallInjector;
 
-public class JdbcExecuteInjector extends SpanCallInjector {
+public class JdbcExecuteInjector extends AbsJdbcMethodCallInjector {
 
 
 	protected final static String NAME = "JDBC";

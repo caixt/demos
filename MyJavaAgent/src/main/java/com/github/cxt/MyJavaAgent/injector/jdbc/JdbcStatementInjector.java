@@ -1,9 +1,8 @@
 package com.github.cxt.MyJavaAgent.injector.jdbc;
 
-import com.github.cxt.MyJavaAgent.injector.CallInjector;
 import com.github.cxt.MyJavaAgent.injector.Method;
 
-public class JdbcStatementInjector implements CallInjector {
+public class JdbcStatementInjector extends AbsJdbcMethodCallInjector {
 	
 	protected  String methodCallBefore 
 		    = "  com.github.cxt.MyJavaAgent.tracespan.Tracer _$tracer; \n"
@@ -34,7 +33,4 @@ public class JdbcStatementInjector implements CallInjector {
 		return isNeedInject(callClassName) && 
 				("prepareStatement".equals(callMethodName) || "prepareCall".equals(callMethodName));
 	}
-	
-	
-
 }

@@ -39,10 +39,7 @@ public class Tracer{
 	
 	private Span addSpan(String name, String desc){
 		Span span = new Span(createUUId(), name, desc, this.currentSpan);
-		if(this.currentSpan == null){
-			currentSpan = span;
-		}
-		else {
+		if(this.currentSpan != null && !name.equals(this.currentSpan.getName())){
 			currentSpan.addChild(span);
 		}
 		return span;
