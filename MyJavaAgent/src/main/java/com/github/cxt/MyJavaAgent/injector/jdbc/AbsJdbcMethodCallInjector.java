@@ -9,6 +9,6 @@ public abstract class AbsJdbcMethodCallInjector extends AbsMethodCallInjector{
 	//先过滤mysql的
 	@Override
 	public boolean isNeedProcessInject(String className, Method method) {
-		return !className.startsWith("com.mysql.jdbc") && !(className.equals("org.apache.commons.dbcp.PoolableConnectionFactory") && method.getName().equals("validateConnection"));
+		return !className.startsWith("com.mysql.jdbc");
 	}
 }

@@ -23,6 +23,7 @@ public class JettyMain
 		webContext.setDescriptor("WebRoot/WEB-INF/web.xml");
 		webContext.setParentLoaderPriority(true);
 		webContext.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
+		webContext.setInitParameter("org.eclipse.jetty.servlet.Default.etags", "true");
 		webContext.setResourceBase("WebRoot");
 		Server server = new Server();
 		server.setStopAtShutdown(true);
