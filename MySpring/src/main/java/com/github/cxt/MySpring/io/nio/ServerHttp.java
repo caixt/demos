@@ -86,23 +86,25 @@ public class ServerHttp {
 			}
 		} else if (selectionKey.isWritable()) {
 			StringBuilder sb = new StringBuilder();
+			String body = "hello world";
 			sb.append("HTTP/1.1 200 OK\r\n");
 			sb.append("Content-Type:text/txt;charset=").append("UTF-8").append("\r\n");
+			sb.append("Content-Length:").append(body.getBytes("UTF-8").length).append("\r\n");
 			sb.append("\r\n");
-			sb.append("hello world");
+			sb.append(body);
 			// 将缓冲区清空以备下次写入
 			sendbuffer.clear();
 			// 返回为之创建此键的通道。
 			client = (SocketChannel) selectionKey.channel();
 			sendText = sb.toString();
 			// 向缓冲区中输入数据
-			sendbuffer.put(sendText.getBytes());
+			sendbuffer.put(sendText.getBytes("UTF-8"));
 			// 将缓冲区各标志复位,因为向里面put了数据标志被改变要想从中读取数据发向服务器,就要复位
 			sendbuffer.flip();
 			// 输出到通道
 			client.write(sendbuffer);
-			client.close();
-//			client.register(selector, SelectionKey.OP_READ);
+//			client.close();
+			client.register(selector, SelectionKey.OP_READ);
 		}
 	}
 
