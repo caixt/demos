@@ -45,12 +45,12 @@ public class ServerHttpTomcat {
 	}
 	
 	public void start() {
-		new Thread(block).start();
+		new Thread(block, "block").start();
 		int pollerSize = pollers.length;
 		for(int i = 0; i < pollerSize; i++){
-			new Thread(pollers[i]).start();
+			new Thread(pollers[i], "pollers-" + (i + 1)).start();
 		}
-		new Thread(acceptor).start();
+		new Thread(acceptor, "acceptor").start();
 	}
 	
 	

@@ -24,12 +24,7 @@ public class HttpGetTest {
 		 
 		 s.getOutputStream().write(bytes);
 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 	
@@ -46,12 +41,7 @@ public class HttpGetTest {
 		 
 		 s.getOutputStream().write(bytes);
 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 	
@@ -70,13 +60,7 @@ public class HttpGetTest {
 		 s.getOutputStream().write(Arrays.copyOfRange(bytes, 0, middle));
 		 s.getOutputStream().write(Arrays.copyOfRange(bytes, middle, bytes.length));
 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
-		 	 		 
+		 Tools.printlt(s.getInputStream());	 
 		 s.close();
 	}
 }

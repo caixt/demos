@@ -32,12 +32,7 @@ public class HttpPostTest {
 		 buffer.put(body);
 		 s.getOutputStream().write(buffer.array());
 		 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 	
@@ -57,12 +52,7 @@ public class HttpPostTest {
 		 s.getOutputStream().write(head);
 		 s.getOutputStream().write(body);
 		 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 	
@@ -86,12 +76,7 @@ public class HttpPostTest {
 		 s.getOutputStream().write(Arrays.copyOfRange(body, 0, middle));
 		 s.getOutputStream().write(Arrays.copyOfRange(body, middle, body.length));
 		 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 	
@@ -117,12 +102,7 @@ public class HttpPostTest {
 		 s.getOutputStream().write(buffer.array());
 		 s.getOutputStream().write(Arrays.copyOfRange(body, middle, body.length));
 		 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 	
@@ -147,12 +127,7 @@ public class HttpPostTest {
 		 s.getOutputStream().write(Arrays.copyOfRange(body, 0, middle));
 		 s.getOutputStream().write(Arrays.copyOfRange(body, middle, body.length));
 		 		 
-		 InputStream in = s.getInputStream();
-		 BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-		 String line = null;
-		 while((line = br.readLine()) != null){
-			 System.out.println(line);
-		 }
+		 Tools.printlt(s.getInputStream());
 		 s.close();
 	}
 }
