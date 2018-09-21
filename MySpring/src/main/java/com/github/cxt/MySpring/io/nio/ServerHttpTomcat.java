@@ -27,6 +27,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerHttpTomcat {
 	
+	private static final byte LF = (byte) 10; 
+	private static final byte CR = (byte) 13; 
+	private static final String SPLIT = new String(new byte[]{CR, LF});
+	
 	private BlockPoller block;
 	private Acceptor acceptor;
 	private Poller[] pollers;
@@ -147,9 +151,9 @@ public class ServerHttpTomcat {
 						StringBuilder sb = new StringBuilder();
 						String body = "hello world";
 						sb.append("HTTP/1.1 200 OK\r\n");
-						sb.append("Content-Type:text/txt;charset=").append("UTF-8").append("\r\n");
-						sb.append("Content-Length:").append(body.getBytes("UTF-8").length).append("\r\n");
-						sb.append("\r\n");
+						sb.append("Content-Type:text/txt;charset=").append("UTF-8").append(SPLIT);
+						sb.append("Content-Length:").append(body.getBytes("UTF-8").length).append(SPLIT);
+						sb.append(SPLIT);
 						sb.append(body);
 						ByteBuffer sendbuffer = ByteBuffer.allocate(1024);
 						String sendText = sb.toString();
@@ -164,9 +168,6 @@ public class ServerHttpTomcat {
 			});
 		}
 
-		private static final byte LF = (byte) 10; 
-		private static final byte CR = (byte) 13; 
-		
 		private boolean parseHead(Attachment attachment) {
 			int index = attachment.headerIndex;
 			boolean success = false;
@@ -343,8 +344,8 @@ public class ServerHttpTomcat {
 				System.arraycopy(temp, headSize, bodyPart, 0, bodyPartSize);
 			}
 			header = new HashMap<>();
-			String headStr = new String(headByte, 0, headSize);
-			String[] str = headStr.split("\r\n");
+			String headStr = new String(headByte, 0, headSize - 4);
+			String[] str = headStr.split(SPLIT);
 			url = str[0];
 			for(int i = 1; i < str.length; i++){
 				String[] s = str[i].split(": ");
@@ -358,17 +359,17 @@ public class ServerHttpTomcat {
 		
 		public String toHttpInfo(){
 			StringBuilder sb = new StringBuilder();
-			sb.append("url:" + url).append("\r\n");
+			sb.append("url:" + url).append(SPLIT);
 			for(Map.Entry<String, String> entry : header.entrySet()){
-				sb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\r\n");
+				sb.append(entry.getKey()).append(": ").append(entry.getValue()).append(SPLIT);
 			}
 			if(contentLength > 0){
-				sb.append("<body>:").append("\r\n");
+				sb.append("<body>:").append(SPLIT);
 				BufferedReader reader = new BufferedReader(new InputStreamReader(getBodyInput(), Charset.forName("UTF-8")));
 				String line = null;
 				try {
 					while((line = reader.readLine()) != null){
-						sb.append(line).append("\r\n");
+						sb.append(line).append(SPLIT);
 					}
 				} catch (IOException e) {
 					e.printStackTrace();
