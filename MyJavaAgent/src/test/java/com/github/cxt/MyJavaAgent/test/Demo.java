@@ -6,29 +6,22 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
+
 
 public class Demo {
 
 	public static void test(String str) {
 		Tools.traceMethodCall();
 		Tools.traceMethodProcess();
-		long now = System.currentTimeMillis();
-		System.out.println("now:" + now);
-		long _$startTime = System.currentTimeMillis() + 500;
-		System.out.println("_$startTime:" + _$startTime);
-//        System.out.println("this is DiyObject1111111！");
-//        try {
-//			Thread.sleep(600);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//        System.out.println(System.currentTimeMillis());
-//        System.out.println(str);
+        System.out.println("this is DiyObject1111111！");
+        try {
+			Thread.sleep(600);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+        System.out.println(str);
     }
  
 	public void print(String str) {
@@ -57,8 +50,6 @@ public class Demo {
     
     
 	public void printJDBCdata() {
-		System.out.println(Arrays.asList(1, 2, 3).stream().filter(e -> e <= 1).collect(Collectors.toList()).size());
-		
 		String driver = "com.mysql.jdbc.Driver";
 	    String url = "jdbc:mysql://localhost:3306/test";
 	    String username = "root";

@@ -1,4 +1,4 @@
-package com.github.cxt.MyJavaAgent.javassist;
+package com.github.cxt.MyJavaAgent;
 
 import javassist.ClassPool;
 

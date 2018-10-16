@@ -1,8 +1,6 @@
 package com.github.cxt.MyJavaAgent;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Modifier;
 import java.util.HashSet;
 import java.util.List;
@@ -15,7 +13,9 @@ import com.github.cxt.MyJavaAgent.injector.base.CustomMethodInjector;
 import com.github.cxt.MyJavaAgent.injector.jdbc.JdbcExecuteInjector;
 import com.github.cxt.MyJavaAgent.injector.jdbc.JdbcStatementInjector;
 import com.github.cxt.MyJavaAgent.injector.servlert.ServletInjector;
+import javassist.ByteArrayClassPath;
 import javassist.CannotCompileException;
+import javassist.ClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtMethod;
@@ -68,35 +68,26 @@ public class ClassAssemble {
 			}
 		}
 	}
-
-	public byte[] assembleClass(String className, InputStream inputStream){
-    	ClassPool classPool = ClassPool.getDefault();
-    	
-    	CtClass ctclass;
-		try {
-			ctclass = classPool.makeClass(inputStream);
-			return assembleClass(className, ctclass);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 	
-	
-	public byte[] assembleClass(String className, byte[] classfileBuffer){
+	public byte[] assembleClass(ClassLoader loader, String className, byte[] classfileBuffer){
 		className = className.replace("/", ".");
 		if(className.startsWith("sun.")){
 			return classfileBuffer;
 		}
-		InputStream inputStream = new ByteArrayInputStream(classfileBuffer);
-		return assembleClass(className, inputStream);
+		ClassPool contextCassPool = new ClassPool(PoolManage.getPool(loader));
+		contextCassPool.childFirstLookup = true;
+		ClassPath byteArrayClassPath = new ByteArrayClassPath(className, classfileBuffer);
+	    contextCassPool.insertClassPath(byteArrayClassPath);
+		
+	    try {
+			return assembleClass(className, contextCassPool.get(className));
+		} catch (NotFoundException e) {
+			return classfileBuffer;
+		}
 	}
 	
 	
 	public byte[] assembleClass(String className, CtClass ctclass){
-		ctclass.setName(className);
 		try {
 			for (CtMethod ctmethod : ctclass.getDeclaredMethods()) {
 				for(CallInjector injector : callInjectors){

@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
+
 import com.github.cxt.MyJavaAgent.ClassAssemble;
 import com.github.cxt.MyJavaAgent.LogTraceConfig;
 
@@ -42,14 +44,7 @@ public class MyClassLoad extends ClassLoader {
     		return null;
     	}
         String path = "target" + File.separator + "test-classes" + File.separator + className.replace('.', File.separatorChar) + ".class";
-        FileInputStream inputStream = new FileInputStream(new File(path));
-        try{
-        	return classAssemble.assembleClass(className, inputStream);
-        }finally{
-        	try{
-        		inputStream.close();
-        	}catch(IOException ignore){}
-        }
+        return classAssemble.assembleClass(this, className, FileUtils.readFileToByteArray(new File(path)));
     }
 
 	@Override

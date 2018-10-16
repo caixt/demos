@@ -4,14 +4,25 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
+import com.github.cxt.MyJavaAgent.AroundInterceptorDemo1;
+import com.github.cxt.MyJavaAgent.AroundInterceptorDemo2;
+import com.github.cxt.MyJavaAgent.InterceptorManage;
+import com.github.cxt.MyJavaAgent.NamedClassPool;
+
 import javassist.ByteArrayClassPath;
+import javassist.CannotCompileException;
+import javassist.ClassPath;
 import javassist.ClassPool;
 import javassist.CtClass;
 import javassist.CtField;
 import javassist.CtMethod;
 import javassist.CtNewMethod;
+import javassist.LoaderClassPath;
+
 
 public class Main {
 
@@ -21,6 +32,7 @@ public class Main {
 		
 		ClassPool cp = ClassPool.getDefault();
 		CtClass cc = cp.get(name);
+		
 		
 		CtField f = CtField.make("public int z = 0;", cc);
 		cc.addField(f);
@@ -101,6 +113,52 @@ public class Main {
 		ctclass.toBytecode();
 		ctclass.writeFile("testClasses2");
 		
+	}
+	
+	
+	@Test
+	public void test4() throws Exception {
+		Class<?> clazz = null;
+		ClassLoader classLoader = new URLClassLoader(new URL[]{}, Main.class.getClassLoader());
+		
+		String name = Main.class.getPackage().getName() + "." + "Demo";
+		
+		ClassPool root = new NamedClassPool("root");
+//		root.appendSystemPath();
+		ClassPath classPath = new LoaderClassPath(Main.class.getClassLoader());
+		root.appendClassPath(classPath);
+		
+		System.out.println(root.get("com.github.cxt.MyJavaAgent.InterceptorManage"));
+		
+		ByteArrayClassPath byteArrayClassPath = new ByteArrayClassPath(name, FileUtils.readFileToByteArray(new File("classDir\\Demo.class")));
+		root.insertClassPath(byteArrayClassPath);
+		CtClass ctclass = root.get(name);
+		
+		CtMethod ctMethod = ctclass.getDeclaredMethod("test");
+		CtClass throwable = root.get("java.lang.Throwable");
+		int key1 = InterceptorManage.add(new AroundInterceptorDemo1());
+		methodAddInterceptor(ctMethod, key1, throwable);
+		int key2 = InterceptorManage.add(new AroundInterceptorDemo2());
+		methodAddInterceptor(ctMethod, key2, throwable);
+		
+		clazz = ctclass.toClass(classLoader);
+		System.out.println(clazz.getClassLoader());
+		
+		Object obj = clazz.newInstance();
+		Method method  = clazz.getMethod("test");
+		
+		System.out.println(method.invoke(obj));
+		
+	}
+	
+	private void methodAddInterceptor(CtMethod ctMethod, int key, CtClass throwable) throws CannotCompileException{
+		String beforeCode = String.format("{com.github.cxt.MyJavaAgent.InterceptorManage.get(%d).before(this, $args);}", key);
+		String afterCode = String.format("{com.github.cxt.MyJavaAgent.InterceptorManage.get(%d).after(this, $args, ($w)$_, null);}", key);
+		String catchCode = String.format("{com.github.cxt.MyJavaAgent.InterceptorManage.get(%d).after(this, $args, null, $e); throw $e;}", key);
+		
+		ctMethod.insertBefore(beforeCode);
+		ctMethod.insertAfter(afterCode);
+		ctMethod.addCatch(catchCode, throwable, "$e");
 	}
 }
 
