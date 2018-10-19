@@ -1,0 +1,12 @@
+#package=${groupId}.springmvc
+#groupId=com.github.cxt
+#artifactId=springmvc
+
+archetype.filteredExtensions=java,xml,properties
+excludePatterns=.settings/*,.project,.classpath,archetype.property
+
+jdbc_host=127.0.0.1
+
+
+
+#https://blog.csdn.net/zhangdaiscott/article/details/48517329
