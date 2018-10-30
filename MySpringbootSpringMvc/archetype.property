@@ -1,4 +1,4 @@
-#package=${groupId}.springmvc
+#package=com.github.cxt.springmvc
 #groupId=com.github.cxt
 #artifactId=springmvc
 

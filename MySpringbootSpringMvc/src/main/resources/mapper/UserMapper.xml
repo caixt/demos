@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.github.cxt.springmvc.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.github.cxt.springmvc.entity.User" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="info" property="info" jdbcType="LONGVARCHAR" />
+    <result column="classes" property="classes" jdbcType="VARCHAR" />
+    <association column="user_type" property="type" select="com.github.cxt.springmvc.mapper.UserTypeMapper.selectById" />
+  </resultMap>
+  
+  
+    <select id="selectByUserPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   		select * from user where id = #{id, jdbcType=VARCHAR}
+    </select>
+    
+    
+    <select id="selectPage" resultMap="BaseResultMap">
+   		select * from user order by id asc
+    </select>
+    
+    
+    <insert id="insert" parameterType="com.github.cxt.springmvc.entity.User">
+	     insert into user (id, name, user_type, info, classes)
+   		 values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{type.id,jdbcType=INTEGER}, #{info, jdbcType=LONGVARCHAR},#{classes,jdbcType=VARCHAR})
+	 </insert>
+	 
+	 <update id="updateByPrimaryKey" parameterType="com.github.cxt.springmvc.entity.User" >
+    	update user
+	    <set >
+	      <if test="name != null" >
+	        name = #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="type != null" >
+	        user_type = #{type.id,jdbcType=INTEGER},
+	      </if>
+	      <if test="info != null" >
+	        info = #{name,jdbcType=LONGVARCHAR},
+	      </if>
+	      <if test="classes != null" >
+	        classes = #{name,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where id = #{id,jdbcType=VARCHAR}
+	 </update>
+	 
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+   		delete from user where id = #{id, jdbcType=VARCHAR}
+    </delete>
+</mapper>
