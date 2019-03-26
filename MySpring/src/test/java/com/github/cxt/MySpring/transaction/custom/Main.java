@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -25,7 +26,7 @@ public class Main {
 		customDemo.test4();
 	}
 
-	
+	@EnableAspectJAutoProxy(proxyTargetClass=true, exposeProxy = true)//启用AopContext
 	@EnableCustomManagement
 	public static class Context{
 	    

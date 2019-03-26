@@ -7,7 +7,7 @@
 		<encoder>
 		    <!-- 时间戳|主机名|日志级别|模块名|类名|线程名|方法名|行号|日志内容 -->
 			<pattern>
-			     %d{yyyy-MM-dd HH:mm:ss.SSS}|%contextName|%level|Test|%class|%logger{80}|%thread|%method|%line|%msg%n
+			     %X{custom}|%d{yyyy-MM-dd HH:mm:ss.SSS}|%contextName|%level|Test|%class|%logger{80}|%thread|%method|%line|%msg%n
 			</pattern>
 		</encoder>
 	</appender>
