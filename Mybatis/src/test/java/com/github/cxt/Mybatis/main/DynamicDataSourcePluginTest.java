@@ -15,8 +15,10 @@ import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -31,7 +33,7 @@ import com.github.cxt.Mybatis.dds.DynamicDataSourcePlugin;
 import com.github.cxt.Mybatis.entity.User;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = DynamicDataSourcePluginTest.Configurator.class)
+@ContextConfiguration(classes = {DynamicDataSourcePluginTest.Configurator.class, DynamicDataSourcePluginTest.Configurator2.class})
 //@Transactional
 //@TransactionConfiguration(defaultRollback = true)
 public class DynamicDataSourcePluginTest {
@@ -62,6 +64,7 @@ public class DynamicDataSourcePluginTest {
 	}
 	
 	@EnableTransactionManagement
+	@Configuration
 	public static class Configurator {
 		
 		@Bean
@@ -85,24 +88,32 @@ public class DynamicDataSourcePluginTest {
 	    }
 		
 		@Bean
-		DynamicDataSource dynamicDataSource(DataSource master, DataSource slave){
+		DynamicDataSource dynamicDataSource(){
 			DynamicDataSource dds = new DynamicDataSource();
 			Map<Object, Object> targetDataSources = new HashMap<>();
-			targetDataSources.put("master", master);
-			targetDataSources.put("slave", slave);
+			targetDataSources.put("master", master());
+			targetDataSources.put("slave", slave());
 			dds.setTargetDataSources(targetDataSources);
 			return dds;
 		}
 		
+		@Bean
+		LazyConnectionDataSourceProxy dataSource(){
+			LazyConnectionDataSourceProxy lazyConnectionDataSourceProxy = new LazyConnectionDataSourceProxy();
+			lazyConnectionDataSourceProxy.setTargetDataSource(dynamicDataSource());
+			return lazyConnectionDataSourceProxy;
+			
+		}
+		
 	    @Bean(name="transactionManager")
-	    PlatformTransactionManager txManager(DynamicDataSource dynamicDataSource) {
-	        return new DataSourceTransactionManager(dynamicDataSource);
+	    PlatformTransactionManager txManager() {
+	        return new DataSourceTransactionManager(dataSource());
 	    }
 	    
 	    @Bean
-	    SqlSessionFactoryBean sqlSessionFactoryBean(DynamicDataSource dynamicDataSource) throws IOException{
+	    SqlSessionFactoryBean sqlSessionFactoryBean() throws IOException{
 	    	SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-	    	sqlSessionFactoryBean.setDataSource(dynamicDataSource);
+	    	sqlSessionFactoryBean.setDataSource(dataSource());
 	    	TypeHandler<?>[] typeHandlers = new TypeHandler[]{new JSONArrayHandler(), new JSONObjectHandler(), new UUIDTypeHandler(), new STRING()};
 	    	sqlSessionFactoryBean.setTypeHandlers(typeHandlers);
 	    	PathMatchingResourcePatternResolver p  = new PathMatchingResourcePatternResolver();
@@ -112,7 +123,11 @@ public class DynamicDataSourcePluginTest {
 	    	return sqlSessionFactoryBean;
 	    }
 	    
-	    @Bean
+	}
+	
+	//单独写,不然上面的ref就不生效了.不知道为什么。
+	public static class Configurator2 {
+		@Bean
 	    MapperScannerConfigurer mapperScannerConfigurer(){
 	    	MapperScannerConfigurer scannerConfigurer = new MapperScannerConfigurer();
 	    	scannerConfigurer.setBasePackage("com.github.cxt.Mybatis.dao");
