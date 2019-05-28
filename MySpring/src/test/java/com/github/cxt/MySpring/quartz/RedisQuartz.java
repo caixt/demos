@@ -37,6 +37,7 @@ public class RedisQuartz {
 		Thread.sleep(1000 * 60 * 100);
 	}
 	
+	//由于是基于redis的。如果调度时间比较接近,并且直接杀进程,如果出现不会再被调度的问题
 	@Test
 	public void testold() throws InterruptedException, SchedulerException {	
 		Thread.sleep(1000 * 60 * 100);
