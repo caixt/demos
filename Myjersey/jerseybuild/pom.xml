@@ -43,6 +43,28 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- 运行命令用的
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<ant antfile="build.xml" target="build-centos" />
+								<ant antfile="build.xml" target="build-windows" />
+								<tar destfile="${project.build.directory}/${project.artifactId}-${project.version}.tar.gz" basedir="${basedir}/build" compression="gzip" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			-->
 		</plugins>
 	</build>
 </project>
