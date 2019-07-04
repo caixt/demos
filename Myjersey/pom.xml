@@ -20,6 +20,7 @@
   <modules>
 		<module>jerseycore</module>
 		<module>jerseymain</module>
+		<module>jerseybuild</module>
   </modules>
   
   <build>
