@@ -20,7 +20,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.google.common.collect.Lists;
 //http://supben.iteye.com/blog/2094077
 public class Base {
@@ -39,6 +38,42 @@ public class Base {
 		        .build();
 		client.start();
 		client.blockUntilConnected();
+		
+//        try {
+//            CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder()
+//                    .connectString(url.getBackupAddress())
+//                    .retryPolicy(new RetryNTimes(1, 1000))
+//                    .connectionTimeoutMs(5000);
+//            String authority = url.getAuthority();
+//            if (authority != null && authority.length() > 0) {
+//                builder = builder.authorization("digest", authority.getBytes());
+//            }
+//            client = builder.build();
+//            client.getConnectionStateListenable().addListener(new ConnectionStateListener() {
+//                @Override
+//                public void stateChanged(CuratorFramework client, ConnectionState state) {
+//                    if (state == ConnectionState.LOST) {
+//                        CuratorZookeeperClient.this.stateChanged(StateListener.DISCONNECTED);
+//                    } else if (state == ConnectionState.CONNECTED) {
+//                        CuratorZookeeperClient.this.stateChanged(StateListener.CONNECTED);
+//                    } else if (state == ConnectionState.RECONNECTED) {
+//                        CuratorZookeeperClient.this.stateChanged(StateListener.RECONNECTED);
+//                    }
+//                }
+//            });
+//            client.start();
+//        } catch (Exception e) {
+//            throw new IllegalStateException(e.getMessage(), e);
+//        }
+		/*以上是dubbo 2.5.7 后的curator的源码
+		之前是  new RetryNTimes(Integer.MAX_VALUE, 1000)
+      	如果zkserver被停止后几分钟后再正常启动 zkserver。
+      	在过程中,zkclient会重新发起新的连接(会话id变化了)
+      	zkserver正常启动后,zkclient会重新注册临时节点,但临时节点还存在，所以临时节点加不上去
+      	但临时节点已经不属于当前的会话客户端,最终该临时节点会被删除
+      	其他dubbo的客户端会监听到时间后发现没有生产者，所以报黑白名单问题
+      	如果改成 new RetryNTimes(1, 1000) 就不会发起新的连接（老的会话会重新连接）
+		*/
 	}
 	
 	@After
