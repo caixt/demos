@@ -127,7 +127,7 @@ public class FtpScan {
 		if(activeMode == null || !activeMode){
 			client.enterLocalPassiveMode();
 		}
-		client.listFiles("test.info");//文件不管是否存在,只为验证返回码
+		client.listFiles("");//文件不管是否存在,只为验证返回码
 		if(FTPReply.isPositiveCompletion(client.getReplyCode())){
 			return true;
 		}
@@ -136,7 +136,7 @@ public class FtpScan {
 		}
 		//自适应,再切回主动模式
 		client.enterLocalActiveMode();
-		client.listFiles("test.info");//文件不管是否存在,只为验证返回码
+		client.listFiles("");//文件不管是否存在,只为验证返回码
 		if(FTPReply.isPositiveCompletion(client.getReplyCode())){
 			return true;
 		}
