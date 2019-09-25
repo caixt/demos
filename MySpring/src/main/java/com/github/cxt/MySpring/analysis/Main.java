@@ -3,6 +3,9 @@ package com.github.cxt.MySpring.analysis;
 import java.util.concurrent.ThreadLocalRandom;
 
 /*
+ *  java -XshowSettings:vm -version
+ *	java -XshowSettings:properties -version
+ *	java -XshowSettings:locale -version
  * 初始默认值             java -XX:+PrintFlagsInitial
  * 查看修改更新        java -XX:+PrintFlagsFinal -version
  * 默认参数                 java -XX:+PrintCommandLineFlags -version
