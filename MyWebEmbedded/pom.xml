@@ -12,7 +12,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <org.eclipse.jetty.version>9.3.3.v20150827</org.eclipse.jetty.version>
+    <org.eclipse.jetty.version>9.4.24.v20191120</org.eclipse.jetty.version>
   </properties>
 
   <dependencies>
