@@ -1,43 +1,39 @@
 package com.github.cxt.MySpring.io.netty;
 
-import io.netty.buffer.ByteBuf;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-import java.io.UnsupportedEncodingException;
+import io.netty.channel.SimpleChannelInboundHandler;
 
-/**
- * Handles a server-side channel.
- */
-public class ServerHandler extends ChannelInboundHandlerAdapter {
+@io.netty.channel.ChannelHandler.Sharable
+public class ServerHandler  extends SimpleChannelInboundHandler<String> {
+	
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * 收到客户端消息
-	 * @throws UnsupportedEncodingException 
-	 */
-	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws UnsupportedEncodingException {
-		ByteBuf in = (ByteBuf) msg;
-		byte[] req = new byte[in.readableBytes()];
-		in.readBytes(req);
-		String body = new String(req,"utf-8");
-		System.out.println("收到客户端消息:"+body);
-		String calrResult = null;
-		calrResult = "return: " + body;
-		ctx.fireChannelRead(calrResult);
-		//ctx.write(Unpooled.copiedBuffer(calrResult.getBytes()));
-	}
+	private ExecutorService executorService = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS,
+			new SynchronousQueue<Runnable>(), new ThreadPoolExecutor.CallerRunsPolicy());
 
 	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		ctx.flush();
-	}
-
-	/**
-	 * 异常处理
-	 */
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-		cause.printStackTrace();
-		ctx.close();
+	protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+		executorService.submit(new Runnable() {
+			
+			@Override
+			public void run() {
+				logger.info("get Message: " + msg);
+				String response = "server time:" + System.currentTimeMillis() + "," + msg;
+				ctx.writeAndFlush(response);
+//				try {
+//					Thread.sleep(Long.MAX_VALUE);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+			}
+		});
 	}
 }

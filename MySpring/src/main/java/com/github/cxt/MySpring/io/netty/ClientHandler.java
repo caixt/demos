@@ -2,6 +2,8 @@ package com.github.cxt.MySpring.io.netty;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
@@ -25,8 +27,12 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 		byte[] req = msg.getBytes();
 		ByteBuf m = Unpooled.buffer(req.length);
 		m.writeBytes(req);
-		ctx.writeAndFlush(m);
-		return msg.equals("q")?false:true;
+		ChannelFuture future = ctx.writeAndFlush(m);
+		boolean exit =  msg.equals("q")?false:true;
+		if(!exit){
+			future.addListener(ChannelFutureListener.CLOSE);
+		}
+		return exit;
 	}
 	
 	/**

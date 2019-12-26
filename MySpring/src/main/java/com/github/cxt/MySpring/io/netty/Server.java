@@ -3,12 +3,15 @@ package com.github.cxt.MySpring.io.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 
 public class Server {
 
@@ -19,8 +22,11 @@ public class Server {
     }
 
     public void run() throws Exception {
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
+        EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        EventLoopGroup workerGroup = new NioEventLoopGroup(2);
+        
+        ChannelHandler[] channelHandlers = new ChannelHandler[]{new StringDecoder(), new StringEncoder(), new ServerHandler()};
+        
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
@@ -34,8 +40,9 @@ public class Server {
              .childHandler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
-                     ch.pipeline().addLast(new ServerHandler());
-                     ch.pipeline().addLast(new ServerHandler2());
+                	 for(ChannelHandler channelHandler : channelHandlers){
+                		 ch.pipeline().addLast(channelHandler);
+                	 }
                  }
              });
 
