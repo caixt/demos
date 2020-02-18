@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,13 +25,14 @@ public class BatchTest {
 	@Autowired
 	private JdbcTemplate jdbc;
 	@Autowired
-	private UserDao testBatch;
+	private SqlSessionTemplate sqlSessionTemplate;
 	@Autowired
 	private UserDao userDao;
 
 	//执行快，但事务提交慢
 	@Test
 	public void test1(){
+		UserDao testBatch = sqlSessionTemplate.getMapper(UserDao.class);
 		User user = null;
 		for(int i = 0; i < 100000; i++){
 			user = new User();

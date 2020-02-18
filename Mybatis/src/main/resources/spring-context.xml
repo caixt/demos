@@ -8,9 +8,6 @@
 
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.github.cxt" />
-
-	
 	
 	<context:property-placeholder location="jdbc.properties" />
 	
@@ -57,13 +54,9 @@
         <property name="basePackage" value="com.github.cxt.Mybatis" />
     </bean>
     
-    <bean id="testBatch" class="org.mybatis.spring.mapper.MapperFactoryBean">
-		<property name="mapperInterface" value="com.github.cxt.Mybatis.dao.UserDao"/>
-		<property name="sqlSessionTemplate">
-			<bean class="org.mybatis.spring.SqlSessionTemplate">
-				<constructor-arg index="0" ref="sqlSessionFactory"/>
-				<constructor-arg index="1" value="BATCH"/>
-			</bean>
-		</property>
+   
+   	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+		<constructor-arg name="executorType" value="BATCH"></constructor-arg>
 	</bean>
 </beans>
