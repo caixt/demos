@@ -11,7 +11,7 @@
   </resultMap>
   
   <resultMap id="detailMap" type="com.github.cxt.Mybatis.entity.User" extends="BaseResultMap">
-    <association column="id" property="type" select="com.github.cxt.Mybatis.dao.UserTypeDao.selectById" />
+    <association column="id" property="type" select="com.github.cxt.Mybatis.dao.UserTypeDao.selectById"/> <!-- fetchType="lazy" -->
   </resultMap>
   
   <resultMap id="errMap" type="com.github.cxt.Mybatis.entity.User" >

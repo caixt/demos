@@ -46,6 +46,7 @@
 				<!-- 另两个采用具体map的配置 -->
 			</list>
 		</property>
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
         <property name="mapperLocations" value="classpath*:com/github/cxt/Mybatis/mapper/*.xml" />
     </bean>
 

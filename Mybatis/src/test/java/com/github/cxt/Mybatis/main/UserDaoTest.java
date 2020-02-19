@@ -52,10 +52,10 @@ public class UserDaoTest {
 	}
 	
 	@Test
-	public void test4(){
-		Map<String, Object> map = new HashMap<>();
-		map.put("id", 1L);
-		System.out.println(userDao.selectCascadeByUserId(1L));
+	public void test4() throws Exception{
+		User user = userDao.selectCascadeByUserId(1L);
+		System.out.println(user.getId());
+		System.out.println(user);
 	}
 	
 	@Test
