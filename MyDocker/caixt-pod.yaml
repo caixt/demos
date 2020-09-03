@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-centos-pod
+  labels:
+    app: nginx-centos
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    volumeMounts:
+    - name: html-dir
+      mountPath: /usr/share/nginx/html
+  - name: centos
+    image: centos:centos7.4.1708
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    volumeMounts:
+    - name: html-dir
+      mountPath: /root/cxixt
+  volumes:
+  - name: html-dir
+    emptyDir: {}

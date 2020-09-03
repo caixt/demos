@@ -1,0 +1,16 @@
+kubectl  cluster-info
+kubectl get nodes -o wide
+kubectl get nodes -o json
+
+
+kubectl get ns
+kubectl get pod -n kube-system
+kubectl get service
+
+kubectl get rs
+kubectl get deployment
+pods (po)、services (svc)、 replicationcontrollers (rc)、nodes (no)、events (ev)、componentstatuses (cs)、 limitranges (limits)、persistentvolumes (pv)、persistentvolumeclaims (pvc)、 resourcequotas (quota) secrets
+deployment
+
+kubectl describe pod nginx-centos-pod
+kubectl exec -it nginx-centos-pod -c centos /bin/bash
