@@ -1,4 +1,4 @@
-kubectl  cluster-info
+kubectl cluster-info
 kubectl get nodes -o wide
 kubectl get nodes -o json
 
