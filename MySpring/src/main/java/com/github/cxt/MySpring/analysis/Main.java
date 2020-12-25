@@ -25,6 +25,15 @@ import java.util.concurrent.ThreadLocalRandom;
  * 1.查询占cpu的线程id   ps -mp PID -o THREAD,tid,time
  * 2.耗线程的tid       printf "%x\n" tid
  * 3 jstack PID |grep tid(16进制线程id小写英文) -A60
+ * 
+ * 
+ * 内存信息	 pmap -x PID | sort -n -k3
+ * 
+ * java相关命令
+ * 查看gc		 jstat -gc PID 1000
+ * 查看内存	 jmap -heap pid
+ * dump		 jmap -dump:live,format=b,file=PID.hprof PID
+ * 
  */
 
 public class Main {
