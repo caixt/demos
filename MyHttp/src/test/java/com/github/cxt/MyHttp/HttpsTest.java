@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -13,7 +14,10 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLEngine;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509ExtendedTrustManager;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -47,7 +51,71 @@ public class HttpsTest {
          
         SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
         HttpClient httpclient = HttpClientBuilder.create().setSSLSocketFactory(sslsf).build();
-        doGet(httpclient, "https://127.0.0.1:8443/api/jersey/user/1");
+        doGet(httpclient, "https://10.1.11.147/");
+	}
+	
+	//https://www.pianshen.com/article/62751065518/
+	@Test
+	public void testTrustManager() throws ClientProtocolException, IOException, KeyManagementException, NoSuchAlgorithmException, KeyStoreException{
+		SSLContext sslcontext = SSLContext.getInstance("TLS");
+		sslcontext.init(null, new TrustManager[] { new X509ExtendedTrustManager() {
+
+			@Override
+			public X509Certificate[] getAcceptedIssuers() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType, SSLEngine engine)
+					throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkServerTrusted(X509Certificate[] chain, String authType, Socket socket)
+					throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] chain, String authType, SSLEngine engine)
+					throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void checkClientTrusted(X509Certificate[] chain, String authType, Socket socket)
+					throws CertificateException {
+				// TODO Auto-generated method stub
+
+			}
+		} }, null);
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslcontext, NoopHostnameVerifier.INSTANCE);
+        HttpClient httpclient = HttpClientBuilder.create().setSSLSocketFactory(sslsf).build();
+        
+//        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create()
+//                .register("http", PlainConnectionSocketFactory.INSTANCE)
+//                .register("https", new SSLConnectionSocketFactory(sslcontext, NoopHostnameVerifier.INSTANCE))
+//                .build();
+//    	CloseableHttpClient httpclient = HttpClients.custom().setConnectionManager(new PoolingHttpClientConnectionManager(socketFactoryRegistry)).build();
+        
+        doGet(httpclient, "https://10.1.11.147/");
 	}
 	
 	
