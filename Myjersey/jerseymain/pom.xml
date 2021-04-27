@@ -12,7 +12,7 @@
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <org.eclipse.jetty.version>8.1.16.v20140903</org.eclipse.jetty.version>
+    <org.eclipse.jetty.version>9.4.34.v20201102</org.eclipse.jetty.version>
   </properties>
   <dependencies>
  	<dependency>
