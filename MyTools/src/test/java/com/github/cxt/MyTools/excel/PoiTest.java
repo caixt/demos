@@ -135,6 +135,10 @@ public class PoiTest {
 		style=workbook.createCellStyle();
 		style.setDataFormat(workbook.createDataFormat().getFormat("0.00E+00"));
 		cell.setCellStyle(style);
+		
+		
+		CellRangeAddress region = new CellRangeAddress(0, 0, 1, 2);
+		sheet.addMergedRegion(region);
 	}
 		
 	@Test
