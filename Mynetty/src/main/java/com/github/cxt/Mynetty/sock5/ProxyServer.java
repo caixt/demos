@@ -115,6 +115,7 @@ public class ProxyServer {
 		}
 	}
 	
+	//ssh -D 1081 -fCNq 10.1.50.130
 	public static void main(String[] args) throws Exception {
 		int port = SystemPropertyUtil.getInt("server.port", 1081);
 		ProxyServer.create(port).logging(true)
