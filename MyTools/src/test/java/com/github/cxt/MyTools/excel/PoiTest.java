@@ -1,5 +1,7 @@
 package com.github.cxt.MyTools.excel;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
@@ -19,8 +21,13 @@ import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -163,8 +170,11 @@ public class PoiTest {
 		HSSFCell cell=row.createCell(0);
 		cell.setCellValue("单元格对齐");
 		HSSFCellStyle style=workbook.createCellStyle();
-		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平居中
-		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
+		
+		style.setAlignment(HorizontalAlignment.CENTER);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+//		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);//水平居中
+//		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);//垂直居中
 		style.setWrapText(true);//自动换行
 		style.setIndention((short)5);//缩进
 		style.setRotation((short)60);//文本旋转，这里的取值是从-90到90，而不是0-180度。
@@ -177,14 +187,15 @@ public class PoiTest {
 		HSSFCell cell=row.createCell(1);
 		cell.setCellValue("设置边框");
 		HSSFCellStyle style=workbook.createCellStyle();
-		style.setBorderTop(HSSFCellStyle.BORDER_DOTTED);//上边框
-		style.setBorderBottom(HSSFCellStyle.BORDER_THICK);//下边框
-		style.setBorderLeft(HSSFCellStyle.BORDER_DOUBLE);//左边框
-		style.setBorderRight(HSSFCellStyle.BORDER_SLANTED_DASH_DOT);//右边框
-		style.setTopBorderColor(HSSFColor.RED.index);//上边框颜色
-		style.setBottomBorderColor(HSSFColor.BLUE.index);//下边框颜色
-		style.setLeftBorderColor(HSSFColor.GREEN.index);//左边框颜色
-		style.setRightBorderColor(HSSFColor.PINK.index);//右边框颜色
+		
+		style.setBorderTop(BorderStyle.DOTTED);//上边框
+		style.setBorderBottom(BorderStyle.THICK);//下边框
+		style.setBorderLeft(BorderStyle.DOUBLE);//左边框
+		style.setBorderRight(BorderStyle.SLANTED_DASH_DOT);//右边框
+		style.setTopBorderColor(HSSFColorPredefined.RED.getIndex());//上边框颜色
+		style.setBottomBorderColor(HSSFColorPredefined.BLUE.getIndex());//下边框颜色
+		style.setLeftBorderColor(HSSFColorPredefined.GREEN.getIndex());//左边框颜色
+		style.setRightBorderColor(HSSFColorPredefined.PINK.getIndex());//右边框颜色
 		cell.setCellStyle(style);
 		
 		cell = row.createCell(2);
@@ -193,11 +204,13 @@ public class PoiTest {
 		HSSFFont font = workbook.createFont();
 		font.setFontName("华文行楷");//设置字体名称
 		font.setFontHeightInPoints((short)28);//设置字号
-		font.setColor(HSSFColor.RED.index);//设置字体颜色
+		font.setColor(HSSFColorPredefined.RED.getIndex());//设置字体颜色
 		font.setUnderline(FontFormatting.U_SINGLE);//设置下划线
 		font.setTypeOffset(FontFormatting.SS_SUPER);//设置上标下标
 		font.setStrikeout(true);//设置删除线
 		style.setFont(font);
 		cell.setCellStyle(style);
 	}
+	
+	
 }
