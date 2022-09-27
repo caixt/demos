@@ -8,6 +8,16 @@ import com.jcraft.jsch.Session;
 
 public class JschTest {
 
+	//ssh -fCNL 3306:10.1.5.230:3306 root@10.1.50.130
+	//navicat 的ssh 代理和我这个用的是同一个原理
+	@Test
+	public void portForwarding() throws JSchException, InterruptedException{
+		Session session = ShellUtils.connect("root", "12345678", "10.1.50.130");
+		int assinged_port = session.setPortForwardingL(3306, "10.1.5.230", 3306);
+		System.out.println(assinged_port);
+		Thread.sleep(Integer.MAX_VALUE);
+	}
+	
 	@Test
 	public void test1() throws JSchException{
 		Session session = ShellUtils.connect("root", "12345678", "10.1.50.130");
