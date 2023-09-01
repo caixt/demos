@@ -33,7 +33,10 @@ public class PDFUtils {
 	
 	private static FontProvider fontProvider = new FontProvider();
 	
-	
+	/**
+	 * 字体文件夹  fonts-chinese/ simsun.ttc 宋体-粗体.otf
+	 * 如果是windows 可以把 宋体-粗体.otf  放在 XX:\\usr\share\fonts\chinese\目录下即可
+	 */
 	static {
 		FontProgramFactory.registerSystemFontDirectories();
 		try {
