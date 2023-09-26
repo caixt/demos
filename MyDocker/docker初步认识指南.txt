@@ -24,6 +24,7 @@ systemctl start docker
     docker rm
     docker stop 
 
+镜像以及TAG 可查 https://github.com/docker-library/docs/
 docker run --name test-ningx -d -p 8080:80 nginx
 
 ==========================================================================
@@ -32,6 +33,8 @@ DockerFile -->build
              Dcoker Image --> Dcoker Contianer
                   |
 Dokcer Container--
+
+
 
 方式一：Docker File
    1）编写DcokerFile文件，DockerFile文件一般和源码放在一起
@@ -47,6 +50,9 @@ Dokcer Container--
   
      注：也可以导出一个镜像的容器，通过命令docker export
    4)
+   
+如果导入名称为 none
+docker tag  imageId  xxx:xxx
 
 附：Dokcer File编写常用
         FROM
@@ -58,6 +64,8 @@ Dokcer Container--
         EXPOSE
         ENV
         VOLUME
+        ENTRYPOINT
+        ARG
     
 方式二： 从一个容器生成镜像
    1）docker run/start 一个镜像为一个容器
@@ -68,7 +76,6 @@ Dokcer Container--
       例如
         docker save 6c5563 > ./ubuntu_tomcat.tar.gz
 		docker load < ./ubuntu_tomcat.tar.gz
-		
 		
 docker 启动不以 bash 来启动 docker run -it *** /bin/bash
 docker 集群的解决方案
