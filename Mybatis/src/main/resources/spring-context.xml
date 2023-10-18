@@ -60,4 +60,6 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 		<constructor-arg name="executorType" value="BATCH"></constructor-arg>
 	</bean>
+	
+	<bean id="userService" class="com.github.cxt.Mybatis.Service.UserService"/>
 </beans>

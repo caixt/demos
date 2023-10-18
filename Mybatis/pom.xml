@@ -76,7 +76,7 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.4.1</version>
+			<version>3.5.13</version>
 		</dependency>
 		
 		<dependency>
@@ -148,6 +148,18 @@
 		     <artifactId>pagehelper</artifactId>
 		     <version>5.1.4</version>
 		 </dependency>
+		 
+		 <dependency>
+		 	<artifactId>druid</artifactId>
+			<version>1.2.11</version>
+			<groupId>com.alibaba</groupId>
+		 </dependency>
+		 
+		<dependency>
+		    <groupId>com.xugudb</groupId>
+		    <artifactId>xugu-jdbc</artifactId>
+		    <version>12.1.12</version>
+		</dependency>
   </dependencies>
   
   
