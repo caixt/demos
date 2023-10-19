@@ -68,9 +68,9 @@ public class PagePluginTest {
 	    DataSource dataSource(){
 			BasicDataSource ds = new BasicDataSource();
 	        ds.setDriverClassName("com.mysql.jdbc.Driver");
-	        ds.setUrl("jdbc:mysql://127.0.0.1:3306/mybatis?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8");
+	        ds.setUrl("jdbc:mysql://10.1.5.231:3306/mybatis?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8");
 	        ds.setUsername("root");
-	        ds.setPassword("xiantong");
+	        ds.setPassword("12345678");
 	        return ds;
 	    }
 		
@@ -93,6 +93,7 @@ public class PagePluginTest {
 	    	plugins[0] = plugin;
 	    	Properties props = new Properties();
 	    	props.setProperty("helperDialect", "mysql");
+//	    	props.setProperty("autoRuntimeDialect", "true");
 	    	props.setProperty("reasonable", "true");
 	    	plugin.setProperties(props);
 	    	return sqlSessionFactoryBean;
