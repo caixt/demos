@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<property name="LOG_ROOT" value="${log.rootDir:-logs}" />
+	<property name="LOG_MODULE" value="${app.name:-default}" />
+	<property name="ENCODER_PATTERN"
+		value="%d{yyyy-MM-dd  HH:mm:ss} [%thread] %-5level %logger{40}[%L] - %msg%n" />
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">   
+     		<level>debug</level>   
+    	</filter>  
+		<encoder charset="UTF-8">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<appender name="info"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_ROOT}/${LOG_MODULE}.info.log</file>
+       	<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+       		<FileNamePattern>${LOG_ROOT}/${LOG_MODULE}.info.%i.log</FileNamePattern>
+         	<minIndex>1</minIndex>
+         	<maxIndex>20</maxIndex>
+       	</rollingPolicy>
+       	<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+       	  <maxFileSize>10MB</maxFileSize>
+      	</triggeringPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>info</level>
+		</filter>
+	</appender>
+
+	<appender name="warn"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_ROOT}/${LOG_MODULE}.warn.log</file>
+       	<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+       		<FileNamePattern>${LOG_ROOT}/${LOG_MODULE}.warn.%i.log</FileNamePattern>
+         	<minIndex>1</minIndex>
+         	<maxIndex>20</maxIndex>
+       	</rollingPolicy>
+       	<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+       	  <maxFileSize>10MB</maxFileSize>
+      	</triggeringPolicy>
+		<encoder charset="UTF-8">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>warn</level>
+		</filter>
+	</appender>
+
+
+	<root level="info">
+		<appender-ref ref="console" />
+		<appender-ref ref="info" />
+		<appender-ref ref="warn" />
+	</root>
+	
+	
+</configuration>   
