@@ -19,14 +19,14 @@ public class Springboot2Application implements WebMvcConfigurer {
 	}
 	
 	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
+	public void addInterceptors(InterceptorRegistry registry) {//?locale=zh_CN
 		registry.addInterceptor(new LocaleChangeInterceptor()).addPathPatterns("/*");
 	}
 	
 	@Bean
-	public MessageSource messageSource() {
+	public MessageSource messageSource() {//RequestContextFilter  Accept-Language: zh_CN
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("messages");
+		messageSource.setBasename("i18n/messages");
 		return messageSource;
 	}
 
