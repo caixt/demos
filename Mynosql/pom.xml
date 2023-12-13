@@ -86,20 +86,14 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>3.4.0</version>
+            <version>3.12.14</version>
         </dependency>
         
-        <dependency>  
-            <groupId>org.apache-extras.cassandra-jdbc</groupId>  
-            <artifactId>cassandra-jdbc</artifactId>  
-            <version>1.2.5</version>  
-        </dependency> 
-        
-            <dependency>
-	    <groupId>org.apache.commons</groupId>
-	    <artifactId>commons-lang3</artifactId>
-	    <version>3.9</version>
-	</dependency>
+        <dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>3.9</version>
+		</dependency>
   </dependencies>
   
   
