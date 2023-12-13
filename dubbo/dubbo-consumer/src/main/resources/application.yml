@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: dubbo-consumer
+
+dubbo:
+  application:
+    name: ${spring.application.name}
+  registry:
+    check: false
+    timeout: 30000
+    address: multicast://224.5.6.7:1234
+    #address: 127.0.0.1:2181
+    #client: curator
+    #protocol: zookeeper
+  consumer:
+    retries: 0
+    check: false
+    timeout: 1000
+    loadbalance: leastactive
+
