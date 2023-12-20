@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.github.cxt.springboot2.config.ApiJsonObject;
 import com.github.cxt.springboot2.config.ApiJsonProperty;
-
+import com.github.cxt.springboot2.lock.DistLock;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -39,6 +38,13 @@ public class IndexController {
 		int a = map.get("a");
 		int b = map.get("b");
 		return a / b;
+	}
+	
+	
+	@GetMapping("/lock")
+	@DistLock(value = DistLock.PATH + "/#path")
+	public String lock(String path) {
+		return "lock:" + path;
 	}
 
 }
